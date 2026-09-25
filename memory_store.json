@@ -1,0 +1,548 @@
+[
+  {
+    "id": "tp:ml-agg-1",
+    "db": "movielens",
+    "question": "How many tags are in the database?",
+    "sql": "SELECT COUNT(*) AS n_tags FROM tags",
+    "technique": "simple-aggregate"
+  },
+  {
+    "id": "tp:ml-agg-2",
+    "db": "movielens",
+    "question": "What is the highest rating any movie has received?",
+    "sql": "SELECT MAX(rating) AS highest_rating FROM ratings",
+    "technique": "simple-aggregate"
+  },
+  {
+    "id": "tp:ml-agg-3",
+    "db": "movielens",
+    "question": "How many different users have rated at least one movie?",
+    "sql": "SELECT COUNT(DISTINCT userid) AS n_users FROM ratings",
+    "technique": "simple-aggregate"
+  },
+  {
+    "id": "tp:ml-grp-1",
+    "db": "movielens",
+    "question": "Which 10 movies have the most tags?",
+    "sql": "SELECT m.title, COUNT(*) AS n_tags FROM tags t JOIN movies m ON m.movieid = t.movieid GROUP BY m.movieid, m.title ORDER BY n_tags DESC LIMIT 10",
+    "technique": "per-group-aggregate"
+  },
+  {
+    "id": "tp:ml-grp-2",
+    "db": "movielens",
+    "question": "What is the average rating of each movie whose title starts with 'Star'?",
+    "sql": "SELECT m.title, AVG(r.rating) AS avg_rating, COUNT(*) AS n_ratings FROM ratings r JOIN movies m ON m.movieid = r.movieid WHERE m.title LIKE 'Star%' GROUP BY m.movieid, m.title ORDER BY avg_rating DESC",
+    "technique": "per-group-aggregate"
+  },
+  {
+    "id": "tp:ml-grp-3",
+    "db": "movielens",
+    "question": "How many different movies has each user tagged? Show the top 10 users.",
+    "sql": "SELECT t.userid, COUNT(DISTINCT t.movieid) AS n_movies FROM tags t GROUP BY t.userid ORDER BY n_movies DESC LIMIT 10",
+    "technique": "per-group-aggregate"
+  },
+  {
+    "id": "tp:ml-hav-1",
+    "db": "movielens",
+    "question": "Which movies have an average rating above 4.5 and at least 20 ratings?",
+    "sql": "SELECT m.title, AVG(r.rating) AS avg_rating, COUNT(*) AS n_ratings FROM ratings r JOIN movies m ON m.movieid = r.movieid GROUP BY m.movieid, m.title HAVING COUNT(*) >= 20 AND AVG(r.rating) > 4.5 ORDER BY avg_rating DESC",
+    "technique": "having-min-count"
+  },
+  {
+    "id": "tp:ml-hav-2",
+    "db": "movielens",
+    "question": "Which users have given more than 500 ratings?",
+    "sql": "SELECT userid, COUNT(*) AS n_ratings FROM ratings GROUP BY userid HAVING COUNT(*) > 500 ORDER BY n_ratings DESC",
+    "technique": "having-min-count"
+  },
+  {
+    "id": "tp:ml-hav-3",
+    "db": "movielens",
+    "question": "Which tags have been applied to at least 10 different movies?",
+    "sql": "SELECT tag, COUNT(DISTINCT movieid) AS n_movies FROM tags GROUP BY tag HAVING COUNT(DISTINCT movieid) >= 10 ORDER BY n_movies DESC",
+    "technique": "having-min-count"
+  },
+  {
+    "id": "tp:ml-unn-1",
+    "db": "movielens",
+    "question": "List every distinct genre in the database.",
+    "sql": "SELECT DISTINCT unnest(string_to_array(genres, '|')) AS genre FROM movies ORDER BY genre",
+    "technique": "unnest-multivalue"
+  },
+  {
+    "id": "tp:ml-unn-2",
+    "db": "movielens",
+    "question": "How many movies are listed as Comedy?",
+    "sql": "SELECT COUNT(*) AS n_comedy FROM movies WHERE 'Comedy' = ANY(string_to_array(genres, '|'))",
+    "technique": "unnest-multivalue"
+  },
+  {
+    "id": "tp:ml-unn-3",
+    "db": "movielens",
+    "question": "How many distinct users have rated a movie in each genre? Top 5 genres.",
+    "sql": "SELECT g AS genre, COUNT(DISTINCT r.userid) AS n_users FROM movies m JOIN ratings r ON r.movieid = m.movieid CROSS JOIN unnest(string_to_array(m.genres, '|')) AS g GROUP BY g ORDER BY n_users DESC LIMIT 5",
+    "technique": "unnest-multivalue"
+  },
+  {
+    "id": "tp:ml-arg-1",
+    "db": "movielens",
+    "question": "Which user has written the most tags?",
+    "sql": "SELECT userid, COUNT(*) AS n_tags FROM tags GROUP BY userid ORDER BY n_tags DESC LIMIT 1",
+    "technique": "argmax-top1"
+  },
+  {
+    "id": "tp:ml-arg-2",
+    "db": "movielens",
+    "question": "Which movie has the most tags?",
+    "sql": "SELECT m.title, COUNT(*) AS n_tags FROM tags t JOIN movies m ON m.movieid = t.movieid GROUP BY m.movieid, m.title ORDER BY n_tags DESC LIMIT 1",
+    "technique": "argmax-top1"
+  },
+  {
+    "id": "tp:ml-arg-3",
+    "db": "movielens",
+    "question": "Which movie has the highest average rating among movies with at least 100 ratings?",
+    "sql": "SELECT m.title, AVG(r.rating) AS avg_rating FROM ratings r JOIN movies m ON m.movieid = r.movieid GROUP BY m.movieid, m.title HAVING COUNT(*) >= 100 ORDER BY avg_rating DESC LIMIT 1",
+    "technique": "argmax-top1"
+  },
+  {
+    "id": "tp:ml-yr-1",
+    "db": "movielens",
+    "question": "How many movies were released in 1995?",
+    "sql": "SELECT COUNT(*) AS n_movies FROM movies WHERE substring(title FROM '\\((\\d{4})\\)\\s*$')::int = 1995",
+    "technique": "year-from-title"
+  },
+  {
+    "id": "tp:ml-yr-2",
+    "db": "movielens",
+    "question": "List the 10 oldest movies by release year.",
+    "sql": "SELECT title, substring(title FROM '\\((\\d{4})\\)\\s*$')::int AS release_year FROM movies WHERE substring(title FROM '\\((\\d{4})\\)\\s*$') IS NOT NULL ORDER BY release_year ASC LIMIT 10",
+    "technique": "year-from-title"
+  },
+  {
+    "id": "tp:ml-yr-3",
+    "db": "movielens",
+    "question": "How many movies were released in each decade?",
+    "sql": "SELECT (substring(title FROM '\\((\\d{4})\\)\\s*$')::int / 10) * 10 AS decade, COUNT(*) AS n_movies FROM movies WHERE substring(title FROM '\\((\\d{4})\\)\\s*$') IS NOT NULL GROUP BY decade ORDER BY decade",
+    "technique": "year-from-title"
+  },
+  {
+    "id": "tp:ml-win-1",
+    "db": "movielens",
+    "question": "For each user, which movie did they rate first? Show 10 users.",
+    "sql": "SELECT userid, movieid, ts FROM (SELECT userid, movieid, timestamp AS ts, ROW_NUMBER() OVER (PARTITION BY userid ORDER BY timestamp) AS rn FROM ratings) x WHERE rn = 1 ORDER BY userid LIMIT 10",
+    "technique": "window-top1-per-group"
+  },
+  {
+    "id": "tp:ml-win-2",
+    "db": "movielens",
+    "question": "For each user, what are their two highest-rated movies? Show 10 rows.",
+    "sql": "SELECT userid, movieid, rating FROM (SELECT userid, movieid, rating, ROW_NUMBER() OVER (PARTITION BY userid ORDER BY rating DESC, movieid) AS rn FROM ratings) x WHERE rn <= 2 ORDER BY userid, rating DESC LIMIT 10",
+    "technique": "window-top1-per-group"
+  },
+  {
+    "id": "tp:ml-win-3",
+    "db": "movielens",
+    "question": "For each rating value, which movie received that rating most often?",
+    "sql": "SELECT rating, title, n FROM (SELECT r.rating, m.title, COUNT(*) AS n, ROW_NUMBER() OVER (PARTITION BY r.rating ORDER BY COUNT(*) DESC, m.title) AS rn FROM ratings r JOIN movies m ON m.movieid = r.movieid GROUP BY r.rating, m.movieid, m.title) x WHERE rn = 1 ORDER BY rating",
+    "technique": "window-top1-per-group"
+  },
+  {
+    "id": "tp:ml-dist-1",
+    "db": "movielens",
+    "question": "How many movies have each number of ratings? Show the first 20 buckets.",
+    "sql": "SELECT n_ratings, COUNT(*) AS n_movies FROM (SELECT movieid, COUNT(*) AS n_ratings FROM ratings GROUP BY movieid) x GROUP BY n_ratings ORDER BY n_ratings LIMIT 20",
+    "technique": "distribution-counts"
+  },
+  {
+    "id": "tp:ml-dist-2",
+    "db": "movielens",
+    "question": "How many users wrote each number of tags? Show the first 20 buckets.",
+    "sql": "SELECT n_tags, COUNT(*) AS n_users FROM (SELECT userid, COUNT(*) AS n_tags FROM tags GROUP BY userid) x GROUP BY n_tags ORDER BY n_tags LIMIT 20",
+    "technique": "distribution-counts"
+  },
+  {
+    "id": "tp:ml-dist-3",
+    "db": "movielens",
+    "question": "How many movies have one genre, two genres, three genres and so on?",
+    "sql": "SELECT array_length(string_to_array(genres, '|'), 1) AS n_genres, COUNT(*) AS n_movies FROM movies GROUP BY n_genres ORDER BY n_genres",
+    "technique": "distribution-counts"
+  },
+  {
+    "id": "tp:ml-anti-1",
+    "db": "movielens",
+    "question": "Which movies have never been rated by anyone?",
+    "sql": "SELECT m.movieid, m.title FROM movies m WHERE NOT EXISTS (SELECT 1 FROM ratings r WHERE r.movieid = m.movieid) ORDER BY m.title",
+    "technique": "anti-join"
+  },
+  {
+    "id": "tp:ml-anti-2",
+    "db": "movielens",
+    "question": "Which users have rated movies but never written a tag?",
+    "sql": "SELECT DISTINCT r.userid FROM ratings r WHERE NOT EXISTS (SELECT 1 FROM tags t WHERE t.userid = r.userid) ORDER BY r.userid LIMIT 20",
+    "technique": "anti-join"
+  },
+  {
+    "id": "tp:ml-anti-3",
+    "db": "movielens",
+    "question": "Which movies have never been given a rating of 5?",
+    "sql": "SELECT m.movieid, m.title FROM movies m WHERE NOT EXISTS (SELECT 1 FROM ratings r WHERE r.movieid = m.movieid AND r.rating = 5) ORDER BY m.title LIMIT 20",
+    "technique": "anti-join"
+  },
+  {
+    "id": "tp:ml-epo-1",
+    "db": "movielens",
+    "question": "How many tags were created in each year?",
+    "sql": "SELECT EXTRACT(YEAR FROM to_timestamp(timestamp)) AS year, COUNT(*) AS n_tags FROM tags GROUP BY year ORDER BY year",
+    "technique": "epoch-bucketing"
+  },
+  {
+    "id": "tp:ml-epo-2",
+    "db": "movielens",
+    "question": "In which month of the year are ratings most often given?",
+    "sql": "SELECT EXTRACT(MONTH FROM to_timestamp(timestamp)) AS month, COUNT(*) AS n_ratings FROM ratings GROUP BY month ORDER BY n_ratings DESC",
+    "technique": "epoch-bucketing"
+  },
+  {
+    "id": "tp:ml-epo-3",
+    "db": "movielens",
+    "question": "What are the dates of the earliest and latest rating?",
+    "sql": "SELECT to_timestamp(MIN(timestamp)) AS first_rating, to_timestamp(MAX(timestamp)) AS last_rating FROM ratings",
+    "technique": "epoch-bucketing"
+  },
+  {
+    "id": "tp:ol-agg-1",
+    "db": "olist",
+    "question": "How many sellers are in the database?",
+    "sql": "SELECT COUNT(*) AS n_sellers FROM sellers",
+    "technique": "simple-aggregate"
+  },
+  {
+    "id": "tp:ol-agg-2",
+    "db": "olist",
+    "question": "What is the total freight value paid across all order items?",
+    "sql": "SELECT SUM(freight_value) AS total_freight FROM order_items",
+    "technique": "simple-aggregate"
+  },
+  {
+    "id": "tp:ol-agg-3",
+    "db": "olist",
+    "question": "How many customer reviews are there?",
+    "sql": "SELECT COUNT(*) AS n_reviews FROM order_reviews",
+    "technique": "simple-aggregate"
+  },
+  {
+    "id": "tp:ol-rev-1",
+    "db": "olist",
+    "question": "Which 10 products generated the most revenue?",
+    "sql": "SELECT product_id, SUM(price) AS revenue FROM order_items GROUP BY product_id ORDER BY revenue DESC LIMIT 10",
+    "technique": "revenue-topn"
+  },
+  {
+    "id": "tp:ol-rev-2",
+    "db": "olist",
+    "question": "Which 10 seller states generated the most revenue?",
+    "sql": "SELECT s.seller_state, SUM(oi.price) AS revenue FROM order_items oi JOIN sellers s ON s.seller_id = oi.seller_id GROUP BY s.seller_state ORDER BY revenue DESC LIMIT 10",
+    "technique": "revenue-topn"
+  },
+  {
+    "id": "tp:ol-rev-3",
+    "db": "olist",
+    "question": "Which 5 customer states generated the most revenue?",
+    "sql": "SELECT c.customer_state, SUM(oi.price) AS revenue FROM order_items oi JOIN orders o ON o.order_id = oi.order_id JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.customer_state ORDER BY revenue DESC LIMIT 5",
+    "technique": "revenue-topn"
+  },
+  {
+    "id": "tp:ol-grp-1",
+    "db": "olist",
+    "question": "What is the average review score for each order status?",
+    "sql": "SELECT o.order_status, AVG(rv.review_score) AS avg_score, COUNT(*) AS n_reviews FROM order_reviews rv JOIN orders o ON o.order_id = rv.order_id GROUP BY o.order_status ORDER BY avg_score DESC",
+    "technique": "per-group-aggregate"
+  },
+  {
+    "id": "tp:ol-grp-2",
+    "db": "olist",
+    "question": "What is the average item price per product category in English? Top 10 by average.",
+    "sql": "SELECT t.product_category_name_english AS category, AVG(oi.price) AS avg_price FROM order_items oi JOIN products p ON p.product_id = oi.product_id JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name GROUP BY category ORDER BY avg_price DESC LIMIT 10",
+    "technique": "per-group-aggregate"
+  },
+  {
+    "id": "tp:ol-grp-3",
+    "db": "olist",
+    "question": "How many distinct orders did each seller receive? Show the top 10 sellers.",
+    "sql": "SELECT seller_id, COUNT(DISTINCT order_id) AS n_orders FROM order_items GROUP BY seller_id ORDER BY n_orders DESC LIMIT 10",
+    "technique": "per-group-aggregate"
+  },
+  {
+    "id": "tp:ol-dist-1",
+    "db": "olist",
+    "question": "How many orders used each number of payment installments?",
+    "sql": "SELECT payment_installments, COUNT(*) AS n FROM order_payments GROUP BY payment_installments ORDER BY payment_installments",
+    "technique": "distribution-counts"
+  },
+  {
+    "id": "tp:ol-dist-2",
+    "db": "olist",
+    "question": "What is the distribution of review scores from 1 to 5?",
+    "sql": "SELECT review_score, COUNT(*) AS n FROM order_reviews GROUP BY review_score ORDER BY review_score",
+    "technique": "distribution-counts"
+  },
+  {
+    "id": "tp:ol-dist-3",
+    "db": "olist",
+    "question": "How many orders contain one item, two items, three items and so on?",
+    "sql": "SELECT item_count, COUNT(*) AS n_orders FROM (SELECT order_id, COUNT(*) AS item_count FROM order_items GROUP BY order_id) x GROUP BY item_count ORDER BY item_count",
+    "technique": "distribution-counts"
+  },
+  {
+    "id": "tp:ol-dd-1",
+    "db": "olist",
+    "question": "What is the average number of days between purchase and carrier handover?",
+    "sql": "SELECT AVG(EXTRACT(EPOCH FROM (order_delivered_carrier_date - order_purchase_timestamp)) / 86400.0) AS avg_days FROM orders WHERE order_delivered_carrier_date IS NOT NULL",
+    "technique": "date-diff-days"
+  },
+  {
+    "id": "tp:ol-dd-2",
+    "db": "olist",
+    "question": "Which 10 delivered orders took the longest number of days to reach the customer?",
+    "sql": "SELECT order_id, EXTRACT(EPOCH FROM (order_delivered_customer_date - order_purchase_timestamp)) / 86400.0 AS days FROM orders WHERE order_delivered_customer_date IS NOT NULL ORDER BY days DESC LIMIT 10",
+    "technique": "date-diff-days"
+  },
+  {
+    "id": "tp:ol-dd-3",
+    "db": "olist",
+    "question": "What is the average number of days between order approval and delivery to the customer?",
+    "sql": "SELECT AVG(EXTRACT(EPOCH FROM (order_delivered_customer_date - order_approved_at)) / 86400.0) AS avg_days FROM orders WHERE order_delivered_customer_date IS NOT NULL AND order_approved_at IS NOT NULL",
+    "technique": "date-diff-days"
+  },
+  {
+    "id": "tp:ol-pct-1",
+    "db": "olist",
+    "question": "What percentage of orders were cancelled?",
+    "sql": "SELECT 100.0 * SUM(CASE WHEN order_status = 'canceled' THEN 1 ELSE 0 END) / COUNT(*) AS pct_cancelled FROM orders",
+    "technique": "conditional-percentage"
+  },
+  {
+    "id": "tp:ol-pct-2",
+    "db": "olist",
+    "question": "What percentage of reviews gave the top score of 5?",
+    "sql": "SELECT 100.0 * SUM(CASE WHEN review_score = 5 THEN 1 ELSE 0 END) / COUNT(*) AS pct_five_star FROM order_reviews",
+    "technique": "conditional-percentage"
+  },
+  {
+    "id": "tp:ol-pct-3",
+    "db": "olist",
+    "question": "What percentage of delivered orders arrived before the estimated delivery date?",
+    "sql": "SELECT 100.0 * SUM(CASE WHEN order_delivered_customer_date < order_estimated_delivery_date THEN 1 ELSE 0 END) / COUNT(*) AS pct_early FROM orders WHERE order_delivered_customer_date IS NOT NULL",
+    "technique": "conditional-percentage"
+  },
+  {
+    "id": "tp:ol-mon-1",
+    "db": "olist",
+    "question": "How much revenue was earned in each month?",
+    "sql": "SELECT date_trunc('month', o.order_purchase_timestamp) AS month, SUM(oi.price) AS revenue FROM order_items oi JOIN orders o ON o.order_id = oi.order_id GROUP BY month ORDER BY month",
+    "technique": "monthly-bucketing"
+  },
+  {
+    "id": "tp:ol-mon-2",
+    "db": "olist",
+    "question": "How many reviews were created in each month?",
+    "sql": "SELECT date_trunc('month', review_creation_date) AS month, COUNT(*) AS n_reviews FROM order_reviews GROUP BY month ORDER BY month",
+    "technique": "monthly-bucketing"
+  },
+  {
+    "id": "tp:ol-mon-3",
+    "db": "olist",
+    "question": "How many orders were placed in each year?",
+    "sql": "SELECT date_trunc('year', order_purchase_timestamp) AS year, COUNT(*) AS n_orders FROM orders GROUP BY year ORDER BY year",
+    "technique": "monthly-bucketing"
+  },
+  {
+    "id": "tp:ol-hav-1",
+    "db": "olist",
+    "question": "Which product categories in English have more than 1000 items sold?",
+    "sql": "SELECT t.product_category_name_english AS category, COUNT(*) AS n_items FROM order_items oi JOIN products p ON p.product_id = oi.product_id JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name GROUP BY category HAVING COUNT(*) > 1000 ORDER BY n_items DESC",
+    "technique": "having-min-count"
+  },
+  {
+    "id": "tp:ol-hav-2",
+    "db": "olist",
+    "question": "Which sellers have sold at least 100 items?",
+    "sql": "SELECT seller_id, COUNT(*) AS n_items FROM order_items GROUP BY seller_id HAVING COUNT(*) >= 100 ORDER BY n_items DESC",
+    "technique": "having-min-count"
+  },
+  {
+    "id": "tp:ol-hav-3",
+    "db": "olist",
+    "question": "Which customer states have more than 5000 orders?",
+    "sql": "SELECT c.customer_state, COUNT(*) AS n_orders FROM orders o JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.customer_state HAVING COUNT(*) > 5000 ORDER BY n_orders DESC",
+    "technique": "having-min-count"
+  },
+  {
+    "id": "tp:ol-nest-1",
+    "db": "olist",
+    "question": "What is the average total revenue per order?",
+    "sql": "SELECT AVG(order_total) AS avg_order_value FROM (SELECT order_id, SUM(price) AS order_total FROM order_items GROUP BY order_id) x",
+    "technique": "nested-aggregate"
+  },
+  {
+    "id": "tp:ol-nest-2",
+    "db": "olist",
+    "question": "What is the largest number of items in a single order?",
+    "sql": "SELECT MAX(item_count) AS max_items FROM (SELECT order_id, COUNT(*) AS item_count FROM order_items GROUP BY order_id) x",
+    "technique": "nested-aggregate"
+  },
+  {
+    "id": "tp:ol-nest-3",
+    "db": "olist",
+    "question": "What is the average number of payment records per order?",
+    "sql": "SELECT AVG(n_payments) AS avg_payments FROM (SELECT order_id, COUNT(*) AS n_payments FROM order_payments GROUP BY order_id) x",
+    "technique": "nested-aggregate"
+  },
+  {
+    "id": "tp:ol-rep-1",
+    "db": "olist",
+    "question": "How many sellers have sold more than one distinct product?",
+    "sql": "SELECT COUNT(*) AS n_sellers FROM (SELECT seller_id FROM order_items GROUP BY seller_id HAVING COUNT(DISTINCT product_id) > 1) x",
+    "technique": "repeat-entity"
+  },
+  {
+    "id": "tp:ol-rep-2",
+    "db": "olist",
+    "question": "How many orders have more than one payment record?",
+    "sql": "SELECT COUNT(*) AS n_orders FROM (SELECT order_id FROM order_payments GROUP BY order_id HAVING COUNT(*) > 1) x",
+    "technique": "repeat-entity"
+  },
+  {
+    "id": "tp:ol-rep-3",
+    "db": "olist",
+    "question": "How many products were sold in more than one order?",
+    "sql": "SELECT COUNT(*) AS n_products FROM (SELECT product_id FROM order_items GROUP BY product_id HAVING COUNT(DISTINCT order_id) > 1) x",
+    "technique": "repeat-entity"
+  },
+  {
+    "id": "tp:sc-agg-1",
+    "db": "soccer",
+    "question": "How many leagues are in the database?",
+    "sql": "SELECT COUNT(*) AS n_leagues FROM \"League\"",
+    "technique": "simple-aggregate"
+  },
+  {
+    "id": "tp:sc-agg-2",
+    "db": "soccer",
+    "question": "How many teams are in the database?",
+    "sql": "SELECT COUNT(*) AS n_teams FROM \"Team\"",
+    "technique": "simple-aggregate"
+  },
+  {
+    "id": "tp:sc-agg-3",
+    "db": "soccer",
+    "question": "How many goals were scored in total across all matches?",
+    "sql": "SELECT SUM(home_team_goal + away_team_goal) AS total_goals FROM \"Match\"",
+    "technique": "simple-aggregate"
+  },
+  {
+    "id": "tp:sc-grp-1",
+    "db": "soccer",
+    "question": "How many matches were played in each season?",
+    "sql": "SELECT season, COUNT(*) AS n_matches FROM \"Match\" GROUP BY season ORDER BY season",
+    "technique": "per-group-aggregate"
+  },
+  {
+    "id": "tp:sc-grp-2",
+    "db": "soccer",
+    "question": "How many matches were hosted by each country?",
+    "sql": "SELECT c.name AS country, COUNT(*) AS n_matches FROM \"Match\" m JOIN \"Country\" c ON c.id = m.country_id GROUP BY c.name ORDER BY n_matches DESC",
+    "technique": "per-group-aggregate"
+  },
+  {
+    "id": "tp:sc-grp-3",
+    "db": "soccer",
+    "question": "What is the average number of goals per match in each season?",
+    "sql": "SELECT season, AVG(home_team_goal + away_team_goal) AS avg_goals FROM \"Match\" GROUP BY season ORDER BY season",
+    "technique": "per-group-aggregate"
+  },
+  {
+    "id": "tp:sc-arg-1",
+    "db": "soccer",
+    "question": "Which match had the most goals in total?",
+    "sql": "SELECT id, season, home_team_goal, away_team_goal, (home_team_goal + away_team_goal) AS total_goals FROM \"Match\" ORDER BY total_goals DESC LIMIT 1",
+    "technique": "argmax-top1"
+  },
+  {
+    "id": "tp:sc-arg-2",
+    "db": "soccer",
+    "question": "Which league scored the most goals in total?",
+    "sql": "SELECT l.name AS league, SUM(m.home_team_goal + m.away_team_goal) AS total_goals FROM \"Match\" m JOIN \"League\" l ON l.id = m.league_id GROUP BY l.name ORDER BY total_goals DESC LIMIT 1",
+    "technique": "argmax-top1"
+  },
+  {
+    "id": "tp:sc-arg-3",
+    "db": "soccer",
+    "question": "Which player is the youngest in the database?",
+    "sql": "SELECT player_name, birthday FROM \"Player\" ORDER BY birthday DESC LIMIT 1",
+    "technique": "argmax-top1"
+  },
+  {
+    "id": "tp:sc-ha-1",
+    "db": "soccer",
+    "question": "How many matches has each team played in total, counting home and away? Top 10.",
+    "sql": "SELECT t.team_long_name, COUNT(*) AS n_matches FROM (SELECT home_team_api_id AS team_api_id FROM \"Match\"  UNION ALL SELECT away_team_api_id FROM \"Match\") x JOIN \"Team\" t ON t.team_api_id = x.team_api_id GROUP BY t.team_long_name ORDER BY n_matches DESC LIMIT 10",
+    "technique": "home-away-union"
+  },
+  {
+    "id": "tp:sc-ha-2",
+    "db": "soccer",
+    "question": "Which 10 teams conceded the most goals in total, counting home and away matches?",
+    "sql": "SELECT t.team_long_name, SUM(x.conceded) AS goals_conceded FROM (SELECT home_team_api_id AS team_api_id, away_team_goal AS conceded FROM \"Match\"  UNION ALL SELECT away_team_api_id, home_team_goal FROM \"Match\") x JOIN \"Team\" t ON t.team_api_id = x.team_api_id GROUP BY t.team_long_name ORDER BY goals_conceded DESC LIMIT 10",
+    "technique": "home-away-union"
+  },
+  {
+    "id": "tp:sc-ha-3",
+    "db": "soccer",
+    "question": "What is each team's average goals scored per match, for teams with at least 100 matches? Top 10.",
+    "sql": "SELECT t.team_long_name, AVG(x.scored) AS avg_scored, COUNT(*) AS n_matches FROM (SELECT home_team_api_id AS team_api_id, home_team_goal AS scored FROM \"Match\"  UNION ALL SELECT away_team_api_id, away_team_goal FROM \"Match\") x JOIN \"Team\" t ON t.team_api_id = x.team_api_id GROUP BY t.team_long_name HAVING COUNT(*) >= 100 ORDER BY avg_scored DESC LIMIT 10",
+    "technique": "home-away-union"
+  },
+  {
+    "id": "tp:sc-wld-1",
+    "db": "soccer",
+    "question": "How many home wins did each league have? Top 5 leagues.",
+    "sql": "SELECT l.name AS league, SUM(CASE WHEN m.home_team_goal > m.away_team_goal THEN 1 ELSE 0 END) AS home_wins FROM \"Match\" m JOIN \"League\" l ON l.id = m.league_id GROUP BY l.name ORDER BY home_wins DESC LIMIT 5",
+    "technique": "case-wld-counting"
+  },
+  {
+    "id": "tp:sc-wld-2",
+    "db": "soccer",
+    "question": "How many matches ended in a draw in each season?",
+    "sql": "SELECT season, SUM(CASE WHEN home_team_goal = away_team_goal THEN 1 ELSE 0 END) AS draws FROM \"Match\" GROUP BY season ORDER BY season",
+    "technique": "case-wld-counting"
+  },
+  {
+    "id": "tp:sc-wld-3",
+    "db": "soccer",
+    "question": "How many wins, losses and draws does Arsenal have overall?",
+    "sql": "SELECT SUM(CASE WHEN (m.home_team_api_id = t.team_api_id AND m.home_team_goal > m.away_team_goal)       OR (m.away_team_api_id = t.team_api_id AND m.away_team_goal > m.home_team_goal)      THEN 1 ELSE 0 END) AS wins, SUM(CASE WHEN (m.home_team_api_id = t.team_api_id AND m.home_team_goal < m.away_team_goal)       OR (m.away_team_api_id = t.team_api_id AND m.away_team_goal < m.home_team_goal)      THEN 1 ELSE 0 END) AS losses, SUM(CASE WHEN m.home_team_goal = m.away_team_goal THEN 1 ELSE 0 END) AS draws FROM \"Match\" m JOIN \"Team\" t ON t.team_api_id IN (m.home_team_api_id, m.away_team_api_id) WHERE t.team_long_name = 'Arsenal'",
+    "technique": "case-wld-counting"
+  },
+  {
+    "id": "tp:sc-anti-1",
+    "db": "soccer",
+    "question": "Which teams never played a home match?",
+    "sql": "SELECT t.team_long_name FROM \"Team\" t WHERE NOT EXISTS (SELECT 1 FROM \"Match\" m WHERE m.home_team_api_id = t.team_api_id) ORDER BY t.team_long_name",
+    "technique": "anti-join"
+  },
+  {
+    "id": "tp:sc-anti-2",
+    "db": "soccer",
+    "question": "Which teams have no entries in the team attributes table?",
+    "sql": "SELECT t.team_long_name FROM \"Team\" t WHERE NOT EXISTS (SELECT 1 FROM \"Team_Attributes\" ta WHERE ta.team_api_id = t.team_api_id) ORDER BY t.team_long_name",
+    "technique": "anti-join"
+  },
+  {
+    "id": "tp:sc-anti-3",
+    "db": "soccer",
+    "question": "Which leagues had no matches in the 2015/2016 season?",
+    "sql": "SELECT l.name AS league FROM \"League\" l WHERE NOT EXISTS (SELECT 1 FROM \"Match\" m WHERE m.league_id = l.id AND m.season = '2015/2016') ORDER BY l.name",
+    "technique": "anti-join"
+  }
+]

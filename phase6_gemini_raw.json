@@ -1,0 +1,3485 @@
+{
+ "A|ml#1": {
+  "config": "A",
+  "id": "ml#1",
+  "db": "movielens",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT COUNT(*) FROM movies",
+  "n_rows": 1,
+  "rows": [
+   [
+    "9742"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 5.2
+ },
+ "C|ml#1": {
+  "config": "C",
+  "id": "ml#1",
+  "db": "movielens",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT COUNT(*) AS n_movies FROM movies",
+  "n_rows": 1,
+  "rows": [
+   [
+    "9742"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-agg-1",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ml-unn-1",
+    "technique": "unnest-multivalue"
+   },
+   {
+    "id": "tp:ml-yr-1",
+    "technique": "year-from-title"
+   }
+  ],
+  "elapsed_s": 3.0
+ },
+ "A|ml#2": {
+  "config": "A",
+  "id": "ml#2",
+  "db": "movielens",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT COUNT(*) FROM ratings",
+  "n_rows": 1,
+  "rows": [
+   [
+    "100836"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 2.7
+ },
+ "C|ml#2": {
+  "config": "C",
+  "id": "ml#2",
+  "db": "movielens",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT COUNT(*) FROM ratings",
+  "n_rows": 1,
+  "rows": [
+   [
+    "100836"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-agg-1",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ml-epo-2",
+    "technique": "epoch-bucketing"
+   },
+   {
+    "id": "tp:ml-unn-2",
+    "technique": "unnest-multivalue"
+   }
+  ],
+  "elapsed_s": 3.4
+ },
+ "A|ml#3": {
+  "config": "A",
+  "id": "ml#3",
+  "db": "movielens",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT AVG(rating) FROM ratings",
+  "n_rows": 1,
+  "rows": [
+   [
+    "3.501556983616962"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.5
+ },
+ "C|ml#3": {
+  "config": "C",
+  "id": "ml#3",
+  "db": "movielens",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT AVG(rating) AS overall_avg_rating FROM ratings",
+  "n_rows": 1,
+  "rows": [
+   [
+    "3.501556983616962"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-grp-2",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:ml-agg-2",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ml-epo-3",
+    "technique": "epoch-bucketing"
+   }
+  ],
+  "elapsed_s": 3.4
+ },
+ "A|ml#4": {
+  "config": "A",
+  "id": "ml#4",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT movies.title, COUNT(ratings.movieid) AS rating_count\nFROM movies\nJOIN ratings ON movies.movieid = ratings.movieid\nGROUP BY movies.movieid, movies.title\nORDER BY rating_count DESC\nLIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "Forrest Gump (1994)",
+    "329"
+   ],
+   [
+    "Shawshank Redemption, The (1994)",
+    "317"
+   ],
+   [
+    "Pulp Fiction (1994)",
+    "307"
+   ],
+   [
+    "Silence of the Lambs, The (1991)",
+    "279"
+   ],
+   [
+    "Matrix, The (1999)",
+    "278"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.7
+ },
+ "C|ml#4": {
+  "config": "C",
+  "id": "ml#4",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT m.title, COUNT(*) AS n_ratings FROM ratings r JOIN movies m ON m.movieid = r.movieid GROUP BY m.movieid, m.title ORDER BY n_ratings DESC LIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "Forrest Gump (1994)",
+    "329"
+   ],
+   [
+    "Shawshank Redemption, The (1994)",
+    "317"
+   ],
+   [
+    "Pulp Fiction (1994)",
+    "307"
+   ],
+   [
+    "Silence of the Lambs, The (1991)",
+    "279"
+   ],
+   [
+    "Matrix, The (1999)",
+    "278"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-grp-1",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:ml-arg-2",
+    "technique": "argmax-top1"
+   },
+   {
+    "id": "tp:ml-epo-2",
+    "technique": "epoch-bucketing"
+   }
+  ],
+  "elapsed_s": 3.5
+ },
+ "A|ml#5": {
+  "config": "A",
+  "id": "ml#5",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT m.title, AVG(r.rating) AS avg_rating\nFROM movies m\nJOIN ratings r ON m.movieid = r.movieid\nGROUP BY m.movieid, m.title\nHAVING COUNT(r.rating) >= 50\nORDER BY avg_rating DESC\nLIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "Shawshank Redemption, The (1994)",
+    "4.429022082018927"
+   ],
+   [
+    "Godfather, The (1972)",
+    "4.2890625"
+   ],
+   [
+    "Fight Club (1999)",
+    "4.272935779816514"
+   ],
+   [
+    "Cool Hand Luke (1967)",
+    "4.271929824561403"
+   ],
+   [
+    "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb (1964)",
+    "4.268041237113402"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.6
+ },
+ "C|ml#5": {
+  "config": "C",
+  "id": "ml#5",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT m.title, AVG(r.rating) AS avg_rating\nFROM movies m\nJOIN ratings r ON m.movieid = r.movieid\nGROUP BY m.movieid, m.title\nHAVING COUNT(r.rating) >= 50\nORDER BY avg_rating DESC\nLIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "Shawshank Redemption, The (1994)",
+    "4.429022082018927"
+   ],
+   [
+    "Godfather, The (1972)",
+    "4.2890625"
+   ],
+   [
+    "Fight Club (1999)",
+    "4.272935779816514"
+   ],
+   [
+    "Cool Hand Luke (1967)",
+    "4.271929824561403"
+   ],
+   [
+    "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb (1964)",
+    "4.268041237113402"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-arg-3",
+    "technique": "argmax-top1"
+   },
+   {
+    "id": "tp:ml-win-2",
+    "technique": "window-top1-per-group"
+   },
+   {
+    "id": "tp:ml-hav-1",
+    "technique": "having-min-count"
+   }
+  ],
+  "elapsed_s": 3.3
+ },
+ "A|ml#6": {
+  "config": "A",
+  "id": "ml#6",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT unnest(string_to_array(genres, '|')) AS genre, count(*) AS movie_count\nFROM movies\nGROUP BY genre\nORDER BY movie_count DESC\nLIMIT 100",
+  "n_rows": 20,
+  "rows": [
+   [
+    "Drama",
+    "4361"
+   ],
+   [
+    "Comedy",
+    "3756"
+   ],
+   [
+    "Thriller",
+    "1894"
+   ],
+   [
+    "Action",
+    "1828"
+   ],
+   [
+    "Romance",
+    "1596"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.6
+ },
+ "C|ml#6": {
+  "config": "C",
+  "id": "ml#6",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT g AS genre, COUNT(DISTINCT movieid) AS n_movies FROM movies, unnest(string_to_array(genres, '|')) AS g GROUP BY g ORDER BY n_movies DESC LIMIT 50",
+  "n_rows": 20,
+  "rows": [
+   [
+    "Drama",
+    "4361"
+   ],
+   [
+    "Comedy",
+    "3756"
+   ],
+   [
+    "Thriller",
+    "1894"
+   ],
+   [
+    "Action",
+    "1828"
+   ],
+   [
+    "Romance",
+    "1596"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-agg-1",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ml-unn-2",
+    "technique": "unnest-multivalue"
+   },
+   {
+    "id": "tp:ml-unn-3",
+    "technique": "unnest-multivalue"
+   }
+  ],
+  "elapsed_s": 3.9
+ },
+ "A|ml#7": {
+  "config": "A",
+  "id": "ml#7",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "same row count, 1 rows differ",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT userid FROM ratings GROUP BY userid ORDER BY COUNT(*) DESC LIMIT 1",
+  "n_rows": 1,
+  "rows": [
+   [
+    "414"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.2
+ },
+ "C|ml#7": {
+  "config": "C",
+  "id": "ml#7",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT userid, COUNT(*) AS n_ratings FROM ratings GROUP BY userid ORDER BY n_ratings DESC LIMIT 1",
+  "n_rows": 1,
+  "rows": [
+   [
+    "414",
+    "2698"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-arg-1",
+    "technique": "argmax-top1"
+   },
+   {
+    "id": "tp:ml-arg-2",
+    "technique": "argmax-top1"
+   },
+   {
+    "id": "tp:ml-grp-1",
+    "technique": "per-group-aggregate"
+   }
+  ],
+  "elapsed_s": 3.5
+ },
+ "A|ml#8": {
+  "config": "A",
+  "id": "ml#8",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT unnest(string_to_array(m.genres, '|')) AS genre, AVG(r.rating) AS avg_rating\nFROM movies m\nJOIN ratings r ON m.movieid = r.movieid\nGROUP BY genre\nORDER BY avg_rating DESC\nLIMIT 100",
+  "n_rows": 20,
+  "rows": [
+   [
+    "Film-Noir",
+    "3.920114942528736"
+   ],
+   [
+    "War",
+    "3.8082938876312"
+   ],
+   [
+    "Documentary",
+    "3.797785069729286"
+   ],
+   [
+    "Crime",
+    "3.658293867274144"
+   ],
+   [
+    "Drama",
+    "3.6561844113718758"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 4.5
+ },
+ "C|ml#8": {
+  "config": "C",
+  "id": "ml#8",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT \n    unnest(string_to_array(m.genres, '|')) AS genre, \n    AVG(r.rating) AS avg_rating \nFROM movies m \nJOIN ratings r ON m.movieid = r.movieid \nGROUP BY genre \nORDER BY avg_rating DESC \nLIMIT 100",
+  "n_rows": 20,
+  "rows": [
+   [
+    "Film-Noir",
+    "3.920114942528736"
+   ],
+   [
+    "War",
+    "3.8082938876312"
+   ],
+   [
+    "Documentary",
+    "3.797785069729286"
+   ],
+   [
+    "Crime",
+    "3.658293867274144"
+   ],
+   [
+    "Drama",
+    "3.6561844113718758"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-grp-2",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:ml-agg-2",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ml-epo-3",
+    "technique": "epoch-bucketing"
+   }
+  ],
+  "elapsed_s": 5.1
+ },
+ "A|ml#9": {
+  "config": "A",
+  "id": "ml#9",
+  "db": "movielens",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "row count 100 != gold 106",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT \n    SUBSTRING(m.title FROM '\\((\\d{4})\\)') AS release_year,\n    AVG(r.rating) AS avg_rating\nFROM movies m\nJOIN ratings r ON m.movieid = r.movieid\nWHERE SUBSTRING(m.title FROM '\\((\\d{4})\\)') IS NOT NULL\nGROUP BY release_year\nORDER BY release_year\nLIMIT 100",
+  "n_rows": 100,
+  "rows": [
+   [
+    "1902",
+    "3.5"
+   ],
+   [
+    "1903",
+    "2.5"
+   ],
+   [
+    "1908",
+    "4.0"
+   ],
+   [
+    "1915",
+    "2.0"
+   ],
+   [
+    "1916",
+    "3.6"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 6.4,
+  "limit_adjusted": {
+   "stripped_limit": 100,
+   "sql": "SELECT \n    SUBSTRING(m.title FROM '\\((\\d{4})\\)') AS release_year,\n    AVG(r.rating) AS avg_rating\nFROM movies m\nJOIN ratings r ON m.movieid = r.movieid\nWHERE SUBSTRING(m.title FROM '\\((\\d{4})\\)') IS NOT NULL\nGROUP BY release_year\nORDER BY release_year",
+   "category": "correct",
+   "n_rows": 106
+  }
+ },
+ "C|ml#9": {
+  "config": "C",
+  "id": "ml#9",
+  "db": "movielens",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "row count 100 != gold 106",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT substring(m.title FROM '\\((\\d{4})\\)\\s*$')::int AS release_year, AVG(r.rating) AS avg_rating FROM ratings r JOIN movies m ON m.movieid = r.movieid WHERE substring(m.title FROM '\\((\\d{4})\\)\\s*$') IS NOT NULL GROUP BY release_year ORDER BY release_year ASC LIMIT 100",
+  "n_rows": 100,
+  "rows": [
+   [
+    "1902",
+    "3.5"
+   ],
+   [
+    "1903",
+    "2.5"
+   ],
+   [
+    "1908",
+    "4.0"
+   ],
+   [
+    "1915",
+    "2.0"
+   ],
+   [
+    "1916",
+    "3.6"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-grp-2",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:ml-agg-2",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ml-yr-2",
+    "technique": "year-from-title"
+   }
+  ],
+  "elapsed_s": 3.3,
+  "limit_adjusted": {
+   "stripped_limit": 100,
+   "sql": "SELECT substring(m.title FROM '\\((\\d{4})\\)\\s*$')::int AS release_year, AVG(r.rating) AS avg_rating FROM ratings r JOIN movies m ON m.movieid = r.movieid WHERE substring(m.title FROM '\\((\\d{4})\\)\\s*$') IS NOT NULL GROUP BY release_year ORDER BY release_year ASC",
+   "category": "correct",
+   "n_rows": 106
+  }
+ },
+ "A|ml#10": {
+  "config": "A",
+  "id": "ml#10",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "same row count, 6 rows differ",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT tag, COUNT(*) AS count\nFROM tags\nGROUP BY tag\nORDER BY count DESC\nLIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "In Netflix queue",
+    "131"
+   ],
+   [
+    "atmospheric",
+    "36"
+   ],
+   [
+    "superhero",
+    "24"
+   ],
+   [
+    "thought-provoking",
+    "24"
+   ],
+   [
+    "funny",
+    "23"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.6
+ },
+ "C|ml#10": {
+  "config": "C",
+  "id": "ml#10",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "same row count, 6 rows differ",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT tag, COUNT(*) AS frequency FROM tags GROUP BY tag ORDER BY frequency DESC LIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "In Netflix queue",
+    "131"
+   ],
+   [
+    "atmospheric",
+    "36"
+   ],
+   [
+    "superhero",
+    "24"
+   ],
+   [
+    "thought-provoking",
+    "24"
+   ],
+   [
+    "funny",
+    "23"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-grp-1",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:ml-arg-2",
+    "technique": "argmax-top1"
+   },
+   {
+    "id": "tp:ml-agg-1",
+    "technique": "simple-aggregate"
+   }
+  ],
+  "elapsed_s": 3.2
+ },
+ "A|ml#11": {
+  "config": "A",
+  "id": "ml#11",
+  "db": "movielens",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "row count 100 != gold 1007",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT m.title\nFROM movies m\nJOIN ratings r ON m.movieid = r.movieid\nGROUP BY m.movieid, m.title\nHAVING AVG(r.rating) > 4 AND COUNT(r.rating) < 10\nLIMIT 100",
+  "n_rows": 100,
+  "rows": [
+   [
+    "Cry, the Beloved Country (1995)"
+   ],
+   [
+    "Lamerica (1994)"
+   ],
+   [
+    "Heidi Fleiss: Hollywood Madam (1995)"
+   ],
+   [
+    "Chungking Express (Chung Hing sam lam) (1994)"
+   ],
+   [
+    "Awfully Big Adventure, An (1995)"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.6,
+  "limit_adjusted": {
+   "stripped_limit": 100,
+   "sql": "SELECT m.title\nFROM movies m\nJOIN ratings r ON m.movieid = r.movieid\nGROUP BY m.movieid, m.title\nHAVING AVG(r.rating) > 4 AND COUNT(r.rating) < 10",
+   "category": "silent",
+   "n_rows": 1007
+  }
+ },
+ "C|ml#11": {
+  "config": "C",
+  "id": "ml#11",
+  "db": "movielens",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "row count 100 != gold 1007",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT m.title, AVG(r.rating) AS avg_rating, COUNT(*) AS n_ratings FROM movies m JOIN ratings r ON m.movieid = r.movieid GROUP BY m.movieid, m.title HAVING AVG(r.rating) > 4 AND COUNT(*) < 10 ORDER BY avg_rating DESC LIMIT 100",
+  "n_rows": 100,
+  "rows": [
+   [
+    "Tenchi Muy\u00f4! In Love (1996)",
+    "5.0",
+    "1"
+   ],
+   [
+    "Empties (2007)",
+    "5.0",
+    "1"
+   ],
+   [
+    "Big Top Scooby-Doo! (2012)",
+    "5.0",
+    "1"
+   ],
+   [
+    "Wow! A Talking Fish! (1983)",
+    "5.0",
+    "1"
+   ],
+   [
+    "Calcium Kid, The (2004)",
+    "5.0",
+    "1"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-hav-1",
+    "technique": "having-min-count"
+   },
+   {
+    "id": "tp:ml-hav-2",
+    "technique": "having-min-count"
+   },
+   {
+    "id": "tp:ml-grp-1",
+    "technique": "per-group-aggregate"
+   }
+  ],
+  "elapsed_s": 3.9,
+  "limit_adjusted": {
+   "stripped_limit": 100,
+   "sql": "SELECT m.title, AVG(r.rating) AS avg_rating, COUNT(*) AS n_ratings FROM movies m JOIN ratings r ON m.movieid = r.movieid GROUP BY m.movieid, m.title HAVING AVG(r.rating) > 4 AND COUNT(*) < 10 ORDER BY avg_rating DESC",
+   "category": "correct",
+   "n_rows": 1007
+  }
+ },
+ "A|ml#12": {
+  "config": "A",
+  "id": "ml#12",
+  "db": "movielens",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "WITH movie_ratings AS (\n    SELECT \n        m.movieid,\n        m.title,\n        m.genres,\n        AVG(r.rating) AS avg_rating\n    FROM movies m\n    JOIN ratings r ON m.movieid = r.movieid\n    GROUP BY m.movieid, m.title, m.genres\n    HAVING COUNT(r.rating) >= 20\n),\nmovie_genres AS (\n    SELECT \n        movieid,\n        title,\n        avg_rating,\n        unnest(string_to_array(genres, '|')) AS genre\n    FROM movie_ratings\n),\nranked_movies AS (\n    SELECT \n        genre,\n        title,\n        avg_rating,\n        ROW_NUMBER() OVER (PARTITION BY genre ORDER BY avg_rating DESC) AS rn\n    FROM movie_genres\n)\nSELECT genre, title, avg_rating\nFROM ranked_movies\nWHERE rn = 1\nLIMIT 100",
+  "n_rows": 19,
+  "rows": [
+   [
+    "Action",
+    "Logan (2017)",
+    "4.28"
+   ],
+   [
+    "Adventure",
+    "Lawrence of Arabia (1962)",
+    "4.3"
+   ],
+   [
+    "Animation",
+    "Spirited Away (Sen to Chihiro no kamikakushi) (2001)",
+    "4.155172413793103"
+   ],
+   [
+    "Children",
+    "Toy Story 3 (2010)",
+    "4.109090909090909"
+   ],
+   [
+    "Comedy",
+    "Philadelphia Story, The (1940)",
+    "4.310344827586207"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 6.0
+ },
+ "C|ml#12": {
+  "config": "C",
+  "id": "ml#12",
+  "db": "movielens",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "WITH movie_stats AS (\n    SELECT \n        m.movieid,\n        m.title,\n        AVG(r.rating) AS avg_rating,\n        COUNT(r.rating) AS rating_count\n    FROM movies m\n    JOIN ratings r ON m.movieid = r.movieid\n    GROUP BY m.movieid, m.title\n    HAVING COUNT(r.rating) >= 20\n),\ngenre_movies AS (\n    SELECT \n        unnest(string_to_array(m.genres, '|')) AS genre,\n        ms.title,\n        ms.avg_rating,\n        ROW_NUMBER() OVER (PARTITION BY unnest(string_to_array(m.genres, '|')) ORDER BY ms.avg_rating DESC) as rn\n    FROM movies m\n    JOIN movie_stats ms ON m.movieid = ms.movieid\n)\nSELECT genre, title, avg_rating\nFROM genre_movies\nWHERE rn = 1\nORDER BY genre\nLIMIT 100",
+  "n_rows": 19,
+  "rows": [
+   [
+    "Action",
+    "Logan (2017)",
+    "4.28"
+   ],
+   [
+    "Adventure",
+    "Lawrence of Arabia (1962)",
+    "4.3"
+   ],
+   [
+    "Animation",
+    "Spirited Away (Sen to Chihiro no kamikakushi) (2001)",
+    "4.155172413793103"
+   ],
+   [
+    "Children",
+    "Toy Story 3 (2010)",
+    "4.109090909090909"
+   ],
+   [
+    "Comedy",
+    "Philadelphia Story, The (1940)",
+    "4.310344827586207"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-arg-3",
+    "technique": "argmax-top1"
+   },
+   {
+    "id": "tp:ml-hav-1",
+    "technique": "having-min-count"
+   },
+   {
+    "id": "tp:ml-agg-2",
+    "technique": "simple-aggregate"
+   }
+  ],
+  "elapsed_s": 3.6
+ },
+ "A|ml#13": {
+  "config": "A",
+  "id": "ml#13",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT rating, COUNT(*) AS count\nFROM ratings\nGROUP BY rating\nORDER BY rating\nLIMIT 100",
+  "n_rows": 10,
+  "rows": [
+   [
+    "0.5",
+    "1370"
+   ],
+   [
+    "1.0",
+    "2811"
+   ],
+   [
+    "1.5",
+    "1791"
+   ],
+   [
+    "2.0",
+    "7551"
+   ],
+   [
+    "2.5",
+    "5550"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.3
+ },
+ "C|ml#13": {
+  "config": "C",
+  "id": "ml#13",
+  "db": "movielens",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT rating, COUNT(*) AS n_ratings FROM ratings GROUP BY rating ORDER BY rating",
+  "n_rows": 10,
+  "rows": [
+   [
+    "0.5",
+    "1370"
+   ],
+   [
+    "1.0",
+    "2811"
+   ],
+   [
+    "1.5",
+    "1791"
+   ],
+   [
+    "2.0",
+    "7551"
+   ],
+   [
+    "2.5",
+    "5550"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-agg-2",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ml-grp-2",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:ml-epo-3",
+    "technique": "epoch-bucketing"
+   }
+  ],
+  "elapsed_s": 18.1
+ },
+ "A|ml#14": {
+  "config": "A",
+  "id": "ml#14",
+  "db": "movielens",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT DISTINCT m.movieid, m.title\nFROM movies m\nJOIN tags t ON m.movieid = t.movieid\nLEFT JOIN ratings r ON m.movieid = r.movieid\nWHERE r.movieid IS NULL\nLIMIT 100",
+  "n_rows": 18,
+  "rows": [
+   [
+    "1076",
+    "Innocents, The (1961)"
+   ],
+   [
+    "2939",
+    "Niagara (1953)"
+   ],
+   [
+    "3338",
+    "For All Mankind (1989)"
+   ],
+   [
+    "3456",
+    "Color of Paradise, The (Rang-e khoda) (1999)"
+   ],
+   [
+    "4194",
+    "I Know Where I'm Going! (1945)"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.6
+ },
+ "C|ml#14": {
+  "config": "C",
+  "id": "ml#14",
+  "db": "movielens",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT DISTINCT m.movieid, m.title\nFROM movies m\nJOIN tags t ON m.movieid = t.movieid\nWHERE NOT EXISTS (\n    SELECT 1 FROM ratings r WHERE r.movieid = m.movieid\n)\nORDER BY m.title\nLIMIT 20",
+  "n_rows": 18,
+  "rows": [
+   [
+    "34482",
+    "Browning Version, The (1951)"
+   ],
+   [
+    "32371",
+    "Call Northside 777 (1948)"
+   ],
+   [
+    "85565",
+    "Chalet Girl (2011)"
+   ],
+   [
+    "5721",
+    "Chosen, The (1981)"
+   ],
+   [
+    "3456",
+    "Color of Paradise, The (Rang-e khoda) (1999)"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-anti-3",
+    "technique": "anti-join"
+   },
+   {
+    "id": "tp:ml-anti-2",
+    "technique": "anti-join"
+   },
+   {
+    "id": "tp:ml-anti-1",
+    "technique": "anti-join"
+   }
+  ],
+  "elapsed_s": 3.3
+ },
+ "A|ml#15": {
+  "config": "A",
+  "id": "ml#15",
+  "db": "movielens",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT EXTRACT(YEAR FROM TO_TIMESTAMP(timestamp)) AS year, COUNT(*) AS rating_count\nFROM ratings\nGROUP BY EXTRACT(YEAR FROM TO_TIMESTAMP(timestamp))\nORDER BY year\nLIMIT 100",
+  "n_rows": 23,
+  "rows": [
+   [
+    "1996",
+    "6040"
+   ],
+   [
+    "1997",
+    "1916"
+   ],
+   [
+    "1998",
+    "507"
+   ],
+   [
+    "1999",
+    "2439"
+   ],
+   [
+    "2000",
+    "10061"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.4
+ },
+ "C|ml#15": {
+  "config": "C",
+  "id": "ml#15",
+  "db": "movielens",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT EXTRACT(YEAR FROM to_timestamp(timestamp)) AS year, COUNT(*) AS n_ratings FROM ratings GROUP BY year ORDER BY year",
+  "n_rows": 23,
+  "rows": [
+   [
+    "1996",
+    "6040"
+   ],
+   [
+    "1997",
+    "1916"
+   ],
+   [
+    "1998",
+    "507"
+   ],
+   [
+    "1999",
+    "2439"
+   ],
+   [
+    "2000",
+    "10061"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ml-epo-1",
+    "technique": "epoch-bucketing"
+   },
+   {
+    "id": "tp:ml-yr-3",
+    "technique": "year-from-title"
+   },
+   {
+    "id": "tp:ml-yr-1",
+    "technique": "year-from-title"
+   }
+  ],
+  "elapsed_s": 4.8
+ },
+ "A|ol#1": {
+  "config": "A",
+  "id": "ol#1",
+  "db": "olist",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT COUNT(*) FROM orders",
+  "n_rows": 1,
+  "rows": [
+   [
+    "99441"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.7
+ },
+ "C|ol#1": {
+  "config": "C",
+  "id": "ol#1",
+  "db": "olist",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT COUNT(*) AS n_orders FROM orders",
+  "n_rows": 1,
+  "rows": [
+   [
+    "99441"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-agg-1",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ol-agg-3",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ol-mon-3",
+    "technique": "monthly-bucketing"
+   }
+  ],
+  "elapsed_s": 3.3
+ },
+ "A|ol#2": {
+  "config": "A",
+  "id": "ol#2",
+  "db": "olist",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "same row count, 1 rows differ",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT SUM(payment_value) FROM order_payments",
+  "n_rows": 1,
+  "rows": [
+   [
+    "16008872.119998764"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 12.4
+ },
+ "C|ol#2": {
+  "config": "C",
+  "id": "ol#2",
+  "db": "olist",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT SUM(price) AS total_revenue FROM order_items",
+  "n_rows": 1,
+  "rows": [
+   [
+    "13591643.70001419"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-nest-1",
+    "technique": "nested-aggregate"
+   },
+   {
+    "id": "tp:ol-agg-2",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ol-rev-3",
+    "technique": "revenue-topn"
+   }
+  ],
+  "elapsed_s": 3.3
+ },
+ "A|ol#3": {
+  "config": "A",
+  "id": "ol#3",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT pcnt.product_category_name_english, SUM(oi.price) AS total_revenue\nFROM order_items oi\nJOIN products p ON oi.product_id = p.product_id\nJOIN product_category_name_translation pcnt ON p.product_category_name = pcnt.product_category_name\nGROUP BY pcnt.product_category_name_english\nORDER BY total_revenue DESC\nLIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "health_beauty",
+    "1258681.3399999682"
+   ],
+   [
+    "watches_gifts",
+    "1205005.6799999995"
+   ],
+   [
+    "bed_bath_table",
+    "1036988.6800000712"
+   ],
+   [
+    "sports_leisure",
+    "988048.9700000401"
+   ],
+   [
+    "computers_accessories",
+    "911954.3200000388"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.4
+ },
+ "C|ol#3": {
+  "config": "C",
+  "id": "ol#3",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT t.product_category_name_english, SUM(oi.price) AS total_revenue\nFROM order_items oi\nJOIN products p ON oi.product_id = p.product_id\nJOIN product_category_name_translation t ON p.product_category_name = t.product_category_name\nGROUP BY t.product_category_name_english\nORDER BY total_revenue DESC\nLIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "health_beauty",
+    "1258681.3399999682"
+   ],
+   [
+    "watches_gifts",
+    "1205005.6799999995"
+   ],
+   [
+    "bed_bath_table",
+    "1036988.6800000712"
+   ],
+   [
+    "sports_leisure",
+    "988048.9700000401"
+   ],
+   [
+    "computers_accessories",
+    "911954.3200000388"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-grp-2",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:ol-hav-1",
+    "technique": "having-min-count"
+   },
+   {
+    "id": "tp:ol-rev-1",
+    "technique": "revenue-topn"
+   }
+  ],
+  "elapsed_s": 2.9
+ },
+ "A|ol#4": {
+  "config": "A",
+  "id": "ol#4",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT order_status, COUNT(*) AS order_count\nFROM orders\nGROUP BY order_status\nORDER BY order_count DESC\nLIMIT 100",
+  "n_rows": 8,
+  "rows": [
+   [
+    "delivered",
+    "96478"
+   ],
+   [
+    "shipped",
+    "1107"
+   ],
+   [
+    "canceled",
+    "625"
+   ],
+   [
+    "unavailable",
+    "609"
+   ],
+   [
+    "invoiced",
+    "314"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.4
+ },
+ "C|ol#4": {
+  "config": "C",
+  "id": "ol#4",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT order_status, COUNT(*) AS order_count FROM orders GROUP BY order_status ORDER BY order_count DESC LIMIT 100",
+  "n_rows": 8,
+  "rows": [
+   [
+    "delivered",
+    "96478"
+   ],
+   [
+    "shipped",
+    "1107"
+   ],
+   [
+    "canceled",
+    "625"
+   ],
+   [
+    "unavailable",
+    "609"
+   ],
+   [
+    "invoiced",
+    "314"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-agg-3",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ol-agg-1",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ol-nest-1",
+    "technique": "nested-aggregate"
+   }
+  ],
+  "elapsed_s": 2.5
+ },
+ "A|ol#5": {
+  "config": "A",
+  "id": "ol#5",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT \n    t.product_category_name_english,\n    AVG(r.review_score) AS average_review_score\nFROM order_reviews r\nJOIN order_items oi ON r.order_id = oi.order_id\nJOIN products p ON oi.product_id = p.product_id\nJOIN product_category_name_translation t ON p.product_category_name = t.product_category_name\nGROUP BY t.product_category_name_english\nLIMIT 100",
+  "n_rows": 73,
+  "rows": [
+   [
+    "agro_industry_and_commerce",
+    "4.0000000000000000"
+   ],
+   [
+    "air_conditioning",
+    "3.9691780821917808"
+   ],
+   [
+    "art",
+    "3.9371980676328502"
+   ],
+   [
+    "arts_and_craftmanship",
+    "4.1250000000000000"
+   ],
+   [
+    "audio",
+    "3.8254847645429363"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 4.1
+ },
+ "C|ol#5": {
+  "config": "C",
+  "id": "ol#5",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT t.product_category_name_english, AVG(rv.review_score) AS avg_review_score FROM order_reviews rv JOIN order_items oi ON oi.order_id = rv.order_id JOIN products p ON p.product_id = oi.product_id JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name GROUP BY t.product_category_name_english ORDER BY avg_review_score DESC",
+  "n_rows": 73,
+  "rows": [
+   [
+    "cds_dvds_musicals",
+    "4.6428571428571429"
+   ],
+   [
+    "fashion_childrens_clothes",
+    "4.5000000000000000"
+   ],
+   [
+    "books_general_interest",
+    "4.4462659380692168"
+   ],
+   [
+    "costruction_tools_tools",
+    "4.4444444444444444"
+   ],
+   [
+    "flowers",
+    "4.4193548387096774"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-grp-2",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:ol-grp-1",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:ol-nest-1",
+    "technique": "nested-aggregate"
+   }
+  ],
+  "elapsed_s": 22.5
+ },
+ "A|ol#6": {
+  "config": "A",
+  "id": "ol#6",
+  "db": "olist",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT AVG(EXTRACT(EPOCH FROM (order_delivered_customer_date - order_purchase_timestamp)) / 86400.0) AS avg_delivery_time_days\nFROM orders\nWHERE order_status = 'delivered'\n  AND order_delivered_customer_date IS NOT NULL",
+  "n_rows": 1,
+  "rows": [
+   [
+    "12.55821709805197547514"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 4.7
+ },
+ "C|ol#6": {
+  "config": "C",
+  "id": "ol#6",
+  "db": "olist",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT AVG(EXTRACT(EPOCH FROM (order_delivered_customer_date - order_purchase_timestamp)) / 86400.0) AS avg_delivery_days FROM orders WHERE order_status = 'delivered' AND order_delivered_customer_date IS NOT NULL",
+  "n_rows": 1,
+  "rows": [
+   [
+    "12.55821709805197547514"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-pct-3",
+    "technique": "conditional-percentage"
+   },
+   {
+    "id": "tp:ol-dd-1",
+    "technique": "date-diff-days"
+   },
+   {
+    "id": "tp:ol-dd-3",
+    "technique": "date-diff-days"
+   }
+  ],
+  "elapsed_s": 3.4
+ },
+ "A|ol#7": {
+  "config": "A",
+  "id": "ol#7",
+  "db": "olist",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "same row count, 1 rows differ",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT \n    100.0 * COUNT(CASE WHEN order_delivered_customer_date > order_estimated_delivery_date THEN 1 END) / COUNT(*)\nFROM orders",
+  "n_rows": 1,
+  "rows": [
+   [
+    "7.8709988837602196"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 15.6
+ },
+ "C|ol#7": {
+  "config": "C",
+  "id": "ol#7",
+  "db": "olist",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "same row count, 1 rows differ",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT 100.0 * COUNT(CASE WHEN order_delivered_customer_date > order_estimated_delivery_date THEN 1 END) / COUNT(*) AS pct_late FROM orders",
+  "n_rows": 1,
+  "rows": [
+   [
+    "7.8709988837602196"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-pct-3",
+    "technique": "conditional-percentage"
+   },
+   {
+    "id": "tp:ol-pct-1",
+    "technique": "conditional-percentage"
+   },
+   {
+    "id": "tp:ol-pct-2",
+    "technique": "conditional-percentage"
+   }
+  ],
+  "elapsed_s": 22.0
+ },
+ "A|ol#8": {
+  "config": "A",
+  "id": "ol#8",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT payment_type, COUNT(*) AS payment_count\nFROM order_payments\nGROUP BY payment_type\nORDER BY payment_count DESC\nLIMIT 10",
+  "n_rows": 5,
+  "rows": [
+   [
+    "credit_card",
+    "76795"
+   ],
+   [
+    "boleto",
+    "19784"
+   ],
+   [
+    "voucher",
+    "5775"
+   ],
+   [
+    "debit_card",
+    "1529"
+   ],
+   [
+    "not_defined",
+    "3"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.0
+ },
+ "C|ol#8": {
+  "config": "C",
+  "id": "ol#8",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT payment_type, COUNT(*) AS n FROM order_payments GROUP BY payment_type ORDER BY n DESC",
+  "n_rows": 5,
+  "rows": [
+   [
+    "credit_card",
+    "76795"
+   ],
+   [
+    "boleto",
+    "19784"
+   ],
+   [
+    "voucher",
+    "5775"
+   ],
+   [
+    "debit_card",
+    "1529"
+   ],
+   [
+    "not_defined",
+    "3"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-dist-2",
+    "technique": "distribution-counts"
+   },
+   {
+    "id": "tp:ol-nest-3",
+    "technique": "nested-aggregate"
+   },
+   {
+    "id": "tp:ol-nest-2",
+    "technique": "nested-aggregate"
+   }
+  ],
+  "elapsed_s": 10.4
+ },
+ "A|ol#9": {
+  "config": "A",
+  "id": "ol#9",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT seller_id, SUM(price) AS total_revenue\nFROM order_items\nGROUP BY seller_id\nORDER BY total_revenue DESC\nLIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "4869f7a5dfa277a7dca6462dcf3b52b2",
+    "229472.6299999981"
+   ],
+   [
+    "53243585a1d6dc2643021fd1853d8905",
+    "222776.04999999952"
+   ],
+   [
+    "4a3ca9315b744ce9f8e9374361493884",
+    "200472.9199999949"
+   ],
+   [
+    "fa1c13f2614d7b5c4749cbc52fecda94",
+    "194042.02999999846"
+   ],
+   [
+    "7c67e1448b00f6e969d365cea6b010ab",
+    "187923.8899999995"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 4.3
+ },
+ "C|ol#9": {
+  "config": "C",
+  "id": "ol#9",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT seller_id, SUM(price) AS total_revenue FROM order_items GROUP BY seller_id ORDER BY total_revenue DESC LIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "4869f7a5dfa277a7dca6462dcf3b52b2",
+    "229472.6299999981"
+   ],
+   [
+    "53243585a1d6dc2643021fd1853d8905",
+    "222776.04999999952"
+   ],
+   [
+    "4a3ca9315b744ce9f8e9374361493884",
+    "200472.9199999949"
+   ],
+   [
+    "fa1c13f2614d7b5c4749cbc52fecda94",
+    "194042.02999999846"
+   ],
+   [
+    "7c67e1448b00f6e969d365cea6b010ab",
+    "187923.8899999995"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-agg-1",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ol-nest-1",
+    "technique": "nested-aggregate"
+   },
+   {
+    "id": "tp:ol-grp-2",
+    "technique": "per-group-aggregate"
+   }
+  ],
+  "elapsed_s": 3.8
+ },
+ "A|ol#10": {
+  "config": "A",
+  "id": "ol#10",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT customers.customer_state, COUNT(orders.order_id) AS order_count\nFROM orders\nJOIN customers ON orders.customer_id = customers.customer_id\nGROUP BY customers.customer_state\nORDER BY order_count DESC\nLIMIT 100",
+  "n_rows": 27,
+  "rows": [
+   [
+    "SP",
+    "41746"
+   ],
+   [
+    "RJ",
+    "12852"
+   ],
+   [
+    "MG",
+    "11635"
+   ],
+   [
+    "RS",
+    "5466"
+   ],
+   [
+    "PR",
+    "5045"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 4.0
+ },
+ "C|ol#10": {
+  "config": "C",
+  "id": "ol#10",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT customer_state, COUNT(*) AS n_orders FROM orders JOIN customers ON orders.customer_id = customers.customer_id GROUP BY customer_state ORDER BY n_orders DESC",
+  "n_rows": 27,
+  "rows": [
+   [
+    "SP",
+    "41746"
+   ],
+   [
+    "RJ",
+    "12852"
+   ],
+   [
+    "MG",
+    "11635"
+   ],
+   [
+    "RS",
+    "5466"
+   ],
+   [
+    "PR",
+    "5045"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-agg-3",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ol-agg-1",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ol-mon-3",
+    "technique": "monthly-bucketing"
+   }
+  ],
+  "elapsed_s": 14.5
+ },
+ "A|ol#11": {
+  "config": "A",
+  "id": "ol#11",
+  "db": "olist",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT DATE_TRUNC('month', order_purchase_timestamp) AS order_month, COUNT(order_id) AS total_orders\nFROM orders\nGROUP BY DATE_TRUNC('month', order_purchase_timestamp)\nORDER BY order_month\nLIMIT 100",
+  "n_rows": 25,
+  "rows": [
+   [
+    "2016-09-01 00:00:00",
+    "4"
+   ],
+   [
+    "2016-10-01 00:00:00",
+    "324"
+   ],
+   [
+    "2016-12-01 00:00:00",
+    "1"
+   ],
+   [
+    "2017-01-01 00:00:00",
+    "800"
+   ],
+   [
+    "2017-02-01 00:00:00",
+    "1780"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.6
+ },
+ "C|ol#11": {
+  "config": "C",
+  "id": "ol#11",
+  "db": "olist",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS month, COUNT(*) AS n_orders FROM orders GROUP BY month ORDER BY month",
+  "n_rows": 25,
+  "rows": [
+   [
+    "2016-09-01 00:00:00",
+    "4"
+   ],
+   [
+    "2016-10-01 00:00:00",
+    "324"
+   ],
+   [
+    "2016-12-01 00:00:00",
+    "1"
+   ],
+   [
+    "2017-01-01 00:00:00",
+    "800"
+   ],
+   [
+    "2017-02-01 00:00:00",
+    "1780"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-mon-3",
+    "technique": "monthly-bucketing"
+   },
+   {
+    "id": "tp:ol-mon-2",
+    "technique": "monthly-bucketing"
+   },
+   {
+    "id": "tp:ol-mon-1",
+    "technique": "monthly-bucketing"
+   }
+  ],
+  "elapsed_s": 4.5
+ },
+ "A|ol#12": {
+  "config": "A",
+  "id": "ol#12",
+  "db": "olist",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT\n    t.product_category_name_english,\n    AVG(r.review_score) AS avg_review_score\nFROM products p\nJOIN product_category_name_translation t\n    ON p.product_category_name = t.product_category_name\nJOIN order_items oi\n    ON p.product_id = oi.product_id\nJOIN order_reviews r\n    ON oi.order_id = r.order_id\nGROUP BY t.product_category_name_english\nHAVING COUNT(DISTINCT oi.order_id) >= 100\nORDER BY avg_review_score ASC\nLIMIT 1",
+  "n_rows": 1,
+  "rows": [
+   [
+    "office_furniture",
+    "3.4931831653823355"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 5.9
+ },
+ "C|ol#12": {
+  "config": "C",
+  "id": "ol#12",
+  "db": "olist",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT t.product_category_name_english, AVG(r.review_score) AS avg_review_score\nFROM order_reviews r\nJOIN order_items oi ON r.order_id = oi.order_id\nJOIN products p ON oi.product_id = p.product_id\nJOIN product_category_name_translation t ON p.product_category_name = t.product_category_name\nGROUP BY t.product_category_name_english\nHAVING COUNT(DISTINCT oi.order_id) >= 100\nORDER BY avg_review_score ASC\nLIMIT 1",
+  "n_rows": 1,
+  "rows": [
+   [
+    "office_furniture",
+    "3.4931831653823355"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-grp-2",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:ol-hav-2",
+    "technique": "having-min-count"
+   },
+   {
+    "id": "tp:ol-hav-1",
+    "technique": "having-min-count"
+   }
+  ],
+  "elapsed_s": 13.9
+ },
+ "A|ol#13": {
+  "config": "A",
+  "id": "ol#13",
+  "db": "olist",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT \n    customers.customer_state, \n    AVG(order_items.freight_value) AS avg_freight_value\nFROM customers\nJOIN orders ON customers.customer_id = orders.customer_id\nJOIN order_items ON orders.order_id = order_items.order_id\nGROUP BY customers.customer_state\nLIMIT 100",
+  "n_rows": 27,
+  "rows": [
+   [
+    "AC",
+    "40.0733695652174"
+   ],
+   [
+    "AL",
+    "35.84367117117116"
+   ],
+   [
+    "AM",
+    "33.20539393939395"
+   ],
+   [
+    "AP",
+    "34.00609756097562"
+   ],
+   [
+    "BA",
+    "26.36395893656226"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 4.5
+ },
+ "C|ol#13": {
+  "config": "C",
+  "id": "ol#13",
+  "db": "olist",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT c.customer_state, AVG(oi.freight_value) AS avg_freight_value FROM customers c JOIN orders o ON c.customer_id = o.customer_id JOIN order_items oi ON o.order_id = oi.order_id GROUP BY c.customer_state ORDER BY avg_freight_value DESC LIMIT 100",
+  "n_rows": 27,
+  "rows": [
+   [
+    "RR",
+    "42.98442307692308"
+   ],
+   [
+    "PB",
+    "42.72380398671094"
+   ],
+   [
+    "RO",
+    "41.06971223021582"
+   ],
+   [
+    "AC",
+    "40.0733695652174"
+   ],
+   [
+    "PI",
+    "39.14797047970478"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-agg-2",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:ol-grp-2",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:ol-dd-3",
+    "technique": "date-diff-days"
+   }
+  ],
+  "elapsed_s": 4.6
+ },
+ "A|ol#14": {
+  "config": "A",
+  "id": "ol#14",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT AVG(item_count)\nFROM (\n    SELECT order_id, COUNT(*) AS item_count\n    FROM order_items\n    GROUP BY order_id\n) sub",
+  "n_rows": 1,
+  "rows": [
+   [
+    "1.1417306873695093"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 5.2
+ },
+ "C|ol#14": {
+  "config": "C",
+  "id": "ol#14",
+  "db": "olist",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT AVG(item_count) AS avg_items FROM (SELECT order_id, COUNT(*) AS item_count FROM order_items GROUP BY order_id) x",
+  "n_rows": 1,
+  "rows": [
+   [
+    "1.1417306873695093"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-nest-3",
+    "technique": "nested-aggregate"
+   },
+   {
+    "id": "tp:ol-nest-1",
+    "technique": "nested-aggregate"
+   },
+   {
+    "id": "tp:ol-nest-2",
+    "technique": "nested-aggregate"
+   }
+  ],
+  "elapsed_s": 4.2
+ },
+ "A|ol#15": {
+  "config": "A",
+  "id": "ol#15",
+  "db": "olist",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT COUNT(*)\nFROM (\n    SELECT c.customer_unique_id\n    FROM customers c\n    JOIN orders o ON c.customer_id = o.customer_id\n    GROUP BY c.customer_unique_id\n    HAVING COUNT(o.order_id) > 1\n) AS repeat_customers",
+  "n_rows": 1,
+  "rows": [
+   [
+    "2997"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 4.3
+ },
+ "C|ol#15": {
+  "config": "C",
+  "id": "ol#15",
+  "db": "olist",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT COUNT(*) FROM (SELECT c.customer_unique_id FROM customers c JOIN orders o ON c.customer_id = o.customer_id GROUP BY c.customer_unique_id HAVING COUNT(o.order_id) > 1) t",
+  "n_rows": 1,
+  "rows": [
+   [
+    "2997"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:ol-rep-3",
+    "technique": "repeat-entity"
+   },
+   {
+    "id": "tp:ol-rep-2",
+    "technique": "repeat-entity"
+   },
+   {
+    "id": "tp:ol-rep-1",
+    "technique": "repeat-entity"
+   }
+  ],
+  "elapsed_s": 4.0
+ },
+ "A|sc#1": {
+  "config": "A",
+  "id": "sc#1",
+  "db": "soccer",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT COUNT(*) FROM Match",
+  "n_rows": 1,
+  "rows": [
+   [
+    "25979"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.0
+ },
+ "C|sc#1": {
+  "config": "C",
+  "id": "sc#1",
+  "db": "soccer",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT COUNT(*) AS n_matches FROM \"Match\"",
+  "n_rows": 1,
+  "rows": [
+   [
+    "25979"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-agg-2",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:sc-agg-1",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:sc-arg-3",
+    "technique": "argmax-top1"
+   }
+  ],
+  "elapsed_s": 2.6
+ },
+ "A|sc#2": {
+  "config": "A",
+  "id": "sc#2",
+  "db": "soccer",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT COUNT(*) FROM Player",
+  "n_rows": 1,
+  "rows": [
+   [
+    "11060"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 7.9
+ },
+ "C|sc#2": {
+  "config": "C",
+  "id": "sc#2",
+  "db": "soccer",
+  "difficulty": "E",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT COUNT(*) FROM Player",
+  "n_rows": 1,
+  "rows": [
+   [
+    "11060"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-agg-2",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:sc-agg-1",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:sc-grp-1",
+    "technique": "per-group-aggregate"
+   }
+  ],
+  "elapsed_s": 3.9
+ },
+ "A|sc#3": {
+  "config": "A",
+  "id": "sc#3",
+  "db": "soccer",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT League.name, COUNT(Match.id) \nFROM League \nJOIN Match ON League.id = Match.league_id \nGROUP BY League.id, League.name \nLIMIT 50",
+  "n_rows": 11,
+  "rows": [
+   [
+    "Belgium Jupiler League",
+    "1728"
+   ],
+   [
+    "England Premier League",
+    "3040"
+   ],
+   [
+    "France Ligue 1",
+    "3040"
+   ],
+   [
+    "Germany 1. Bundesliga",
+    "2448"
+   ],
+   [
+    "Italy Serie A",
+    "3017"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 10.8
+ },
+ "C|sc#3": {
+  "config": "C",
+  "id": "sc#3",
+  "db": "soccer",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT l.name AS league, COUNT(*) AS n_matches FROM \"Match\" m JOIN \"League\" l ON l.id = m.league_id GROUP BY l.name ORDER BY n_matches DESC",
+  "n_rows": 11,
+  "rows": [
+   [
+    "Spain LIGA BBVA",
+    "3040"
+   ],
+   [
+    "France Ligue 1",
+    "3040"
+   ],
+   [
+    "England Premier League",
+    "3040"
+   ],
+   [
+    "Italy Serie A",
+    "3017"
+   ],
+   [
+    "Netherlands Eredivisie",
+    "2448"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-grp-1",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:sc-grp-2",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:sc-agg-3",
+    "technique": "simple-aggregate"
+   }
+  ],
+  "elapsed_s": 2.9
+ },
+ "A|sc#4": {
+  "config": "A",
+  "id": "sc#4",
+  "db": "soccer",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "row count 10 != gold 11",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT League.name, AVG(Match.home_team_goal + Match.away_team_goal) AS avg_goals\nFROM League\nJOIN Match ON League.id = Match.league_id\nGROUP BY League.id, League.name\nLIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "Belgium Jupiler League",
+    "2.8015046296296298"
+   ],
+   [
+    "England Premier League",
+    "2.710526315789474"
+   ],
+   [
+    "France Ligue 1",
+    "2.443092105263158"
+   ],
+   [
+    "Germany 1. Bundesliga",
+    "2.9015522875816995"
+   ],
+   [
+    "Italy Serie A",
+    "2.6168379184620485"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 7.7,
+  "limit_adjusted": {
+   "stripped_limit": 10,
+   "sql": "SELECT League.name, AVG(Match.home_team_goal + Match.away_team_goal) AS avg_goals\nFROM League\nJOIN Match ON League.id = Match.league_id\nGROUP BY League.id, League.name",
+   "category": "correct",
+   "n_rows": 11
+  }
+ },
+ "C|sc#4": {
+  "config": "C",
+  "id": "sc#4",
+  "db": "soccer",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT l.name, AVG(m.home_team_goal + m.away_team_goal) AS avg_goals FROM Match m JOIN League l ON m.league_id = l.id GROUP BY l.id, l.name ORDER BY avg_goals DESC",
+  "n_rows": 11,
+  "rows": [
+   [
+    "Netherlands Eredivisie",
+    "3.0808823529411766"
+   ],
+   [
+    "Switzerland Super League",
+    "2.929676511954993"
+   ],
+   [
+    "Germany 1. Bundesliga",
+    "2.9015522875816995"
+   ],
+   [
+    "Belgium Jupiler League",
+    "2.8015046296296298"
+   ],
+   [
+    "Spain LIGA BBVA",
+    "2.767105263157895"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-grp-3",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:sc-ha-3",
+    "technique": "home-away-union"
+   },
+   {
+    "id": "tp:sc-arg-2",
+    "technique": "argmax-top1"
+   }
+  ],
+  "elapsed_s": 4.5
+ },
+ "A|sc#5": {
+  "config": "A",
+  "id": "sc#5",
+  "db": "soccer",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "same row count, 1 rows differ",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT season FROM Match GROUP BY season ORDER BY COUNT(*) DESC LIMIT 1",
+  "n_rows": 1,
+  "rows": [
+   [
+    "2015/2016"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 3.3
+ },
+ "C|sc#5": {
+  "config": "C",
+  "id": "sc#5",
+  "db": "soccer",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "same row count, 1 rows differ",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT season, COUNT(*) AS match_count FROM Match GROUP BY season ORDER BY match_count DESC LIMIT 1",
+  "n_rows": 1,
+  "rows": [
+   [
+    "2015/2016",
+    "3326"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-arg-1",
+    "technique": "argmax-top1"
+   },
+   {
+    "id": "tp:sc-arg-2",
+    "technique": "argmax-top1"
+   },
+   {
+    "id": "tp:sc-anti-3",
+    "technique": "anti-join"
+   }
+  ],
+  "elapsed_s": 3.5
+ },
+ "A|sc#6": {
+  "config": "A",
+  "id": "sc#6",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT t.team_long_name, SUM(g.goals) AS total_goals\nFROM (\n    SELECT home_team_api_id AS team_api_id, home_team_goal AS goals FROM Match\n    UNION ALL\n    SELECT away_team_api_id AS team_api_id, away_team_goal AS goals FROM Match\n) g\nJOIN Team t ON g.team_api_id = t.team_api_id\nGROUP BY t.team_api_id, t.team_long_name\nORDER BY total_goals DESC\nLIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "FC Barcelona",
+    "849"
+   ],
+   [
+    "Real Madrid CF",
+    "843"
+   ],
+   [
+    "Celtic",
+    "695"
+   ],
+   [
+    "FC Bayern Munich",
+    "653"
+   ],
+   [
+    "PSV",
+    "652"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 5.3
+ },
+ "C|sc#6": {
+  "config": "C",
+  "id": "sc#6",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT t.team_long_name, SUM(x.goals) AS total_goals FROM (SELECT home_team_api_id AS team_api_id, home_team_goal AS goals FROM \"Match\" UNION ALL SELECT away_team_api_id, away_team_goal FROM \"Match\") x JOIN \"Team\" t ON t.team_api_id = x.team_api_id GROUP BY t.team_long_name ORDER BY total_goals DESC LIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "FC Barcelona",
+    "849"
+   ],
+   [
+    "Real Madrid CF",
+    "843"
+   ],
+   [
+    "Celtic",
+    "695"
+   ],
+   [
+    "FC Bayern Munich",
+    "653"
+   ],
+   [
+    "PSV",
+    "652"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-ha-2",
+    "technique": "home-away-union"
+   },
+   {
+    "id": "tp:sc-ha-1",
+    "technique": "home-away-union"
+   },
+   {
+    "id": "tp:sc-arg-2",
+    "technique": "argmax-top1"
+   }
+  ],
+  "elapsed_s": 3.7
+ },
+ "A|sc#7": {
+  "config": "A",
+  "id": "sc#7",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT \n    COUNT(CASE WHEN home_team_goal > away_team_goal THEN 1 END) AS home_win,\n    COUNT(CASE WHEN home_team_goal < away_team_goal THEN 1 END) AS away_win,\n    COUNT(CASE WHEN home_team_goal = away_team_goal THEN 1 END) AS draw\nFROM Match",
+  "n_rows": 1,
+  "rows": [
+   [
+    "11917",
+    "7466",
+    "6596"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 6.2
+ },
+ "C|sc#7": {
+  "config": "C",
+  "id": "sc#7",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT SUM(CASE WHEN home_team_goal > away_team_goal THEN 1 ELSE 0 END) AS home_wins, SUM(CASE WHEN home_team_goal < away_team_goal THEN 1 ELSE 0 END) AS away_wins, SUM(CASE WHEN home_team_goal = away_team_goal THEN 1 ELSE 0 END) AS draws FROM Match",
+  "n_rows": 1,
+  "rows": [
+   [
+    "11917",
+    "7466",
+    "6596"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-wld-2",
+    "technique": "case-wld-counting"
+   },
+   {
+    "id": "tp:sc-ha-1",
+    "technique": "home-away-union"
+   },
+   {
+    "id": "tp:sc-ha-2",
+    "technique": "home-away-union"
+   }
+  ],
+  "elapsed_s": 5.8
+ },
+ "A|sc#8": {
+  "config": "A",
+  "id": "sc#8",
+  "db": "soccer",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "same row count, 1 rows differ",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT T1.player_name\nFROM Player AS T1\nJOIN Player_Attributes AS T2\nON T1.player_api_id = T2.player_api_id\nORDER BY T2.overall_rating DESC\nLIMIT 1",
+  "n_rows": 1,
+  "rows": [
+   [
+    "Lionel Messi"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 13.1
+ },
+ "C|sc#8": {
+  "config": "C",
+  "id": "sc#8",
+  "db": "soccer",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT T1.player_name, T2.overall_rating FROM \"Player\" AS T1 JOIN \"Player_Attributes\" AS T2 ON T1.player_api_id = T2.player_api_id ORDER BY T2.overall_rating DESC LIMIT 1",
+  "n_rows": 1,
+  "rows": [
+   [
+    "Lionel Messi",
+    "94"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-arg-3",
+    "technique": "argmax-top1"
+   },
+   {
+    "id": "tp:sc-arg-1",
+    "technique": "argmax-top1"
+   },
+   {
+    "id": "tp:sc-wld-3",
+    "technique": "case-wld-counting"
+   }
+  ],
+  "elapsed_s": 3.0
+ },
+ "A|sc#9": {
+  "config": "A",
+  "id": "sc#9",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT Player.player_name, AVG(Player_Attributes.overall_rating) AS avg_overall_rating\nFROM Player\nJOIN Player_Attributes ON Player.player_api_id = Player_Attributes.player_api_id\nGROUP BY Player.player_api_id, Player.player_name\nORDER BY avg_overall_rating DESC\nLIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "Lionel Messi",
+    "92.1923076923077"
+   ],
+   [
+    "Cristiano Ronaldo",
+    "91.28"
+   ],
+   [
+    "Franck Ribery",
+    "88.45833333333333"
+   ],
+   [
+    "Andres Iniesta",
+    "88.32"
+   ],
+   [
+    "Zlatan Ibrahimovic",
+    "88.28571428571429"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 5.6
+ },
+ "C|sc#9": {
+  "config": "C",
+  "id": "sc#9",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT p.player_name, AVG(pa.overall_rating) AS avg_overall_rating FROM Player p JOIN Player_Attributes pa ON p.player_api_id = pa.player_api_id GROUP BY p.player_api_id, p.player_name ORDER BY avg_overall_rating DESC LIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "Lionel Messi",
+    "92.1923076923077"
+   ],
+   [
+    "Cristiano Ronaldo",
+    "91.28"
+   ],
+   [
+    "Franck Ribery",
+    "88.45833333333333"
+   ],
+   [
+    "Andres Iniesta",
+    "88.32"
+   ],
+   [
+    "Zlatan Ibrahimovic",
+    "88.28571428571429"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-agg-2",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:sc-agg-1",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:sc-ha-3",
+    "technique": "home-away-union"
+   }
+  ],
+  "elapsed_s": 3.7
+ },
+ "A|sc#10": {
+  "config": "A",
+  "id": "sc#10",
+  "db": "soccer",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "silent",
+  "detail": "same row count, 1 rows differ",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT L.name\nFROM League L\nJOIN Match M ON L.id = M.league_id\nGROUP BY L.id, L.name\nORDER BY AVG(M.home_team_goal + M.away_team_goal) DESC\nLIMIT 1",
+  "n_rows": 1,
+  "rows": [
+   [
+    "Netherlands Eredivisie"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 4.1
+ },
+ "C|sc#10": {
+  "config": "C",
+  "id": "sc#10",
+  "db": "soccer",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT l.name AS league, AVG(m.home_team_goal + m.away_team_goal) AS avg_goals FROM \"Match\" m JOIN \"League\" l ON l.id = m.league_id GROUP BY l.name ORDER BY avg_goals DESC LIMIT 1",
+  "n_rows": 1,
+  "rows": [
+   [
+    "Netherlands Eredivisie",
+    "3.0808823529411766"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-grp-3",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:sc-arg-2",
+    "technique": "argmax-top1"
+   },
+   {
+    "id": "tp:sc-arg-1",
+    "technique": "argmax-top1"
+   }
+  ],
+  "elapsed_s": 3.2
+ },
+ "A|sc#11": {
+  "config": "A",
+  "id": "sc#11",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT \n    SUM(CASE \n        WHEN (m.home_team_api_id = t.team_api_id AND m.home_team_goal > m.away_team_goal)\n          OR (m.away_team_api_id = t.team_api_id AND m.away_team_goal > m.home_team_goal) THEN 1 \n        ELSE 0 \n    END) AS wins,\n    SUM(CASE \n        WHEN (m.home_team_api_id = t.team_api_id AND m.home_team_goal < m.away_team_goal)\n          OR (m.away_team_api_id = t.team_api_id AND m.away_team_goal < m.home_team_goal) THEN 1 \n        ELSE 0 \n    END) AS losses,\n    SUM(CASE \n        WHEN m.home_team_goal = m.away_team_goal THEN 1 \n        ELSE 0 \n    END) AS draws\nFROM Match m\nJOIN Team t ON t.team_api_id = m.home_team_api_id OR t.team_api_id = m.away_team_api_id\nWHERE t.team_long_name = 'Arsenal' AND m.season = '2015/2016'",
+  "n_rows": 1,
+  "rows": [
+   [
+    "20",
+    "7",
+    "11"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 5.9
+ },
+ "C|sc#11": {
+  "config": "C",
+  "id": "sc#11",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT SUM(CASE WHEN (m.home_team_api_id = t.team_api_id AND m.home_team_goal > m.away_team_goal) OR (m.away_team_api_id = t.team_api_id AND m.away_team_goal > m.home_team_goal) THEN 1 ELSE 0 END) AS wins, SUM(CASE WHEN (m.home_team_api_id = t.team_api_id AND m.home_team_goal < m.away_team_goal) OR (m.away_team_api_id = t.team_api_id AND m.away_team_goal < m.home_team_goal) THEN 1 ELSE 0 END) AS losses, SUM(CASE WHEN m.home_team_goal = m.away_team_goal THEN 1 ELSE 0 END) AS draws FROM \"Match\" m JOIN \"Team\" t ON t.team_api_id IN (m.home_team_api_id, m.away_team_api_id) WHERE t.team_long_name = 'Arsenal' AND m.season = '2015/2016'",
+  "n_rows": 1,
+  "rows": [
+   [
+    "20",
+    "7",
+    "11"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-wld-3",
+    "technique": "case-wld-counting"
+   },
+   {
+    "id": "tp:sc-anti-3",
+    "technique": "anti-join"
+   },
+   {
+    "id": "tp:sc-wld-1",
+    "technique": "case-wld-counting"
+   }
+  ],
+  "elapsed_s": 3.0
+ },
+ "A|sc#12": {
+  "config": "A",
+  "id": "sc#12",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT season, SUM(home_team_goal + away_team_goal) FROM Match GROUP BY season LIMIT 10",
+  "n_rows": 8,
+  "rows": [
+   [
+    "2008/2009",
+    "8672"
+   ],
+   [
+    "2009/2010",
+    "8632"
+   ],
+   [
+    "2010/2011",
+    "8749"
+   ],
+   [
+    "2011/2012",
+    "8747"
+   ],
+   [
+    "2012/2013",
+    "9039"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 6.5
+ },
+ "C|sc#12": {
+  "config": "C",
+  "id": "sc#12",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT season, SUM(home_team_goal + away_team_goal) AS total_goals FROM \"Match\" GROUP BY season ORDER BY season LIMIT 10",
+  "n_rows": 8,
+  "rows": [
+   [
+    "2008/2009",
+    "8672"
+   ],
+   [
+    "2009/2010",
+    "8632"
+   ],
+   [
+    "2010/2011",
+    "8749"
+   ],
+   [
+    "2011/2012",
+    "8747"
+   ],
+   [
+    "2012/2013",
+    "9039"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-grp-3",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:sc-agg-3",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:sc-arg-2",
+    "technique": "argmax-top1"
+   }
+  ],
+  "elapsed_s": 4.2
+ },
+ "A|sc#13": {
+  "config": "A",
+  "id": "sc#13",
+  "db": "soccer",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT player_name, height FROM Player ORDER BY height DESC LIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "Kristof van Hout",
+    "208.28"
+   ],
+   [
+    "Bogdan Milic",
+    "203.2"
+   ],
+   [
+    "Costel Pantilimon",
+    "203.2"
+   ],
+   [
+    "Fejsal Mulic",
+    "203.2"
+   ],
+   [
+    "Jurgen Wevers",
+    "203.2"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 5.6
+ },
+ "C|sc#13": {
+  "config": "C",
+  "id": "sc#13",
+  "db": "soccer",
+  "difficulty": "M",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT player_name, height FROM Player ORDER BY height DESC LIMIT 10",
+  "n_rows": 10,
+  "rows": [
+   [
+    "Kristof van Hout",
+    "208.28"
+   ],
+   [
+    "Bogdan Milic",
+    "203.2"
+   ],
+   [
+    "Costel Pantilimon",
+    "203.2"
+   ],
+   [
+    "Fejsal Mulic",
+    "203.2"
+   ],
+   [
+    "Jurgen Wevers",
+    "203.2"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-agg-2",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:sc-agg-1",
+    "technique": "simple-aggregate"
+   },
+   {
+    "id": "tp:sc-ha-2",
+    "technique": "home-away-union"
+   }
+  ],
+  "elapsed_s": 6.4
+ },
+ "A|sc#14": {
+  "config": "A",
+  "id": "sc#14",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT AVG(home_team_goal), AVG(away_team_goal) FROM Match",
+  "n_rows": 1,
+  "rows": [
+   [
+    "1.5445937103044767",
+    "1.1609376804341969"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 5.8
+ },
+ "C|sc#14": {
+  "config": "C",
+  "id": "sc#14",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT AVG(home_team_goal) AS avg_home_goals, AVG(away_team_goal) AS avg_away_goals FROM Match",
+  "n_rows": 1,
+  "rows": [
+   [
+    "1.5445937103044767",
+    "1.1609376804341969"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-grp-3",
+    "technique": "per-group-aggregate"
+   },
+   {
+    "id": "tp:sc-ha-3",
+    "technique": "home-away-union"
+   },
+   {
+    "id": "tp:sc-ha-2",
+    "technique": "home-away-union"
+   }
+  ],
+  "elapsed_s": 5.0
+ },
+ "A|sc#15": {
+  "config": "A",
+  "id": "sc#15",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT T.team_long_name\nFROM Team T\nJOIN Match M ON T.team_api_id = M.home_team_api_id\nWHERE M.season = '2015/2016'\nGROUP BY T.team_api_id, T.team_long_name\nHAVING SUM(CASE WHEN M.home_team_goal < M.away_team_goal THEN 1 ELSE 0 END) = 0\nLIMIT 100",
+  "n_rows": 3,
+  "rows": [
+   [
+    "RSC Anderlecht"
+   ],
+   [
+    "Borussia Dortmund"
+   ],
+   [
+    "Napoli"
+   ]
+  ],
+  "examples": [],
+  "elapsed_s": 9.8
+ },
+ "C|sc#15": {
+  "config": "C",
+  "id": "sc#15",
+  "db": "soccer",
+  "difficulty": "H",
+  "model": "gemini-3.8-flash",
+  "provider": "gemini",
+  "category": "correct",
+  "detail": "exact match",
+  "succeeded": true,
+  "error_kind": null,
+  "error": null,
+  "sql": "SELECT t.team_long_name FROM \"Team\" t WHERE t.team_api_id IN (SELECT home_team_api_id FROM \"Match\" WHERE season = '2015/2016') AND NOT EXISTS (SELECT 1 FROM \"Match\" m WHERE m.home_team_api_id = t.team_api_id AND m.season = '2015/2016' AND m.away_team_goal > m.home_team_goal) ORDER BY t.team_long_name",
+  "n_rows": 3,
+  "rows": [
+   [
+    "Borussia Dortmund"
+   ],
+   [
+    "Napoli"
+   ],
+   [
+    "RSC Anderlecht"
+   ]
+  ],
+  "examples": [
+   {
+    "id": "tp:sc-anti-1",
+    "technique": "anti-join"
+   },
+   {
+    "id": "tp:sc-anti-3",
+    "technique": "anti-join"
+   },
+   {
+    "id": "tp:sc-arg-1",
+    "technique": "argmax-top1"
+   }
+  ],
+  "elapsed_s": 23.8
+ }
+}

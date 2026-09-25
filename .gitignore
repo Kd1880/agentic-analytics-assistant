@@ -1,0 +1,36 @@
+# --- secrets: NEVER commit ---
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# --- python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# --- data (large, reproducible from source) ---
+# NOTE: 'data/*' not 'data/' -- a trailing-slash exclude stops git descending into the
+# directory, which would make the negation below impossible.
+data/*
+!data/README.md
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# --- scratch / logs ---
+*.log
+*.tmp
+phase6_raw.tmp
+
+# --- per-phase working notes (kept locally, not pushed; README carries the results) ---
+notes/
+
+# --- editors / OS ---
+.DS_Store
+.vscode/
+.idea/
+env/

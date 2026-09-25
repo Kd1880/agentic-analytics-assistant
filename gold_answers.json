@@ -1,0 +1,7812 @@
+[
+ {
+  "id": "ml#1",
+  "db": "movielens",
+  "difficulty": "E",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "How many movies are in the database?",
+  "sql": "SELECT COUNT(*) AS n_movies FROM movies",
+  "gold_cols": [
+   "n_movies"
+  ],
+  "gold_rows": [
+   [
+    9742.0
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "ml#2",
+  "db": "movielens",
+  "difficulty": "E",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "How many ratings are there in total?",
+  "sql": "SELECT COUNT(*) AS n_ratings FROM ratings",
+  "gold_cols": [
+   "n_ratings"
+  ],
+  "gold_rows": [
+   [
+    100836.0
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "ml#3",
+  "db": "movielens",
+  "difficulty": "E",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "What is the overall average rating?",
+  "sql": "SELECT AVG(rating) AS avg_rating FROM ratings",
+  "gold_cols": [
+   "avg_rating"
+  ],
+  "gold_rows": [
+   [
+    3.501556983616962
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "ml#4",
+  "db": "movielens",
+  "difficulty": "M",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "Which 10 movies have the most ratings?",
+  "sql": "SELECT m.title, COUNT(*) AS n_ratings FROM ratings r JOIN movies m ON m.movieid = r.movieid GROUP BY m.movieid, m.title ORDER BY n_ratings DESC, m.title LIMIT 10",
+  "gold_cols": [
+   "title",
+   "n_ratings"
+  ],
+  "gold_rows": [
+   [
+    "Forrest Gump (1994)",
+    329.0
+   ],
+   [
+    "Shawshank Redemption, The (1994)",
+    317.0
+   ],
+   [
+    "Pulp Fiction (1994)",
+    307.0
+   ],
+   [
+    "Silence of the Lambs, The (1991)",
+    279.0
+   ],
+   [
+    "Matrix, The (1999)",
+    278.0
+   ],
+   [
+    "Star Wars: Episode IV - A New Hope (1977)",
+    251.0
+   ],
+   [
+    "Jurassic Park (1993)",
+    238.0
+   ],
+   [
+    "Braveheart (1995)",
+    237.0
+   ],
+   [
+    "Terminator 2: Judgment Day (1991)",
+    224.0
+   ],
+   [
+    "Schindler's List (1993)",
+    220.0
+   ]
+  ],
+  "n_rows": 10
+ },
+ {
+  "id": "ml#5",
+  "db": "movielens",
+  "difficulty": "M",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "What are the top 10 highest-average-rated movies with at least 50 ratings?",
+  "sql": "SELECT m.title, AVG(r.rating) AS avg_rating FROM ratings r JOIN movies m ON m.movieid = r.movieid GROUP BY m.movieid, m.title HAVING COUNT(*) >= 50 ORDER BY avg_rating DESC, m.title LIMIT 10",
+  "gold_cols": [
+   "title",
+   "avg_rating"
+  ],
+  "gold_rows": [
+   [
+    "Shawshank Redemption, The (1994)",
+    4.429022082018927
+   ],
+   [
+    "Godfather, The (1972)",
+    4.2890625
+   ],
+   [
+    "Fight Club (1999)",
+    4.272935779816514
+   ],
+   [
+    "Cool Hand Luke (1967)",
+    4.271929824561403
+   ],
+   [
+    "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb (1964)",
+    4.268041237113402
+   ],
+   [
+    "Rear Window (1954)",
+    4.261904761904762
+   ],
+   [
+    "Godfather: Part II, The (1974)",
+    4.25968992248062
+   ],
+   [
+    "Departed, The (2006)",
+    4.252336448598131
+   ],
+   [
+    "Goodfellas (1990)",
+    4.25
+   ],
+   [
+    "Casablanca (1942)",
+    4.24
+   ]
+  ],
+  "n_rows": 10
+ },
+ {
+  "id": "ml#6",
+  "db": "movielens",
+  "difficulty": "M",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "How many movies are there per genre?",
+  "sql": "SELECT g AS genre, COUNT(*) AS n_movies FROM movies CROSS JOIN unnest(string_to_array(genres, '|')) AS g GROUP BY g",
+  "gold_cols": [
+   "genre",
+   "n_movies"
+  ],
+  "gold_rows": [
+   [
+    "IMAX",
+    158.0
+   ],
+   [
+    "Crime",
+    1199.0
+   ],
+   [
+    "Animation",
+    611.0
+   ],
+   [
+    "Documentary",
+    440.0
+   ],
+   [
+    "Romance",
+    1596.0
+   ],
+   [
+    "Mystery",
+    573.0
+   ],
+   [
+    "Children",
+    664.0
+   ],
+   [
+    "Musical",
+    334.0
+   ],
+   [
+    "Film-Noir",
+    87.0
+   ],
+   [
+    "Fantasy",
+    779.0
+   ],
+   [
+    "Horror",
+    978.0
+   ],
+   [
+    "Drama",
+    4361.0
+   ],
+   [
+    "Action",
+    1828.0
+   ],
+   [
+    "(no genres listed)",
+    34.0
+   ],
+   [
+    "Thriller",
+    1894.0
+   ],
+   [
+    "Western",
+    167.0
+   ],
+   [
+    "Sci-Fi",
+    980.0
+   ],
+   [
+    "Comedy",
+    3756.0
+   ],
+   [
+    "Adventure",
+    1263.0
+   ],
+   [
+    "War",
+    382.0
+   ]
+  ],
+  "n_rows": 20
+ },
+ {
+  "id": "ml#7",
+  "db": "movielens",
+  "difficulty": "M",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "Which user has rated the most movies?",
+  "sql": "SELECT userid, COUNT(*) AS n_ratings FROM ratings GROUP BY userid ORDER BY n_ratings DESC, userid LIMIT 1",
+  "gold_cols": [
+   "userid",
+   "n_ratings"
+  ],
+  "gold_rows": [
+   [
+    414.0,
+    2698.0
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "ml#8",
+  "db": "movielens",
+  "difficulty": "M",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "What is the average rating per genre?",
+  "sql": "SELECT g AS genre, AVG(r.rating) AS avg_rating FROM movies m JOIN ratings r ON r.movieid = m.movieid CROSS JOIN unnest(string_to_array(m.genres, '|')) AS g GROUP BY g",
+  "gold_cols": [
+   "genre",
+   "avg_rating"
+  ],
+  "gold_rows": [
+   [
+    "IMAX",
+    3.618335343787696
+   ],
+   [
+    "Crime",
+    3.658293867274144
+   ],
+   [
+    "Animation",
+    3.6299370349170004
+   ],
+   [
+    "Documentary",
+    3.797785069729286
+   ],
+   [
+    "Romance",
+    3.5065107040388437
+   ],
+   [
+    "Mystery",
+    3.632460255407871
+   ],
+   [
+    "Children",
+    3.412956125108601
+   ],
+   [
+    "Musical",
+    3.5636781053649105
+   ],
+   [
+    "Film-Noir",
+    3.920114942528736
+   ],
+   [
+    "Fantasy",
+    3.4910005070136894
+   ],
+   [
+    "Drama",
+    3.6561844113718758
+   ],
+   [
+    "Horror",
+    3.258195034974626
+   ],
+   [
+    "Action",
+    3.447984331646809
+   ],
+   [
+    "(no genres listed)",
+    3.4893617021276597
+   ],
+   [
+    "Thriller",
+    3.4937055799183425
+   ],
+   [
+    "Sci-Fi",
+    3.455721162210752
+   ],
+   [
+    "Western",
+    3.583937823834197
+   ],
+   [
+    "Comedy",
+    3.3847207640898267
+   ],
+   [
+    "Adventure",
+    3.5086089151939075
+   ],
+   [
+    "War",
+    3.8082938876312
+   ]
+  ],
+  "n_rows": 20
+ },
+ {
+  "id": "ml#9",
+  "db": "movielens",
+  "difficulty": "H",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "What is the average rating per release year?",
+  "sql": "WITH y AS (SELECT movieid, substring(title FROM '\\((\\d{4})\\)\\s*$')::int AS release_year FROM movies) SELECT y.release_year, AVG(r.rating) AS avg_rating FROM ratings r JOIN y ON y.movieid = r.movieid WHERE y.release_year IS NOT NULL GROUP BY y.release_year ORDER BY y.release_year",
+  "gold_cols": [
+   "release_year",
+   "avg_rating"
+  ],
+  "gold_rows": [
+   [
+    1902.0,
+    3.5
+   ],
+   [
+    1903.0,
+    2.5
+   ],
+   [
+    1908.0,
+    4.0
+   ],
+   [
+    1915.0,
+    2.0
+   ],
+   [
+    1916.0,
+    3.6
+   ],
+   [
+    1917.0,
+    4.5
+   ],
+   [
+    1919.0,
+    2.0
+   ],
+   [
+    1920.0,
+    3.8125
+   ],
+   [
+    1921.0,
+    4.1
+   ],
+   [
+    1922.0,
+    3.53125
+   ],
+   [
+    1923.0,
+    3.642857142857143
+   ],
+   [
+    1924.0,
+    3.5833333333333335
+   ],
+   [
+    1925.0,
+    3.789473684210526
+   ],
+   [
+    1926.0,
+    4.0
+   ],
+   [
+    1927.0,
+    3.689655172413793
+   ],
+   [
+    1928.0,
+    3.6538461538461537
+   ],
+   [
+    1929.0,
+    3.8333333333333335
+   ],
+   [
+    1930.0,
+    4.205882352941177
+   ],
+   [
+    1931.0,
+    3.6052631578947367
+   ],
+   [
+    1932.0,
+    3.3333333333333335
+   ],
+   [
+    1933.0,
+    3.730769230769231
+   ],
+   [
+    1934.0,
+    4.088235294117647
+   ],
+   [
+    1935.0,
+    3.967391304347826
+   ],
+   [
+    1936.0,
+    3.5283018867924527
+   ],
+   [
+    1937.0,
+    3.6608695652173915
+   ],
+   [
+    1938.0,
+    3.767857142857143
+   ],
+   [
+    1939.0,
+    3.763681592039801
+   ],
+   [
+    1940.0,
+    3.818385650224215
+   ],
+   [
+    1941.0,
+    3.8959390862944163
+   ],
+   [
+    1942.0,
+    3.9216216216216218
+   ],
+   [
+    1943.0,
+    3.625
+   ],
+   [
+    1944.0,
+    4.043478260869565
+   ],
+   [
+    1945.0,
+    3.5357142857142856
+   ],
+   [
+    1946.0,
+    3.949275362318841
+   ],
+   [
+    1947.0,
+    3.8461538461538463
+   ],
+   [
+    1948.0,
+    3.85
+   ],
+   [
+    1949.0,
+    3.763888888888889
+   ],
+   [
+    1950.0,
+    3.813664596273292
+   ],
+   [
+    1951.0,
+    3.8049450549450547
+   ],
+   [
+    1952.0,
+    3.953125
+   ],
+   [
+    1953.0,
+    3.6470588235294117
+   ],
+   [
+    1954.0,
+    4.009191176470588
+   ],
+   [
+    1955.0,
+    3.71978021978022
+   ],
+   [
+    1956.0,
+    3.6826086956521737
+   ],
+   [
+    1957.0,
+    4.03953488372093
+   ],
+   [
+    1958.0,
+    3.8424242424242423
+   ],
+   [
+    1959.0,
+    3.794238683127572
+   ],
+   [
+    1960.0,
+    3.7211155378486054
+   ],
+   [
+    1961.0,
+    3.7
+   ],
+   [
+    1962.0,
+    3.969465648854962
+   ],
+   [
+    1963.0,
+    3.6289198606271778
+   ],
+   [
+    1964.0,
+    3.940159574468085
+   ],
+   [
+    1965.0,
+    3.735042735042735
+   ],
+   [
+    1966.0,
+    3.8236842105263156
+   ],
+   [
+    1967.0,
+    3.92257217847769
+   ],
+   [
+    1968.0,
+    3.8122119815668203
+   ],
+   [
+    1969.0,
+    3.6903669724770642
+   ],
+   [
+    1970.0,
+    3.7540983606557377
+   ],
+   [
+    1971.0,
+    3.841463414634146
+   ],
+   [
+    1972.0,
+    3.939890710382514
+   ],
+   [
+    1973.0,
+    3.7577639751552794
+   ],
+   [
+    1974.0,
+    3.9356223175965663
+   ],
+   [
+    1975.0,
+    3.879120879120879
+   ],
+   [
+    1976.0,
+    3.760047281323877
+   ],
+   [
+    1977.0,
+    3.810405643738977
+   ],
+   [
+    1978.0,
+    3.4551020408163264
+   ],
+   [
+    1979.0,
+    3.676844783715013
+   ],
+   [
+    1980.0,
+    3.733580508474576
+   ],
+   [
+    1981.0,
+    3.760732323232323
+   ],
+   [
+    1982.0,
+    3.510921177587844
+   ],
+   [
+    1983.0,
+    3.6315489749430525
+   ],
+   [
+    1984.0,
+    3.5294934073560027
+   ],
+   [
+    1985.0,
+    3.4341147938561036
+   ],
+   [
+    1986.0,
+    3.4601518026565463
+   ],
+   [
+    1987.0,
+    3.4883116883116885
+   ],
+   [
+    1988.0,
+    3.4181173436492585
+   ],
+   [
+    1989.0,
+    3.4630606860158313
+   ],
+   [
+    1990.0,
+    3.4273104880581515
+   ],
+   [
+    1991.0,
+    3.552264808362369
+   ],
+   [
+    1992.0,
+    3.354942871336314
+   ],
+   [
+    1993.0,
+    3.4521518310612134
+   ],
+   [
+    1994.0,
+    3.5009441087613293
+   ],
+   [
+    1995.0,
+    3.44384765625
+   ],
+   [
+    1996.0,
+    3.3353293413173652
+   ],
+   [
+    1997.0,
+    3.3472412846555035
+   ],
+   [
+    1998.0,
+    3.4271858307562555
+   ],
+   [
+    1999.0,
+    3.498677248677249
+   ],
+   [
+    2000.0,
+    3.3988987816307406
+   ],
+   [
+    2001.0,
+    3.482243229432805
+   ],
+   [
+    2002.0,
+    3.414607358594179
+   ],
+   [
+    2003.0,
+    3.462321144674086
+   ],
+   [
+    2004.0,
+    3.507227138643068
+   ],
+   [
+    2005.0,
+    3.3598879103282626
+   ],
+   [
+    2006.0,
+    3.498452012383901
+   ],
+   [
+    2007.0,
+    3.5224331320103537
+   ],
+   [
+    2008.0,
+    3.5281264528126455
+   ],
+   [
+    2009.0,
+    3.5689655172413794
+   ],
+   [
+    2010.0,
+    3.5690962099125363
+   ],
+   [
+    2011.0,
+    3.4607638888888888
+   ],
+   [
+    2012.0,
+    3.5126262626262625
+   ],
+   [
+    2013.0,
+    3.457119067443797
+   ],
+   [
+    2014.0,
+    3.5128787878787877
+   ],
+   [
+    2015.0,
+    3.4103860294117645
+   ],
+   [
+    2016.0,
+    3.387261146496815
+   ],
+   [
+    2017.0,
+    3.5780911062906724
+   ],
+   [
+    2018.0,
+    3.4835164835164836
+   ]
+  ],
+  "n_rows": 106
+ },
+ {
+  "id": "ml#10",
+  "db": "movielens",
+  "difficulty": "M",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "What are the 10 most frequently used tags?",
+  "sql": "SELECT tag, COUNT(*) AS n FROM tags GROUP BY tag ORDER BY n DESC, tag LIMIT 10",
+  "gold_cols": [
+   "tag",
+   "n"
+  ],
+  "gold_rows": [
+   [
+    "In Netflix queue",
+    131.0
+   ],
+   [
+    "atmospheric",
+    36.0
+   ],
+   [
+    "superhero",
+    24.0
+   ],
+   [
+    "thought-provoking",
+    24.0
+   ],
+   [
+    "Disney",
+    23.0
+   ],
+   [
+    "funny",
+    23.0
+   ],
+   [
+    "surreal",
+    23.0
+   ],
+   [
+    "religion",
+    22.0
+   ],
+   [
+    "dark comedy",
+    21.0
+   ],
+   [
+    "psychology",
+    21.0
+   ]
+  ],
+  "n_rows": 10
+ },
+ {
+  "id": "ml#11",
+  "db": "movielens",
+  "difficulty": "H",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "Which movies have an average rating above 4 but fewer than 10 ratings?",
+  "sql": "SELECT m.title, AVG(r.rating) AS avg_rating, COUNT(*) AS n_ratings FROM ratings r JOIN movies m ON m.movieid = r.movieid GROUP BY m.movieid, m.title HAVING AVG(r.rating) > 4 AND COUNT(*) < 10",
+  "gold_cols": [
+   "title",
+   "avg_rating",
+   "n_ratings"
+  ],
+  "gold_rows": [
+   [
+    "Nasu: Summer in Andalusia (2003)",
+    5.0,
+    1.0
+   ],
+   [
+    "20 Million Miles to Earth (1957)",
+    5.0,
+    1.0
+   ],
+   [
+    "7 Faces of Dr. Lao (1964)",
+    5.0,
+    1.0
+   ],
+   [
+    "Voices of a Distant Star (Hoshi no koe) (2003)",
+    4.5,
+    1.0
+   ],
+   [
+    "Scooby-Doo! Abracadabra-Doo (2010)",
+    5.0,
+    1.0
+   ],
+   [
+    "Hollywood Shuffle (1987)",
+    5.0,
+    1.0
+   ],
+   [
+    "Jim Jefferies: I Swear to God (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "Family Guy Presents: Something, Something, Something, Dark Side (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "Palindromes (2004)",
+    5.0,
+    1.0
+   ],
+   [
+    "Leopard, The (Gattopardo, Il) (1963)",
+    4.25,
+    2.0
+   ],
+   [
+    "Man on the Flying Trapeze (1935)",
+    4.5,
+    1.0
+   ],
+   [
+    "Verdict, The (1982)",
+    4.357142857142857,
+    7.0
+   ],
+   [
+    "Dream of Light (a.k.a. Quince Tree Sun, The) (Sol del membrillo, El) (1992)",
+    5.0,
+    1.0
+   ],
+   [
+    "Kizumonogatari III: Cold Blood (2017)",
+    4.5,
+    1.0
+   ],
+   [
+    "Welcome to Dongmakgol (2005)",
+    4.5,
+    1.0
+   ],
+   [
+    "All the King's Men (1949)",
+    4.25,
+    4.0
+   ],
+   [
+    "Internet's Own Boy: The Story of Aaron Swartz, The (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Incredibly True Adventure of Two Girls in Love, The (1995)",
+    4.5,
+    2.0
+   ],
+   [
+    "Logan Lucky (2017)",
+    4.5,
+    1.0
+   ],
+   [
+    "Chinese Ghost Story, A (Sinnui yauwan) (1987)",
+    4.25,
+    2.0
+   ],
+   [
+    "Cure (1997)",
+    4.5,
+    1.0
+   ],
+   [
+    "Scooby-Doo! and the Loch Ness Monster (2004)",
+    5.0,
+    1.0
+   ],
+   [
+    "DiG! (2004)",
+    4.125,
+    4.0
+   ],
+   [
+    "Jim Jefferies: Freedumb (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "Arizona Dream (1993)",
+    4.25,
+    6.0
+   ],
+   [
+    "This Property is Condemned (1966)",
+    4.5,
+    1.0
+   ],
+   [
+    "I, the Jury (1982)",
+    5.0,
+    1.0
+   ],
+   [
+    "A Dog's Purpose (2017)",
+    4.5,
+    1.0
+   ],
+   [
+    "Seve (2014)",
+    5.0,
+    1.0
+   ],
+   [
+    "Eddie Murphy Delirious (1983)",
+    4.375,
+    4.0
+   ],
+   [
+    "Control Room (2004)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Come and See (Idi i smotri) (1985)",
+    5.0,
+    2.0
+   ],
+   [
+    "Heidi Fleiss: Hollywood Madam (1995)",
+    5.0,
+    2.0
+   ],
+   [
+    "Happy Together (a.k.a. Buenos Aires Affair) (Chun gwong cha sit) (1997)",
+    4.75,
+    2.0
+   ],
+   [
+    "The Night Before (2015)",
+    4.25,
+    4.0
+   ],
+   [
+    "Local Hero (1983)",
+    4.055555555555555,
+    9.0
+   ],
+   [
+    "Written on the Wind (1956)",
+    4.25,
+    2.0
+   ],
+   [
+    "Dylan Moran: Monster (2004)",
+    5.0,
+    1.0
+   ],
+   [
+    "Lumberjack Man (2015)",
+    5.0,
+    1.0
+   ],
+   [
+    "Timecrimes (Cronocr\u00edmenes, Los) (2007)",
+    4.25,
+    4.0
+   ],
+   [
+    "A Most Wanted Man (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Brother's Keeper (1992)",
+    4.25,
+    2.0
+   ],
+   [
+    "Golden Door (Nuovomondo) (2006)",
+    4.5,
+    1.0
+   ],
+   [
+    "Most Hated Family in America, The (2007)",
+    4.5,
+    2.0
+   ],
+   [
+    "Reign Over Me (2007)",
+    4.1,
+    5.0
+   ],
+   [
+    "All That Jazz (1979)",
+    4.083333333333333,
+    6.0
+   ],
+   [
+    "Bloodsucking Bastards (2015)",
+    5.0,
+    1.0
+   ],
+   [
+    "The Girl on the Train (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "Man Who Planted Trees, The (Homme qui plantait des arbres, L') (1987)",
+    4.25,
+    4.0
+   ],
+   [
+    "Son of the Bride (Hijo de la novia, El) (2001)",
+    5.0,
+    1.0
+   ],
+   [
+    "Wedding Banquet, The (Xi yan) (1993)",
+    4.5,
+    1.0
+   ],
+   [
+    "Duel in the Sun (1946)",
+    5.0,
+    1.0
+   ],
+   [
+    "D\u00e9j\u00e0 Vu (1997)",
+    4.5,
+    1.0
+   ],
+   [
+    "What Men Talk About (2010)",
+    5.0,
+    1.0
+   ],
+   [
+    "What We Do in the Shadows (2014)",
+    4.833333333333333,
+    3.0
+   ],
+   [
+    "Green Butchers, The (Gr\u00f8nne slagtere, De) (2003)",
+    4.5,
+    1.0
+   ],
+   [
+    "Priceless (Hors de prix) (2006)",
+    4.25,
+    2.0
+   ],
+   [
+    "Slow West (2015)",
+    4.25,
+    2.0
+   ],
+   [
+    "Love Exposure (Ai No Mukidashi) (2008)",
+    5.0,
+    1.0
+   ],
+   [
+    "Zeitgeist: Moving Forward (2011)",
+    5.0,
+    1.0
+   ],
+   [
+    "Asterix and Cleopatra (Ast\u00e9rix et Cl\u00e9op\u00e2tre) (1968)",
+    4.25,
+    2.0
+   ],
+   [
+    "Little Murders (1971)",
+    5.0,
+    1.0
+   ],
+   [
+    "Stevie (2002)",
+    4.25,
+    2.0
+   ],
+   [
+    "Sex, Drugs & Taxation (2013)",
+    4.5,
+    1.0
+   ],
+   [
+    "Big Red One, The (1980)",
+    4.25,
+    2.0
+   ],
+   [
+    "Doctor Who: The Husbands of River Song (2015)",
+    4.25,
+    2.0
+   ],
+   [
+    "Onibaba (1964)",
+    4.5,
+    1.0
+   ],
+   [
+    "Forgotten Silver (1996)",
+    4.25,
+    2.0
+   ],
+   [
+    "Black Mirror: White Christmas (2014)",
+    4.75,
+    4.0
+   ],
+   [
+    "White Ribbon, The (Das wei\u00dfe Band) (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "King of Hearts (1966)",
+    5.0,
+    1.0
+   ],
+   [
+    "Temple Grandin (2010)",
+    4.375,
+    4.0
+   ],
+   [
+    "Bill Cunningham New York (2011)",
+    4.5,
+    1.0
+   ],
+   [
+    "Way of the Dragon, The (a.k.a. Return of the Dragon) (Meng long guo jiang) (1972)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "I Served the King of England (Obsluhoval jsem anglick\u00e9ho kr\u00e1le) (2006)",
+    4.5,
+    1.0
+   ],
+   [
+    "Enter the Void (2009)",
+    5.0,
+    2.0
+   ],
+   [
+    "Idiots and Angels (2008)",
+    5.0,
+    1.0
+   ],
+   [
+    "Mephisto (1981)",
+    5.0,
+    1.0
+   ],
+   [
+    "Man Who Fell to Earth, The (1976)",
+    4.25,
+    4.0
+   ],
+   [
+    "P.S. (2004)",
+    4.25,
+    2.0
+   ],
+   [
+    "Baby Driver (2017)",
+    4.333333333333333,
+    9.0
+   ],
+   [
+    "Love and Pigeons (1985)",
+    5.0,
+    1.0
+   ],
+   [
+    "Animals are Beautiful People (1974)",
+    5.0,
+    1.0
+   ],
+   [
+    "Mamma Mia: Here We Go Again! (2018)",
+    4.5,
+    1.0
+   ],
+   [
+    "Sorority House Massacre (1986)",
+    5.0,
+    1.0
+   ],
+   [
+    "Reefer Madness: The Movie Musical (2005)",
+    4.75,
+    2.0
+   ],
+   [
+    "Garfield's Pet Force (2009)",
+    5.0,
+    1.0
+   ],
+   [
+    "Gentlemen of Fortune (Dzhentlmeny udachi) (1972)",
+    4.75,
+    2.0
+   ],
+   [
+    "God Bless America (2011)",
+    4.5,
+    1.0
+   ],
+   [
+    "Slumber Party Massacre III (1990)",
+    5.0,
+    1.0
+   ],
+   [
+    "The Adventures of Sherlock Holmes and Doctor Watson: The Treasures of Agra (1983)",
+    5.0,
+    1.0
+   ],
+   [
+    "Amazon Women on the Moon (1987)",
+    4.25,
+    2.0
+   ],
+   [
+    "Something New (2006)",
+    4.5,
+    1.0
+   ],
+   [
+    "Android (1982)",
+    4.5,
+    2.0
+   ],
+   [
+    "Man with the Golden Arm, The (1955)",
+    5.0,
+    1.0
+   ],
+   [
+    "Bill Hicks: Revelations (1993)",
+    5.0,
+    1.0
+   ],
+   [
+    "Redline (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "Police Story (Ging chaat goo si) (1985)",
+    4.25,
+    2.0
+   ],
+   [
+    "Last Waltz, The (1978)",
+    4.5,
+    1.0
+   ],
+   [
+    "Yi Yi (2000)",
+    4.6,
+    5.0
+   ],
+   [
+    "Happy Go Lovely (1951)",
+    4.5,
+    1.0
+   ],
+   [
+    "On the Other Side of the Tracks (De l'autre c\u00f4t\u00e9 du p\u00e9riph) (2012)",
+    5.0,
+    1.0
+   ],
+   [
+    "Infernal Affairs (Mou gaan dou) (2002)",
+    4.333333333333333,
+    9.0
+   ],
+   [
+    "Jet\u00e9e, La (1962)",
+    4.5,
+    2.0
+   ],
+   [
+    "Jack-Jack Attack (2005)",
+    4.5,
+    1.0
+   ],
+   [
+    "Dave Chappelle: For What it's Worth (2004)",
+    4.25,
+    2.0
+   ],
+   [
+    "Larry David: Curb Your Enthusiasm (1999)",
+    5.0,
+    1.0
+   ],
+   [
+    "Johnny Express (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Deathgasm (2015)",
+    5.0,
+    1.0
+   ],
+   [
+    "That Munchhausen (1979)",
+    4.5,
+    1.0
+   ],
+   [
+    "Breed, The (2006)",
+    5.0,
+    1.0
+   ],
+   [
+    "Bone Tomahawk (2015)",
+    4.5,
+    2.0
+   ],
+   [
+    "Game of Death (1978)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Four Days in September (O Que \u00c9 Isso, Companheiro?) (1997)",
+    5.0,
+    1.0
+   ],
+   [
+    "Tyler Perry's I Can Do Bad All by Myself (2009)",
+    5.0,
+    1.0
+   ],
+   [
+    "Looker (1981)",
+    4.5,
+    1.0
+   ],
+   [
+    "All-Star Superman (2011)",
+    4.25,
+    2.0
+   ],
+   [
+    "Paris Is Burning (1990)",
+    4.5,
+    5.0
+   ],
+   [
+    "Days of Being Wild (A Fei jingjyuhn) (1990)",
+    4.5,
+    1.0
+   ],
+   [
+    "The Post (2017)",
+    4.25,
+    2.0
+   ],
+   [
+    "Peaceful Warrior (2006)",
+    5.0,
+    1.0
+   ],
+   [
+    "Crossing Delancey (1988)",
+    5.0,
+    1.0
+   ],
+   [
+    "Cottage, The (2008)",
+    4.25,
+    2.0
+   ],
+   [
+    "Texas - Doc Snyder h\u00e4lt die Welt in Atem (1993)",
+    4.5,
+    1.0
+   ],
+   [
+    "A Detective Story (2003)",
+    5.0,
+    1.0
+   ],
+   [
+    "Voices from the List (2004)",
+    4.3,
+    5.0
+   ],
+   [
+    "Joint Security Area (Gongdong gyeongbi guyeok JSA) (2000)",
+    4.25,
+    4.0
+   ],
+   [
+    "Knockin' on Heaven's Door (1997)",
+    4.25,
+    4.0
+   ],
+   [
+    "Wit (2001)",
+    4.5,
+    1.0
+   ],
+   [
+    "Revenant, The (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "Stuart Little 3: Call of the Wild (2005)",
+    5.0,
+    1.0
+   ],
+   [
+    "Devil's Playground (2002)",
+    4.25,
+    2.0
+   ],
+   [
+    "Frozen Planet (2011)",
+    4.5,
+    2.0
+   ],
+   [
+    "Jeremiah Johnson (1972)",
+    4.25,
+    4.0
+   ],
+   [
+    "Shadow of a Doubt (1943)",
+    4.142857142857143,
+    7.0
+   ],
+   [
+    "Anne of Green Gables (1985)",
+    4.5,
+    3.0
+   ],
+   [
+    "A Flintstones Christmas Carol (1994)",
+    5.0,
+    1.0
+   ],
+   [
+    "ARQ (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "Times of Harvey Milk, The (1984)",
+    4.5,
+    2.0
+   ],
+   [
+    "Phantom of the Paradise (1974)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Maz Jobrani: Immigrant (2017)",
+    4.5,
+    1.0
+   ],
+   [
+    "Dana Carvey: Straight White Male, 60 (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "On the Trail of the Bremen Town Musicians (1973)",
+    5.0,
+    1.0
+   ],
+   [
+    "SORI: Voice from the Heart (2016)",
+    5.0,
+    1.0
+   ],
+   [
+    "Little Dieter Needs to Fly (1997)",
+    5.0,
+    1.0
+   ],
+   [
+    "Wings, Legs and Tails (1986)",
+    5.0,
+    1.0
+   ],
+   [
+    "Planet Earth II (2016)",
+    4.2,
+    5.0
+   ],
+   [
+    "Diving Bell and the Butterfly, The (Scaphandre et le papillon, Le) (2007)",
+    4.1,
+    5.0
+   ],
+   [
+    "2046 (2004)",
+    4.071428571428571,
+    7.0
+   ],
+   [
+    "Young Victoria, The (2009)",
+    4.25,
+    2.0
+   ],
+   [
+    "Crime of Father Amaro, The (Crimen del padre Amaro, El) (2002)",
+    4.5,
+    1.0
+   ],
+   [
+    "Branded to Kill (Koroshi no rakuin) (1967)",
+    5.0,
+    1.0
+   ],
+   [
+    "Common Thread, A (a.k.a. Sequins) (Brodeuses) (2004)",
+    4.5,
+    1.0
+   ],
+   [
+    "Only Lovers Left Alive (2013)",
+    5.0,
+    1.0
+   ],
+   [
+    "Jump In! (2007)",
+    5.0,
+    1.0
+   ],
+   [
+    "Alesha Popovich and Tugarin the Dragon (2004)",
+    5.0,
+    1.0
+   ],
+   [
+    "Hands Over the City (Le mani sulla citt\u00e0) (1963)",
+    4.5,
+    1.0
+   ],
+   [
+    "The Salt of the Earth (2014)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "De platte jungle (1978)",
+    5.0,
+    1.0
+   ],
+   [
+    "It's Such a Beautiful Day (2012)",
+    4.25,
+    2.0
+   ],
+   [
+    "Don't Move (Non ti muovere) (2004)",
+    4.5,
+    1.0
+   ],
+   [
+    "I Am Not Your Negro (2017)",
+    5.0,
+    1.0
+   ],
+   [
+    "Musa the Warrior (Musa) (2001)",
+    4.5,
+    1.0
+   ],
+   [
+    "Bill Burr: You People Are All the Same (2012)",
+    4.5,
+    1.0
+   ],
+   [
+    "Adventures of Mowgli: The Kidnapping (1968)",
+    4.5,
+    1.0
+   ],
+   [
+    "Massu Engira Maasilamani (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "Man Who Shot Liberty Valance, The (1962)",
+    4.4,
+    5.0
+   ],
+   [
+    "Attack of the 50 Foot Woman (1958)",
+    4.5,
+    1.0
+   ],
+   [
+    "Wal-Mart: The High Cost of Low Price (2005)",
+    4.5,
+    1.0
+   ],
+   [
+    "College Road Trip (2008)",
+    4.5,
+    1.0
+   ],
+   [
+    "Evil Aliens (2005)",
+    4.5,
+    1.0
+   ],
+   [
+    "Song of the Little Road (Pather Panchali) (1955)",
+    4.25,
+    2.0
+   ],
+   [
+    "My Sassy Girl (Yeopgijeogin geunyeo) (2001)",
+    5.0,
+    1.0
+   ],
+   [
+    "Captain Fantastic (2016)",
+    4.5,
+    5.0
+   ],
+   [
+    "Laura (1944)",
+    4.333333333333333,
+    6.0
+   ],
+   [
+    "Andrei Rublev (Andrey Rublyov) (1969)",
+    4.5,
+    1.0
+   ],
+   [
+    "Bliss (2012)",
+    4.5,
+    1.0
+   ],
+   [
+    "Doctor Who: The Time of the Doctor (2013)",
+    4.5,
+    3.0
+   ],
+   [
+    "My Love (2006)",
+    5.0,
+    1.0
+   ],
+   [
+    "Big Eden (2000)",
+    4.5,
+    1.0
+   ],
+   [
+    "The Godfather Trilogy: 1972-1990 (1992)",
+    4.75,
+    2.0
+   ],
+   [
+    "Justice League: Doom (2012) ",
+    5.0,
+    1.0
+   ],
+   [
+    "Killing, The (1956)",
+    4.055555555555555,
+    9.0
+   ],
+   [
+    "Bobik Visiting Barbos (1977)",
+    5.0,
+    1.0
+   ],
+   [
+    "Dr. Goldfoot and the Bikini Machine (1965)",
+    5.0,
+    1.0
+   ],
+   [
+    "Louis C.K.: Hilarious (2010)",
+    4.055555555555555,
+    9.0
+   ],
+   [
+    "The Hundred-Foot Journey (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Taking of Pelham One Two Three, The (1974)",
+    4.5,
+    4.0
+   ],
+   [
+    "Beloved (1998)",
+    4.5,
+    2.0
+   ],
+   [
+    "Sweetgrass (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "When the Cat's Away (Chacun cherche son chat) (1996)",
+    4.5,
+    2.0
+   ],
+   [
+    "How to Succeed in Business Without Really Trying (1967)",
+    4.25,
+    2.0
+   ],
+   [
+    "Jim & Andy: The Great Beyond (2017)",
+    4.5,
+    1.0
+   ],
+   [
+    "The Girl with All the Gifts (2016)",
+    5.0,
+    1.0
+   ],
+   [
+    "Too Funny to Fail: The Life and Death of The Dana Carvey Show (2017)",
+    4.5,
+    1.0
+   ],
+   [
+    "Mr. Skeffington (1944)",
+    5.0,
+    1.0
+   ],
+   [
+    "00 Schneider - Jagd auf Nihil Baxter (1994)",
+    4.5,
+    1.0
+   ],
+   [
+    "Gifted (2017)",
+    4.125,
+    4.0
+   ],
+   [
+    "Shogun Assassin (1980)",
+    5.0,
+    1.0
+   ],
+   [
+    "Woman in the Dunes (Suna no onna) (1964)",
+    4.75,
+    4.0
+   ],
+   [
+    "Manufacturing Consent: Noam Chomsky and the Media (1992)",
+    4.25,
+    2.0
+   ],
+   [
+    "Bad Boy Bubby (1993)",
+    4.833333333333333,
+    3.0
+   ],
+   [
+    "From Up on Poppy Hill (Kokuriko-zaka kara) (2011)",
+    4.5,
+    1.0
+   ],
+   [
+    "Dr. Phibes Rises Again (1972)",
+    4.5,
+    1.0
+   ],
+   [
+    "Cruise, The (1998)",
+    4.25,
+    2.0
+   ],
+   [
+    "On the Ropes (1999)",
+    5.0,
+    1.0
+   ],
+   [
+    "Gena the Crocodile (1969)",
+    5.0,
+    1.0
+   ],
+   [
+    "Mother (Madeo) (2009)",
+    5.0,
+    1.0
+   ],
+   [
+    "Gozu (Gokud\u00f4 ky\u00f4fu dai-gekij\u00f4: Gozu) (2003)",
+    4.75,
+    2.0
+   ],
+   [
+    "Carandiru (2003)",
+    4.5,
+    1.0
+   ],
+   [
+    "A Plasticine Crow (1981)",
+    5.0,
+    1.0
+   ],
+   [
+    "Saw VII 3D - The Final Chapter (2010)",
+    4.5,
+    1.0
+   ],
+   [
+    "North & South (2004)",
+    4.5,
+    1.0
+   ],
+   [
+    "Lilting (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Stalingrad (1993)",
+    4.25,
+    2.0
+   ],
+   [
+    "Eva (2011)",
+    5.0,
+    1.0
+   ],
+   [
+    "Klute (1971)",
+    4.083333333333333,
+    6.0
+   ],
+   [
+    "Villain (1971)",
+    5.0,
+    1.0
+   ],
+   [
+    "World of Apu, The (Apur Sansar) (1959)",
+    4.75,
+    2.0
+   ],
+   [
+    "Lemonade (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "Decalogue, The (Dekalog) (1989)",
+    5.0,
+    1.0
+   ],
+   [
+    "Marat/Sade (1966)",
+    4.5,
+    2.0
+   ],
+   [
+    "What Love Is (2007)",
+    5.0,
+    1.0
+   ],
+   [
+    "Last Hurrah for Chivalry (Hao xia) (1979)",
+    5.0,
+    1.0
+   ],
+   [
+    "Visitor, The (2007)",
+    4.5,
+    1.0
+   ],
+   [
+    "Deliver Us from Evil (2006)",
+    4.5,
+    2.0
+   ],
+   [
+    "Sonatine (Sonachine) (1993)",
+    5.0,
+    1.0
+   ],
+   [
+    "Sherlock Holmes and Dr. Watson: Acquaintance (1979)",
+    5.0,
+    1.0
+   ],
+   [
+    "7th Voyage of Sinbad, The (1958)",
+    4.4,
+    5.0
+   ],
+   [
+    "Andalusian Dog, An (Chien andalou, Un) (1929)",
+    4.5,
+    4.0
+   ],
+   [
+    "Scotland, Pa. (2001)",
+    4.5,
+    1.0
+   ],
+   [
+    "13 Tzameti (2005)",
+    4.5,
+    1.0
+   ],
+   [
+    "Mud (2012)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Autumn Sonata (H\u00f6stsonaten) (1978)",
+    4.625,
+    4.0
+   ],
+   [
+    "Discreet Charm of the Bourgeoisie, The (Charme discret de la bourgeoisie, Le) (1972)",
+    4.3,
+    5.0
+   ],
+   [
+    "Black Tar Heroin: The Dark End of the Street (2000)",
+    5.0,
+    1.0
+   ],
+   [
+    "Die Frauen von Ravensbr\u00fcck (2005)",
+    4.5,
+    1.0
+   ],
+   [
+    "Dad's Army (1971)",
+    4.5,
+    1.0
+   ],
+   [
+    "Human Condition I, The (Ningen no joken I) (1959)",
+    4.5,
+    1.0
+   ],
+   [
+    "Jackass 2.5 (2007)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Kill List (2011)",
+    4.5,
+    1.0
+   ],
+   [
+    "Madame Sousatzka (1988)",
+    5.0,
+    1.0
+   ],
+   [
+    "Into the Woods (1991)",
+    5.0,
+    1.0
+   ],
+   [
+    "Ten, The (2007)",
+    4.5,
+    1.0
+   ],
+   [
+    "I'm Not Scared (Io non ho paura) (2003)",
+    4.25,
+    2.0
+   ],
+   [
+    "Particle Fever (2013)",
+    5.0,
+    1.0
+   ],
+   [
+    "Duellists, The (1977)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "The Thief (1997)",
+    4.5,
+    1.0
+   ],
+   [
+    "Tea with Mussolini (1999)",
+    4.25,
+    6.0
+   ],
+   [
+    "Everest (1998)",
+    4.25,
+    6.0
+   ],
+   [
+    "Perfect Candidate, A (1996)",
+    4.25,
+    2.0
+   ],
+   [
+    "His Secret Life (a.k.a. Ignorant Fairies, The) (Fate ignoranti, Le) (2001)",
+    4.5,
+    1.0
+   ],
+   [
+    "Jim Jefferies: Fully Functional (EPIX) (2012)",
+    4.5,
+    1.0
+   ],
+   [
+    "Nymphomaniac: Volume I (2013)",
+    4.25,
+    2.0
+   ],
+   [
+    "Witness for the Prosecution (1957)",
+    4.388888888888889,
+    9.0
+   ],
+   [
+    "After Life (Wandafuru raifu) (1998)",
+    4.25,
+    2.0
+   ],
+   [
+    "Underground (1995)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Jesus Camp (2006)",
+    4.071428571428571,
+    7.0
+   ],
+   [
+    "Empire (2002)",
+    4.5,
+    1.0
+   ],
+   [
+    "Riki-Oh: The Story of Ricky (Lik Wong) (1991)",
+    4.5,
+    1.0
+   ],
+   [
+    "Deathtrap (1982)",
+    4.5,
+    2.0
+   ],
+   [
+    "Train of Life (Train de vie) (1998)",
+    4.5,
+    2.0
+   ],
+   [
+    "Hood of Horror (2006)",
+    4.5,
+    1.0
+   ],
+   [
+    "Vacations in Prostokvashino (1980)",
+    5.0,
+    1.0
+   ],
+   [
+    "Presto (2008)",
+    5.0,
+    1.0
+   ],
+   [
+    "Hush... Hush, Sweet Charlotte (1964)",
+    4.5,
+    2.0
+   ],
+   [
+    "Swept Away (Travolti da un insolito destino nell'azzurro mare d'Agosto) (1975)",
+    4.666666666666667,
+    6.0
+   ],
+   [
+    "Broken (2012)",
+    4.5,
+    1.0
+   ],
+   [
+    "My Father and My Son (Babam ve oglum) (2005)",
+    4.5,
+    1.0
+   ],
+   [
+    "Citizen Ruth (1996)",
+    4.125,
+    4.0
+   ],
+   [
+    "With a Friend Like Harry... (Harry, un ami qui vous veut du bien) (2000)",
+    4.5,
+    2.0
+   ],
+   [
+    "Red Flag (2012)",
+    4.5,
+    1.0
+   ],
+   [
+    "Dinner Game, The (D\u00eener de cons, Le) (1998)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "I Was a Male War Bride (1949)",
+    4.25,
+    2.0
+   ],
+   [
+    "Jesus of Montreal (J\u00e9sus de Montr\u00e9al) (1989)",
+    4.5,
+    1.0
+   ],
+   [
+    "Lifeboat (1944)",
+    4.357142857142857,
+    7.0
+   ],
+   [
+    "Ali Wong: Baby Cobra (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "Chump at Oxford, A (1940)",
+    5.0,
+    1.0
+   ],
+   [
+    "Awfully Big Adventure, An (1995)",
+    5.0,
+    1.0
+   ],
+   [
+    "Incendies (2010)",
+    4.4,
+    5.0
+   ],
+   [
+    "Prince of Darkness (1987)",
+    4.5,
+    1.0
+   ],
+   [
+    "Adam's Apples (Adams \u00e6bler) (2005)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Tetro (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "Battle of Algiers, The (La battaglia di Algeri) (1966)",
+    4.3,
+    5.0
+   ],
+   [
+    "Rififi (Du rififi chez les hommes) (1955)",
+    4.75,
+    2.0
+   ],
+   [
+    "Meantime (1984)",
+    5.0,
+    1.0
+   ],
+   [
+    "The Adventures of Sherlock Holmes and Doctor Watson",
+    5.0,
+    1.0
+   ],
+   [
+    "Night on Earth (1991)",
+    4.125,
+    8.0
+   ],
+   [
+    "World of Tomorrow (2015)",
+    4.5,
+    2.0
+   ],
+   [
+    "The Stanford Prison Experiment (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "Aelita: The Queen of Mars (Aelita) (1924)",
+    4.5,
+    1.0
+   ],
+   [
+    "Happiness of the Katakuris, The (Katakuri-ke no k\u00f4fuku) (2001)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Tomorrow (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "Umberto D. (1952)",
+    5.0,
+    1.0
+   ],
+   [
+    "Return to Treasure Island (1988)",
+    5.0,
+    1.0
+   ],
+   [
+    "Investigation Held by Kolobki (1986)",
+    5.0,
+    1.0
+   ],
+   [
+    "Berlin Calling (2008)",
+    4.25,
+    2.0
+   ],
+   [
+    "Not One Less (Yi ge dou bu neng shao) (1999)",
+    4.5,
+    1.0
+   ],
+   [
+    "When a Woman Ascends the Stairs (Onna ga kaidan wo agaru toki) (1960)",
+    4.5,
+    1.0
+   ],
+   [
+    "Sandpiper, The (1965)",
+    5.0,
+    1.0
+   ],
+   [
+    "Alice Doesn't Live Here Anymore (1974)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Me and you (io e te) (2012)",
+    4.5,
+    1.0
+   ],
+   [
+    "What's Your Number? (2011)",
+    4.5,
+    1.0
+   ],
+   [
+    "All the Real Girls (2003)",
+    4.25,
+    2.0
+   ],
+   [
+    "Trailer Park Boys (1999)",
+    5.0,
+    1.0
+   ],
+   [
+    "Cruel Romance, A (Zhestokij Romans) (1984)",
+    5.0,
+    1.0
+   ],
+   [
+    "Big Top Scooby-Doo! (2012)",
+    5.0,
+    1.0
+   ],
+   [
+    "Paper Birds (P\u00e1jaros de papel) (2010)",
+    5.0,
+    1.0
+   ],
+   [
+    "Beautiful Thing (1996)",
+    4.5,
+    4.0
+   ],
+   [
+    "Tokyo Idols (2017)",
+    4.5,
+    1.0
+   ],
+   [
+    "Circus, The (1928)",
+    4.125,
+    4.0
+   ],
+   [
+    "Human Condition III, The (Ningen no joken III) (1961)",
+    5.0,
+    1.0
+   ],
+   [
+    "Lincoln (2012)",
+    4.5,
+    4.0
+   ],
+   [
+    "Belle \u00e9poque (1992)",
+    5.0,
+    2.0
+   ],
+   [
+    "Like Stars on Earth (Taare Zameen Par) (2007)",
+    4.5,
+    2.0
+   ],
+   [
+    "Sound of the Mountain (Thunder of the Mountain, The) (Yama no oto) (1954)",
+    4.5,
+    1.0
+   ],
+   [
+    "Happy People: A Year in the Taiga (2010)",
+    4.5,
+    1.0
+   ],
+   [
+    "Venus in Fur (La V\u00e9nus \u00e0 la fourrure) (2013)",
+    4.5,
+    1.0
+   ],
+   [
+    "Spirit Camp (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "Return, The (Vozvrashcheniye) (2003)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Hope and Glory (1987)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Mildred Pierce (2011)",
+    4.5,
+    1.0
+   ],
+   [
+    "Who's Afraid of Virginia Woolf? (1966)",
+    4.142857142857143,
+    7.0
+   ],
+   [
+    "Never Cry Wolf (1983)",
+    4.166666666666667,
+    9.0
+   ],
+   [
+    "Chungking Express (Chung Hing sam lam) (1994)",
+    4.375,
+    4.0
+   ],
+   [
+    "Atomic Cafe, The (1982)",
+    4.5,
+    2.0
+   ],
+   [
+    "Pixel Perfect (2004)",
+    4.5,
+    1.0
+   ],
+   [
+    "Trip to Bountiful, The (1985)",
+    4.25,
+    2.0
+   ],
+   [
+    "English Vinglish (2012)",
+    5.0,
+    1.0
+   ],
+   [
+    "Radio (2003)",
+    4.1,
+    5.0
+   ],
+   [
+    "Wings of the Dove, The (1997)",
+    4.416666666666667,
+    6.0
+   ],
+   [
+    "20 Feet from Stardom (Twenty Feet from Stardom) (2013)",
+    4.25,
+    2.0
+   ],
+   [
+    "The Man Who Killed Don Quixote (2018)",
+    4.5,
+    1.0
+   ],
+   [
+    "Fist Fight (2017)",
+    4.5,
+    1.0
+   ],
+   [
+    "Saw (2003)",
+    4.5,
+    2.0
+   ],
+   [
+    "Promise, The (La promesse) (1996)",
+    4.5,
+    2.0
+   ],
+   [
+    "Nine Lives of Tomas Katz, The (2000)",
+    5.0,
+    1.0
+   ],
+   [
+    "Left Behind: The Movie (2000)",
+    4.25,
+    2.0
+   ],
+   [
+    "Wow! A Talking Fish! (1983)",
+    5.0,
+    1.0
+   ],
+   [
+    "Calcium Kid, The (2004)",
+    5.0,
+    1.0
+   ],
+   [
+    "Copenhagen (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Tenchi Muy\u00f4! In Love (1996)",
+    5.0,
+    1.0
+   ],
+   [
+    "Raiders of the Lost Ark: The Adaptation (1989)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Empties (2007)",
+    5.0,
+    1.0
+   ],
+   [
+    "Junior and Karlson (1968)",
+    5.0,
+    1.0
+   ],
+   [
+    "Wild Parrots of Telegraph Hill, The (2003)",
+    4.75,
+    2.0
+   ],
+   [
+    "Free to Play (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Kevin Hart: I'm a Grown Little Man (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "Maximum Ride (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "Palookaville (1996)",
+    4.5,
+    2.0
+   ],
+   [
+    "Denise Calls Up (1995)",
+    5.0,
+    1.0
+   ],
+   [
+    "Siam Sunset (1999)",
+    5.0,
+    1.0
+   ],
+   [
+    "Tom Segura: Mostly Stories (2016)",
+    5.0,
+    1.0
+   ],
+   [
+    "Strictly Sexual (2008)",
+    5.0,
+    1.0
+   ],
+   [
+    "Claire's Knee (Genou de Claire, Le) (1970)",
+    4.5,
+    1.0
+   ],
+   [
+    "Long Goodbye, The (1973)",
+    4.666666666666667,
+    3.0
+   ],
+   [
+    "Home (2009)",
+    4.5,
+    2.0
+   ],
+   [
+    "Colourful (Karafuru) (2010)",
+    5.0,
+    1.0
+   ],
+   [
+    "All the Vermeers in New York (1990)",
+    5.0,
+    1.0
+   ],
+   [
+    "Day & Night (2010)",
+    4.1,
+    5.0
+   ],
+   [
+    "Sanjuro (Tsubaki Sanj\u00fbr\u00f4) (1962)",
+    4.25,
+    4.0
+   ],
+   [
+    "Miracles - Mr. Canton and Lady Rose (1989)",
+    4.5,
+    1.0
+   ],
+   [
+    "Hector and the Search for Happiness (2014)",
+    4.25,
+    2.0
+   ],
+   [
+    "Down Argentine Way (1940)",
+    5.0,
+    1.0
+   ],
+   [
+    "Formula of Love (1984)",
+    5.0,
+    1.0
+   ],
+   [
+    "Under the Sand (2000)",
+    4.5,
+    2.0
+   ],
+   [
+    "Sherlock - A Study in Pink (2010)",
+    4.75,
+    2.0
+   ],
+   [
+    "Interiors (1978)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Craig Ferguson: I'm Here To Help (2013)",
+    5.0,
+    1.0
+   ],
+   [
+    "Lagaan: Once Upon a Time in India (2001)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Odd Life of Timothy Green, The (2012)",
+    5.0,
+    1.0
+   ],
+   [
+    "Frozen River (2008)",
+    4.5,
+    1.0
+   ],
+   [
+    "Whiplash (2013)",
+    4.75,
+    2.0
+   ],
+   [
+    "War Dance (2007)",
+    4.5,
+    1.0
+   ],
+   [
+    "Match Factory Girl, The (Tulitikkutehtaan tytt\u00f6) (1990)",
+    5.0,
+    1.0
+   ],
+   [
+    "Beautiful People (1999)",
+    4.75,
+    2.0
+   ],
+   [
+    "UnHung Hero (2013)",
+    4.5,
+    1.0
+   ],
+   [
+    "Who Killed Chea Vichea? (2010)",
+    5.0,
+    1.0
+   ],
+   [
+    "Matewan (1987)",
+    4.166666666666667,
+    6.0
+   ],
+   [
+    "Career Girls (1997)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Kevin Smith: Too Fat For 40 (2010)",
+    4.5,
+    1.0
+   ],
+   [
+    "Oklahoma! (1955)",
+    4.5,
+    2.0
+   ],
+   [
+    "Bone Man, The (Der Knochenmann) (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "Crippled Avengers (Can que) (Return of the 5 Deadly Venoms) (1981)",
+    5.0,
+    1.0
+   ],
+   [
+    "Desert Hearts (1985)",
+    4.5,
+    1.0
+   ],
+   [
+    "One I Love, The (2014)",
+    5.0,
+    1.0
+   ],
+   [
+    "La Belle Verte (1996)",
+    4.5,
+    1.0
+   ],
+   [
+    "Public Enemy, The (1931)",
+    4.25,
+    2.0
+   ],
+   [
+    "Battlestar Galactica: The Plan (2009)",
+    4.25,
+    2.0
+   ],
+   [
+    "Ooops! Noah is Gone... (2015)",
+    5.0,
+    1.0
+   ],
+   [
+    "American Made (2017)",
+    4.5,
+    2.0
+   ],
+   [
+    "3 Women (Three Women) (1977)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Monty Python Live at the Hollywood Bowl (1982)",
+    4.166666666666667,
+    9.0
+   ],
+   [
+    "Rivers and Tides (2001)",
+    5.0,
+    1.0
+   ],
+   [
+    "Nymphomaniac: Volume II (2013)",
+    4.5,
+    1.0
+   ],
+   [
+    "Vagabond (Sans toit ni loi) (1985)",
+    5.0,
+    1.0
+   ],
+   [
+    "Sorority House Massacre II (1990)",
+    5.0,
+    1.0
+   ],
+   [
+    "Grapes of Wrath, The (1940)",
+    4.111111111111111,
+    9.0
+   ],
+   [
+    "Ballad of Narayama, The (Narayama bushiko) (1983)",
+    5.0,
+    1.0
+   ],
+   [
+    "Going Places (Valseuses, Les) (1974)",
+    5.0,
+    1.0
+   ],
+   [
+    "The Square (2017)",
+    4.25,
+    2.0
+   ],
+   [
+    "My Dinner with Andr\u00e9 (1981)",
+    4.75,
+    2.0
+   ],
+   [
+    "Power of Nightmares, The: The Rise of the Politics of Fear (2004)",
+    4.5,
+    1.0
+   ],
+   [
+    "Barely Lethal (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "Widow of St. Pierre, The (Veuve de Saint-Pierre, La) (2000)",
+    4.125,
+    4.0
+   ],
+   [
+    "Thousand Clowns, A (1965)",
+    5.0,
+    1.0
+   ],
+   [
+    "Winnie the Pooh Goes Visiting (1971)",
+    5.0,
+    1.0
+   ],
+   [
+    "Continental Divide (1981)",
+    5.0,
+    1.0
+   ],
+   [
+    "Shooting Fish (1997)",
+    4.1,
+    5.0
+   ],
+   [
+    "I'm Starting From Three (Ricomincio da Tre) (1981)",
+    4.5,
+    1.0
+   ],
+   [
+    "Triumph of the Will (Triumph des Willens) (1934)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Cosmic Scrat-tastrophe (2015)",
+    5.0,
+    1.0
+   ],
+   [
+    "Dragons: Gift of the Night Fury (2011)",
+    5.0,
+    1.0
+   ],
+   [
+    "Laggies (2014)",
+    5.0,
+    1.0
+   ],
+   [
+    "Freaks of Nature (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "Last Days of Disco, The (1998)",
+    4.5,
+    3.0
+   ],
+   [
+    "Unicorn City (2012)",
+    5.0,
+    1.0
+   ],
+   [
+    "Top Hat (1935)",
+    4.071428571428571,
+    7.0
+   ],
+   [
+    "Cocaine Cowboys (2006)",
+    4.5,
+    2.0
+   ],
+   [
+    "Europa Europa (Hitlerjunge Salomon) (1990)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Places in the Heart (1984)",
+    4.25,
+    4.0
+   ],
+   [
+    "Body Snatcher, The (1945)",
+    4.5,
+    1.0
+   ],
+   [
+    "12 Chairs (1976)",
+    5.0,
+    1.0
+   ],
+   [
+    "Galaxy of Terror (Quest) (1981)",
+    5.0,
+    1.0
+   ],
+   [
+    "True Stories (1986)",
+    5.0,
+    1.0
+   ],
+   [
+    "Near Dark (1987)",
+    4.3125,
+    8.0
+   ],
+   [
+    "The Fool (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Winnie the Pooh and the Day of Concern (1972)",
+    5.0,
+    1.0
+   ],
+   [
+    "Blue Planet II (2017)",
+    5.0,
+    1.0
+   ],
+   [
+    "I Stand Alone (Seul contre tous) (1998)",
+    4.5,
+    1.0
+   ],
+   [
+    "Only Old Men Are Going to Battle (V boy idut odni stariki) (1973)",
+    4.5,
+    1.0
+   ],
+   [
+    "Time Masters (Ma\u00eetres du temps, Les) (1982)",
+    4.5,
+    1.0
+   ],
+   [
+    "Tenant, The (Locataire, Le) (1976)",
+    4.25,
+    2.0
+   ],
+   [
+    "Last Detail, The (1973)",
+    4.25,
+    8.0
+   ],
+   [
+    "[REC] (2007)",
+    4.0625,
+    8.0
+   ],
+   [
+    "Thin Line Between Love and Hate, A (1996)",
+    5.0,
+    1.0
+   ],
+   [
+    "The Raid: Redemption (2011)",
+    4.333333333333333,
+    9.0
+   ],
+   [
+    "Gladiator (1992)",
+    4.333333333333333,
+    9.0
+   ],
+   [
+    "Conjuring, The (2013)",
+    4.214285714285714,
+    7.0
+   ],
+   [
+    "61* (2001)",
+    5.0,
+    1.0
+   ],
+   [
+    "Nebraska (2013)",
+    4.125,
+    4.0
+   ],
+   [
+    "Dune (2000)",
+    4.375,
+    4.0
+   ],
+   [
+    "Partly Cloudy (2009)",
+    4.375,
+    4.0
+   ],
+   [
+    "Born Yesterday (1950)",
+    4.285714285714286,
+    7.0
+   ],
+   [
+    "Gold Rush, The (1925)",
+    4.071428571428571,
+    7.0
+   ],
+   [
+    "National Lampoon's Bag Boy (2007)",
+    5.0,
+    1.0
+   ],
+   [
+    "Colonel Chabert, Le (1994)",
+    4.5,
+    2.0
+   ],
+   [
+    "Babes in Toyland (1934)",
+    5.0,
+    1.0
+   ],
+   [
+    "Scooby-Doo! Curse of the Lake Monster (2010)",
+    5.0,
+    1.0
+   ],
+   [
+    "Harakiri (Seppuku) (1962)",
+    4.5,
+    3.0
+   ],
+   [
+    "George Carlin: Back in Town (1996)",
+    5.0,
+    1.0
+   ],
+   [
+    "Hollywood Chainsaw Hookers (1988)",
+    5.0,
+    1.0
+   ],
+   [
+    "Submarine (2010)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Thief (1981)",
+    4.5,
+    2.0
+   ],
+   [
+    "Kolya (Kolja) (1996)",
+    4.428571428571429,
+    7.0
+   ],
+   [
+    "Myst\u00e8re \u00e0 la Tour Eiffel (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "Elite Squad: The Enemy Within (Tropa de Elite 2 - O Inimigo Agora \u00c9 Outro) (2010)",
+    4.357142857142857,
+    7.0
+   ],
+   [
+    "All Dogs Christmas Carol, An (1998)",
+    4.5,
+    1.0
+   ],
+   [
+    "Assembly (Ji jie hao) (2007) ",
+    4.5,
+    1.0
+   ],
+   [
+    "Superman/Batman: Public Enemies (2009)",
+    5.0,
+    1.0
+   ],
+   [
+    "Oscar (1967)",
+    5.0,
+    1.0
+   ],
+   [
+    "Tekkonkinkreet (Tekkon kinkur\u00eeto) (2006)",
+    4.625,
+    4.0
+   ],
+   [
+    "My Life as a Dog (Mitt liv som hund) (1985)",
+    4.166666666666667,
+    9.0
+   ],
+   [
+    "Garam Masala (2005)",
+    4.5,
+    1.0
+   ],
+   [
+    "Ice Guardians (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "BURN-E (2008)",
+    4.5,
+    3.0
+   ],
+   [
+    "Return of Martin Guerre, The (Retour de Martin Guerre, Le) (1982)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Fugitives (1986)",
+    5.0,
+    1.0
+   ],
+   [
+    "Trial, The (Proc\u00e8s, Le) (1962)",
+    4.9,
+    5.0
+   ],
+   [
+    "Carry on Cabby (1963)",
+    4.5,
+    1.0
+   ],
+   [
+    "Pom Poko (a.k.a. Raccoon War, The) (Heisei tanuki gassen pompoko) (1994)",
+    4.25,
+    2.0
+   ],
+   [
+    "Shaolin Temple (Shao Lin si) (1976)",
+    4.5,
+    1.0
+   ],
+   [
+    "Love & Mercy (2014)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "O.J.: Made in America (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "Lammbock (2001)",
+    4.5,
+    1.0
+   ],
+   [
+    "The Importance of Being Earnest (1952)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Paid in Full (2002)",
+    4.5,
+    1.0
+   ],
+   [
+    "Brother (Brat) (1997)",
+    5.0,
+    1.0
+   ],
+   [
+    "Akira Kurosawa's Dreams (Dreams) (1990)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Last Year's Snow Was Falling (1983)",
+    5.0,
+    1.0
+   ],
+   [
+    "Tom and Jerry: Shiver Me Whiskers (2006)",
+    5.0,
+    1.0
+   ],
+   [
+    "Shadow World (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "Neal Brennan: 3 Mics (2017)",
+    4.5,
+    1.0
+   ],
+   [
+    "Oasis (2002)",
+    4.5,
+    1.0
+   ],
+   [
+    "My Man Godfrey (1957)",
+    5.0,
+    1.0
+   ],
+   [
+    "Marriage of Maria Braun, The (Ehe der Maria Braun, Die) (1979)",
+    5.0,
+    1.0
+   ],
+   [
+    "Spellbound (2011)",
+    5.0,
+    1.0
+   ],
+   [
+    "Raise Your Voice (2004)",
+    5.0,
+    1.0
+   ],
+   [
+    "Impromptu (1991)",
+    4.25,
+    2.0
+   ],
+   [
+    "What's Up, Doc? (1972)",
+    4.5,
+    1.0
+   ],
+   [
+    "Perfect Blue (1997)",
+    4.2,
+    5.0
+   ],
+   [
+    "Trust (1990)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "9/11 (2002)",
+    5.0,
+    1.0
+   ],
+   [
+    "L.A. Slasher (2015)",
+    5.0,
+    1.0
+   ],
+   [
+    "Gallipoli (1981)",
+    4.285714285714286,
+    7.0
+   ],
+   [
+    "Bill Burr: Why Do I Do This? (2008)",
+    4.5,
+    1.0
+   ],
+   [
+    "You Only Live Once (1937)",
+    4.5,
+    1.0
+   ],
+   [
+    "Dernier Combat, Le (Last Battle, The) (1983)",
+    4.5,
+    1.0
+   ],
+   [
+    "Army of Shadows (L'arm\u00e9e des ombres) (1969)",
+    4.5,
+    1.0
+   ],
+   [
+    "Captain Newman, M.D. (1963)",
+    4.5,
+    1.0
+   ],
+   [
+    "Rare Exports: A Christmas Tale (Rare Exports) (2010)",
+    4.25,
+    2.0
+   ],
+   [
+    "Last Life in the Universe (Ruang rak noi nid mahasan) (2003)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Master of the Flying Guillotine (Du bi quan wang da po xue di zi) (1975)",
+    4.5,
+    1.0
+   ],
+   [
+    "Summer's Tale, A (Conte d'\u00e9t\u00e9) (1996)",
+    5.0,
+    1.0
+   ],
+   [
+    "Angry Red Planet, The (1959)",
+    4.5,
+    1.0
+   ],
+   [
+    "Stand, The (1994)",
+    5.0,
+    1.0
+   ],
+   [
+    "Ice Age: The Great Egg-Scapade (2016)",
+    5.0,
+    1.0
+   ],
+   [
+    "Valet, The (La doublure) (2006)",
+    5.0,
+    1.0
+   ],
+   [
+    "Place in the Sun, A (1951)",
+    4.5,
+    2.0
+   ],
+   [
+    "John Wick: Chapter Two (2017)",
+    4.142857142857143,
+    7.0
+   ],
+   [
+    "Alpha (2018)",
+    4.5,
+    1.0
+   ],
+   [
+    "Che: Part One (2008)",
+    5.0,
+    1.0
+   ],
+   [
+    "Martin Lawrence Live: Runteldat (2002)",
+    5.0,
+    1.0
+   ],
+   [
+    "Chapayev (1934)",
+    4.5,
+    1.0
+   ],
+   [
+    "Dead Snow (D\u00f8d sn\u00f8) (2009)",
+    4.25,
+    4.0
+   ],
+   [
+    "Gintama (2017)",
+    4.5,
+    1.0
+   ],
+   [
+    "Quiet Earth, The (1985)",
+    4.25,
+    2.0
+   ],
+   [
+    "Big Bird Cage, The (1972)",
+    4.5,
+    1.0
+   ],
+   [
+    "Hellbenders (2012)",
+    5.0,
+    1.0
+   ],
+   [
+    "Indignation (2016)",
+    5.0,
+    1.0
+   ],
+   [
+    "Moscow Does Not Believe in Tears (Moskva slezam ne verit) (1979)",
+    5.0,
+    1.0
+   ],
+   [
+    "Knock Off (1998)",
+    5.0,
+    1.0
+   ],
+   [
+    "Woman Is a Woman, A (femme est une femme, Une) (1961)",
+    5.0,
+    1.0
+   ],
+   [
+    "Scalphunters, The (1968)",
+    4.5,
+    1.0
+   ],
+   [
+    "Miss Nobody (2010)",
+    5.0,
+    1.0
+   ],
+   [
+    "Supercop 2 (Project S) (Chao ji ji hua) (1993)",
+    5.0,
+    1.0
+   ],
+   [
+    "When Worlds Collide (1951)",
+    5.0,
+    1.0
+   ],
+   [
+    "Guy X (2005)",
+    5.0,
+    1.0
+   ],
+   [
+    "Into the Forest of Fireflies' Light (2011)",
+    5.0,
+    1.0
+   ],
+   [
+    "Go for Zucker! (Alles auf Zucker!) (2004)",
+    5.0,
+    1.0
+   ],
+   [
+    "Ken Park (2002)",
+    4.5,
+    1.0
+   ],
+   [
+    "Affair of Love, An (Liaison pornographique, Une) (1999)",
+    4.75,
+    2.0
+   ],
+   [
+    "Scooby-Doo Goes Hollywood (1979)",
+    5.0,
+    1.0
+   ],
+   [
+    "Cheburashka (1971)",
+    5.0,
+    1.0
+   ],
+   [
+    "Delirium (2014)",
+    5.0,
+    1.0
+   ],
+   [
+    "Signal, The (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Alien Contamination (1980)",
+    5.0,
+    1.0
+   ],
+   [
+    "Perfect Crime, The (Crimen Ferpecto) (Ferpect Crime) (2004)",
+    4.5,
+    1.0
+   ],
+   [
+    "Vampire in Venice (Nosferatu a Venezia) (Nosferatu in Venice) (1986)",
+    5.0,
+    1.0
+   ],
+   [
+    "Ivan Vasilievich: Back to the Future (Ivan Vasilievich menyaet professiyu) (1973)",
+    4.5,
+    1.0
+   ],
+   [
+    "Conformist, The (Conformista, Il) (1970)",
+    4.1,
+    5.0
+   ],
+   [
+    "Moby Dick (1956)",
+    4.5,
+    2.0
+   ],
+   [
+    "Very Potter Sequel, A (2010)",
+    5.0,
+    1.0
+   ],
+   [
+    "George Carlin: You Are All Diseased (1999)",
+    5.0,
+    1.0
+   ],
+   [
+    "Ex Drummer (2007)",
+    5.0,
+    1.0
+   ],
+   [
+    "Price of Milk, The (2000)",
+    4.5,
+    1.0
+   ],
+   [
+    "Babette's Feast (Babettes g\u00e6stebud) (1987)",
+    4.4,
+    5.0
+   ],
+   [
+    "Breaking the Waves (1996)",
+    4.071428571428571,
+    7.0
+   ],
+   [
+    "Cherish (2002)",
+    5.0,
+    1.0
+   ],
+   [
+    "Running on Empty (1988)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Maniac Cop 2 (1990)",
+    5.0,
+    1.0
+   ],
+   [
+    "White Christmas (1954)",
+    4.1875,
+    8.0
+   ],
+   [
+    "Travels of an Ant (1983)",
+    5.0,
+    1.0
+   ],
+   [
+    "Chinese Puzzle (Casse-t\u00eate chinois) (2013)",
+    5.0,
+    1.0
+   ],
+   [
+    "Mr. Nobody (2009)",
+    4.142857142857143,
+    7.0
+   ],
+   [
+    "The Jinx: The Life and Deaths of Robert Durst (2015)",
+    5.0,
+    1.0
+   ],
+   [
+    "Endless Summer, The (1966)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Real Women Have Curves (2002)",
+    4.25,
+    2.0
+   ],
+   [
+    "Touch of Zen, A (Xia nu) (1971)",
+    4.5,
+    1.0
+   ],
+   [
+    "Everybody Wants Some (2016)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Before Night Falls (2000)",
+    4.3,
+    5.0
+   ],
+   [
+    "Broadway Danny Rose (1984)",
+    4.2,
+    5.0
+   ],
+   [
+    "Steamboat Bill, Jr. (1928)",
+    4.5,
+    1.0
+   ],
+   [
+    "The Pacific (2010)",
+    4.75,
+    2.0
+   ],
+   [
+    "Won't You Be My Neighbor? (2018)",
+    5.0,
+    1.0
+   ],
+   [
+    "Umbrellas of Cherbourg, The (Parapluies de Cherbourg, Les) (1964)",
+    4.125,
+    4.0
+   ],
+   [
+    "Monday (2000)",
+    4.5,
+    1.0
+   ],
+   [
+    "United 93 (2006)",
+    4.142857142857143,
+    7.0
+   ],
+   [
+    "High Sierra (1941)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "There Once Was a Dog (1982)",
+    5.0,
+    1.0
+   ],
+   [
+    "Prophet, A (Un Proph\u00e8te) (2009)",
+    4.25,
+    4.0
+   ],
+   [
+    "Piper (2016)",
+    4.5,
+    2.0
+   ],
+   [
+    "Imposter, The (2012)",
+    4.75,
+    2.0
+   ],
+   [
+    "Pride and Prejudice and Zombies (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "Kung Fu Panda: Secrets of the Masters (2011)",
+    5.0,
+    1.0
+   ],
+   [
+    "Brother 2 (Brat 2) (2000)",
+    4.5,
+    1.0
+   ],
+   [
+    "Girl Who Played with Fire, The (Flickan som lekte med elden) (2009)",
+    4.25,
+    4.0
+   ],
+   [
+    "Indochine (1992)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Rory O'Shea Was Here (Inside I'm Dancing) (2004)",
+    4.5,
+    1.0
+   ],
+   [
+    "Assignment, The (1997)",
+    5.0,
+    1.0
+   ],
+   [
+    "Ararat (2002)",
+    4.5,
+    1.0
+   ],
+   [
+    "Going Clear: Scientology and the Prison of Belief (2015)",
+    4.25,
+    2.0
+   ],
+   [
+    "The Adventures of Sherlock Holmes and Doctor Watson: The Hunt for the Tiger (1980)",
+    4.5,
+    1.0
+   ],
+   [
+    "Straight Outta Compton (2015)",
+    4.214285714285714,
+    7.0
+   ],
+   [
+    "Goodbye Charlie (1964)",
+    5.0,
+    1.0
+   ],
+   [
+    "Battle Royale 2: Requiem (Batoru rowaiaru II: Chinkonka) (2003)",
+    5.0,
+    1.0
+   ],
+   [
+    "Short Film About Love, A (Kr\u00f3tki film o milosci) (1988)",
+    4.5,
+    1.0
+   ],
+   [
+    "Sword of Doom, The (Dai-bosatsu t\u00f4ge) (1966)",
+    4.25,
+    2.0
+   ],
+   [
+    "Candy (2006)",
+    4.25,
+    2.0
+   ],
+   [
+    "Jonah Who Will Be 25 in the Year 2000 (Jonas qui aura 25 ans en l'an 2000) (1976)",
+    5.0,
+    2.0
+   ],
+   [
+    "The Founder (2016)",
+    4.25,
+    2.0
+   ],
+   [
+    "No Direction Home: Bob Dylan (2005)",
+    4.625,
+    4.0
+   ],
+   [
+    "Encounters at the End of the World (2008)",
+    4.5,
+    3.0
+   ],
+   [
+    "Entertaining Angels: The Dorothy Day Story (1996)",
+    5.0,
+    1.0
+   ],
+   [
+    "Departures (Okuribito) (2008)",
+    4.1,
+    5.0
+   ],
+   [
+    "Loving Vincent (2017)",
+    5.0,
+    1.0
+   ],
+   [
+    "Killer Joe (2011)",
+    4.5,
+    1.0
+   ],
+   [
+    "Visitors, The (Visiteurs, Les) (1993)",
+    4.125,
+    4.0
+   ],
+   [
+    "Killer Movie (2008)",
+    4.5,
+    1.0
+   ],
+   [
+    "A Perfect Day (2015)",
+    5.0,
+    1.0
+   ],
+   [
+    "Madly in Love (1981)",
+    4.5,
+    1.0
+   ],
+   [
+    "Tae Guk Gi: The Brotherhood of War (Taegukgi hwinalrimyeo) (2004)",
+    4.5,
+    1.0
+   ],
+   [
+    "Loved Ones, The (2009)",
+    4.25,
+    2.0
+   ],
+   [
+    "Dead or Alive: Hanzaisha (1999)",
+    4.25,
+    2.0
+   ],
+   [
+    "Lion King 1\u00bd, The (2004)",
+    4.5,
+    2.0
+   ],
+   [
+    "Black Mirror",
+    5.0,
+    1.0
+   ],
+   [
+    "Damned United, The (2009)",
+    4.25,
+    2.0
+   ],
+   [
+    "Control (2007)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Elling (2001)",
+    4.5,
+    2.0
+   ],
+   [
+    "V/H/S/2 (2013)",
+    4.5,
+    1.0
+   ],
+   [
+    "My Kid Could Paint That (2007)",
+    4.5,
+    1.0
+   ],
+   [
+    "Hit the Bank (Vabank) (1981)",
+    4.5,
+    1.0
+   ],
+   [
+    "Emperor's New Groove 2: Kronk's New Groove, The (2005)",
+    4.5,
+    1.0
+   ],
+   [
+    "The Adventures of Sherlock Holmes and Dr. Watson: Bloody Signature (1979)",
+    5.0,
+    1.0
+   ],
+   [
+    "Cove, The (2009)",
+    4.25,
+    4.0
+   ],
+   [
+    "Intact (Intacto) (2001)",
+    4.25,
+    2.0
+   ],
+   [
+    "Palm Beach Story, The (1942)",
+    4.1,
+    5.0
+   ],
+   [
+    "12 Angry Men (1997)",
+    5.0,
+    1.0
+   ],
+   [
+    "Last Tango in Paris (Ultimo tango a Parigi) (1972)",
+    4.5,
+    5.0
+   ],
+   [
+    "Garden of Words, The (Koto no ha no niwa) (2013)",
+    5.0,
+    1.0
+   ],
+   [
+    "Dark Blue World (Tmavomodr\u00fd svet) (2001)",
+    4.25,
+    2.0
+   ],
+   [
+    "Separation, A (Jodaeiye Nader az Simin) (2011)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Faster (2010)",
+    5.0,
+    1.0
+   ],
+   [
+    "Code 46 (2003)",
+    4.5,
+    1.0
+   ],
+   [
+    "Heima (2007)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Mutiny on the Bounty (1935)",
+    4.166666666666667,
+    6.0
+   ],
+   [
+    "Dersu Uzala (1975)",
+    4.3,
+    5.0
+   ],
+   [
+    "Bill Burr: Let It Go (2010)",
+    4.5,
+    1.0
+   ],
+   [
+    "Jules and Jim (Jules et Jim) (1961)",
+    4.5,
+    5.0
+   ],
+   [
+    "Frank (2014)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Woman Under the Influence, A (1974)",
+    5.0,
+    1.0
+   ],
+   [
+    "Stunt Man, The (1980)",
+    4.5,
+    3.0
+   ],
+   [
+    "Welcome to the Sticks (Bienvenue chez les Ch'tis) (2008)",
+    4.5,
+    2.0
+   ],
+   [
+    "Tangerine (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "Microcosmos (Microcosmos: Le peuple de l'herbe) (1996)",
+    4.125,
+    4.0
+   ],
+   [
+    "Splendor in the Grass (1961)",
+    4.25,
+    2.0
+   ],
+   [
+    "Animal Crackers (1930)",
+    4.125,
+    4.0
+   ],
+   [
+    "Crazy Heart (2009)",
+    4.1,
+    5.0
+   ],
+   [
+    "Awful Truth, The (1937)",
+    4.75,
+    2.0
+   ],
+   [
+    "Winter in Prostokvashino (1984)",
+    5.0,
+    1.0
+   ],
+   [
+    "Patti Rocks (1988)",
+    4.5,
+    1.0
+   ],
+   [
+    "The Big Bus (1976)",
+    5.0,
+    1.0
+   ],
+   [
+    "Rain (2001)",
+    5.0,
+    1.0
+   ],
+   [
+    "Winnie Pooh (1969)",
+    5.0,
+    1.0
+   ],
+   [
+    "Au revoir les enfants (1987)",
+    4.1,
+    5.0
+   ],
+   [
+    "Nobody Knows (Dare mo shiranai) (2004)",
+    4.25,
+    2.0
+   ],
+   [
+    "Ghost Graduation (2012)",
+    5.0,
+    1.0
+   ],
+   [
+    "Dracula (1979)",
+    4.5,
+    1.0
+   ],
+   [
+    "Zeitgeist: Addendum (2008)",
+    4.5,
+    1.0
+   ],
+   [
+    "Monsieur Lazhar (2011)",
+    4.5,
+    2.0
+   ],
+   [
+    "Death Note: Desu n\u00f4to (2006\u20132007)",
+    5.0,
+    1.0
+   ],
+   [
+    "The Love Bug (1997)",
+    5.0,
+    1.0
+   ],
+   [
+    "Max Manus (2008)",
+    5.0,
+    1.0
+   ],
+   [
+    "Central Station (Central do Brasil) (1998)",
+    4.416666666666667,
+    6.0
+   ],
+   [
+    "My Life as McDull (Mak dau goo si) (2001)",
+    5.0,
+    1.0
+   ],
+   [
+    "Snowflake, the White Gorilla (2011)",
+    5.0,
+    1.0
+   ],
+   [
+    "Seven Sisters (2017)",
+    4.25,
+    2.0
+   ],
+   [
+    "Stage Door (1937)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Act of Killing, The (2012)",
+    5.0,
+    1.0
+   ],
+   [
+    "Gaslight (1944)",
+    4.142857142857143,
+    7.0
+   ],
+   [
+    "The Night Is Short, Walk on Girl (2017)",
+    4.5,
+    1.0
+   ],
+   [
+    "Biutiful (2010)",
+    4.25,
+    2.0
+   ],
+   [
+    "Gods and Monsters (1998)",
+    4.125,
+    4.0
+   ],
+   [
+    "What Happened Was... (1994)",
+    5.0,
+    1.0
+   ],
+   [
+    "Dead Man's Shoes (2004)",
+    4.75,
+    2.0
+   ],
+   [
+    "Dragonslayer (1981)",
+    4.083333333333333,
+    6.0
+   ],
+   [
+    "Bill Burr: I'm Sorry You Feel That Way (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Seems Like Old Times (1980)",
+    5.0,
+    1.0
+   ],
+   [
+    "Another Woman (1988)",
+    4.5,
+    1.0
+   ],
+   [
+    "Girl Walks Into a Bar (2011)",
+    4.5,
+    1.0
+   ],
+   [
+    "Marwencol (2010)",
+    4.25,
+    2.0
+   ],
+   [
+    "Style Wars (1983)",
+    4.5,
+    1.0
+   ],
+   [
+    "In the Loop (2009)",
+    4.3,
+    5.0
+   ],
+   [
+    "In the Realm of the Senses (Ai no corrida) (1976)",
+    5.0,
+    1.0
+   ],
+   [
+    "The Lord's Lantern in Budapest (1999)",
+    4.5,
+    1.0
+   ],
+   [
+    "Searching for Sugar Man (2012)",
+    4.25,
+    4.0
+   ],
+   [
+    "Hangar 18 (1980)",
+    4.5,
+    2.0
+   ],
+   [
+    "10th & Wolf (2006)",
+    4.5,
+    1.0
+   ],
+   [
+    "Phir Hera Pheri (2006)",
+    4.5,
+    1.0
+   ],
+   [
+    "Geri's Game (1997)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "American Friend, The (Amerikanische Freund, Der) (1977)",
+    5.0,
+    1.0
+   ],
+   [
+    "That Sugar Film (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Man for All Seasons, A (1966)",
+    4.333333333333333,
+    6.0
+   ],
+   [
+    "Front of the Class (2008)",
+    5.0,
+    1.0
+   ],
+   [
+    "Get Low (2009)",
+    5.0,
+    1.0
+   ],
+   [
+    "Impostors, The (1998)",
+    4.5,
+    2.0
+   ],
+   [
+    "Buena Vista Social Club (1999)",
+    4.375,
+    4.0
+   ],
+   [
+    "I Capture the Castle (2003)",
+    4.5,
+    1.0
+   ],
+   [
+    "Happy Feet Two (2011)",
+    5.0,
+    1.0
+   ],
+   [
+    "Hunger (2008)",
+    4.75,
+    2.0
+   ],
+   [
+    "Cornered! (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "Point of No Return (1993)",
+    4.25,
+    2.0
+   ],
+   [
+    "Manon of the Spring (Manon des sources) (1986)",
+    4.0625,
+    8.0
+   ],
+   [
+    "Human (2015)",
+    5.0,
+    1.0
+   ],
+   [
+    "Paddington 2 (2017)",
+    4.25,
+    2.0
+   ],
+   [
+    "Nut Job, The (2014)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Walkabout (1971)",
+    4.25,
+    2.0
+   ],
+   [
+    "Louis C.K.: Oh My God (2013)",
+    4.125,
+    4.0
+   ],
+   [
+    "The Adventures of Sherlock Holmes and Doctor Watson: King of Blackmailers (1980)",
+    5.0,
+    1.0
+   ],
+   [
+    "Light Years (Gandahar) (1988)",
+    5.0,
+    1.0
+   ],
+   [
+    "Time of the Gypsies (Dom za vesanje) (1989)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "The Taming of the Scoundrel (1980)",
+    4.5,
+    1.0
+   ],
+   [
+    "He Loves Me... He Loves Me Not (\u00c0 la folie... pas du tout) (2002)",
+    4.5,
+    1.0
+   ],
+   [
+    "Doctor Who: Voyage Of The Damned (2007)",
+    4.5,
+    3.0
+   ],
+   [
+    "Harlan County U.S.A. (1976)",
+    5.0,
+    1.0
+   ],
+   [
+    "Mind Game (2004)",
+    4.25,
+    2.0
+   ],
+   [
+    "Cry, the Beloved Country (1995)",
+    4.25,
+    2.0
+   ],
+   [
+    "Buzzard (2015)",
+    5.0,
+    1.0
+   ],
+   [
+    "All That Heaven Allows (1955)",
+    4.25,
+    4.0
+   ],
+   [
+    "Fast Food, Fast Women (2000)",
+    4.5,
+    1.0
+   ],
+   [
+    "Flickering Lights (Blinkende lygter) (2000)",
+    4.5,
+    3.0
+   ],
+   [
+    "The Man from Nowhere (2010)",
+    4.5,
+    3.0
+   ],
+   [
+    "Sophie Scholl: The Final Days (Sophie Scholl - Die letzten Tage) (2005)",
+    4.625,
+    4.0
+   ],
+   [
+    "Willy/Milly (1986)",
+    5.0,
+    1.0
+   ],
+   [
+    "King of Comedy, The (1983)",
+    4.071428571428571,
+    7.0
+   ],
+   [
+    "Hunt for the Wilderpeople (2016)",
+    4.375,
+    4.0
+   ],
+   [
+    "Children of the Corn IV: The Gathering (1996)",
+    4.666666666666667,
+    3.0
+   ],
+   [
+    "Ryuzo and the Seven Henchmen (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "12 Chairs (1971)",
+    4.5,
+    1.0
+   ],
+   [
+    "Saving Face (2004)",
+    5.0,
+    1.0
+   ],
+   [
+    "Filth (2013)",
+    4.5,
+    2.0
+   ],
+   [
+    "We're No Angels (1955)",
+    4.5,
+    1.0
+   ],
+   [
+    "Very Potter Musical, A (2009)",
+    4.25,
+    2.0
+   ],
+   [
+    "Vanya on 42nd Street (1994)",
+    4.2,
+    5.0
+   ],
+   [
+    "Tom Segura: Disgraceful (2018)",
+    4.5,
+    1.0
+   ],
+   [
+    "Vatel (2000)",
+    4.25,
+    2.0
+   ],
+   [
+    "Lavender Hill Mob, The (1951)",
+    4.5,
+    2.0
+   ],
+   [
+    "Lamerica (1994)",
+    5.0,
+    2.0
+   ],
+   [
+    "My Life in Pink (Ma vie en rose) (1997)",
+    4.055555555555555,
+    9.0
+   ],
+   [
+    "Oscar and Lucinda (a.k.a. Oscar & Lucinda) (1997)",
+    4.5,
+    1.0
+   ],
+   [
+    "The FP (2012)",
+    4.5,
+    1.0
+   ],
+   [
+    "Thirty-Two Short Films About Glenn Gould (1993)",
+    4.5,
+    2.0
+   ],
+   [
+    "Why Don't You Play In Hell? (Jigoku de naze warui) (2013)",
+    4.25,
+    2.0
+   ],
+   [
+    "Sweet Smell of Success (1957)",
+    4.125,
+    4.0
+   ],
+   [
+    "Tom Segura: Completely Normal (2014)",
+    5.0,
+    1.0
+   ],
+   [
+    "What Ever Happened to Baby Jane? (1962)",
+    4.5,
+    2.0
+   ],
+   [
+    "Divorce - Italian Style (Divorzio all'italiana) (1961)",
+    4.5,
+    2.0
+   ],
+   [
+    "Tickling Giants (2017)",
+    5.0,
+    1.0
+   ],
+   [
+    "Holy Mountain, The (Monta\u00f1a sagrada, La) (1973)",
+    4.5,
+    2.0
+   ],
+   [
+    "Paradise Lost: The Child Murders at Robin Hood Hills (1996)",
+    4.083333333333333,
+    6.0
+   ],
+   [
+    "My Own Private Idaho (1991)",
+    4.1,
+    5.0
+   ],
+   [
+    "Repulsion (1965)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Manderlay (2005)",
+    4.125,
+    4.0
+   ],
+   [
+    "Babadook, The (2014)",
+    4.5,
+    3.0
+   ],
+   [
+    "Final Destination 5 (2011)",
+    4.5,
+    1.0
+   ],
+   [
+    "Sightseers (2012)",
+    4.5,
+    1.0
+   ],
+   [
+    "Miss Sloane (2016)",
+    4.5,
+    2.0
+   ],
+   [
+    "Passenger, The (Professione: reporter) (1975)",
+    5.0,
+    1.0
+   ],
+   [
+    "Night at the Opera, A (1935)",
+    4.111111111111111,
+    9.0
+   ],
+   [
+    "Ox-Bow Incident, The (1943)",
+    4.5,
+    1.0
+   ],
+   [
+    "Kidnapping, Caucasian Style (Kavkazskaya plennitsa) (1967)",
+    4.5,
+    1.0
+   ],
+   [
+    "Searchers, The (1956)",
+    4.071428571428571,
+    7.0
+   ],
+   [
+    "Raise the Red Lantern (Da hong deng long gao gao gua) (1991)",
+    4.333333333333333,
+    9.0
+   ],
+   [
+    "Eddie Izzard: Dress to Kill (1999)",
+    4.5,
+    2.0
+   ],
+   [
+    "Five Easy Pieces (1970)",
+    4.5,
+    8.0
+   ],
+   [
+    "Sympathy for the Underdog (1971)",
+    4.5,
+    1.0
+   ],
+   [
+    "Closer You Get, The (2000)",
+    4.5,
+    1.0
+   ],
+   [
+    "You Can Count on Me (2000)",
+    4.166666666666667,
+    9.0
+   ],
+   [
+    "Super High Me (2007)",
+    4.25,
+    2.0
+   ],
+   [
+    "Five Senses, The (1999)",
+    5.0,
+    1.0
+   ],
+   [
+    "Between Your Legs (Entre las piernas) (1999)",
+    4.5,
+    1.0
+   ],
+   [
+    "Jane Eyre (1944)",
+    5.0,
+    1.0
+   ],
+   [
+    "My Architect: A Son's Journey (2003)",
+    4.25,
+    2.0
+   ],
+   [
+    "Salvador (1986)",
+    4.5,
+    1.0
+   ],
+   [
+    "Don't Look Now: We're Being Shot At (La grande vadrouille) (1966)",
+    4.5,
+    1.0
+   ],
+   [
+    "Tangerines (2013)",
+    4.5,
+    1.0
+   ],
+   [
+    "Through a Glass Darkly (S\u00e5som i en spegel) (1961)",
+    4.5,
+    1.0
+   ],
+   [
+    "Che: Part Two (2008)",
+    5.0,
+    1.0
+   ],
+   [
+    "Bittersweet Life, A (Dalkomhan insaeng) (2005)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "The Eye: Infinity (2005)",
+    5.0,
+    1.0
+   ],
+   [
+    "Connections (1978)",
+    5.0,
+    1.0
+   ],
+   [
+    "Field in England, A (2013)",
+    4.5,
+    1.0
+   ],
+   [
+    "Fans (1999)",
+    4.5,
+    1.0
+   ],
+   [
+    "Baar\u00eca (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "Paperman (2012)",
+    4.375,
+    8.0
+   ],
+   [
+    "Lesson Faust (1994)",
+    5.0,
+    2.0
+   ],
+   [
+    "In the blue sea, in the white foam. (1984)",
+    5.0,
+    1.0
+   ],
+   [
+    "Sleuth (2007)",
+    4.25,
+    2.0
+   ],
+   [
+    "Inhuman Resources (Redd Inc.) (2012)",
+    4.5,
+    1.0
+   ],
+   [
+    "Saving Santa (2013)",
+    5.0,
+    1.0
+   ],
+   [
+    "Day of the Doctor, The (2013)",
+    4.571428571428571,
+    7.0
+   ],
+   [
+    "Three Billboards Outside Ebbing, Missouri (2017)",
+    4.75,
+    8.0
+   ],
+   [
+    "The Girls (1961)",
+    5.0,
+    1.0
+   ],
+   [
+    "Dog Soldiers (2002)",
+    4.666666666666667,
+    3.0
+   ],
+   [
+    "Girls About Town (1931)",
+    5.0,
+    1.0
+   ],
+   [
+    "Housebound (2014)",
+    4.25,
+    2.0
+   ],
+   [
+    "Dead Meat (2004)",
+    4.5,
+    1.0
+   ],
+   [
+    "Advise and Consent (1962)",
+    5.0,
+    1.0
+   ],
+   [
+    "More (1998)",
+    5.0,
+    1.0
+   ],
+   [
+    "Twelve O'Clock High (1949)",
+    4.5,
+    1.0
+   ],
+   [
+    "Planet Earth (2006)",
+    4.214285714285714,
+    7.0
+   ],
+   [
+    "Mystery of the Third Planet, The (Tayna tretey planety) (1981)",
+    5.0,
+    1.0
+   ],
+   [
+    "Hype! (1996)",
+    5.0,
+    1.0
+   ],
+   [
+    "1900 (Novecento) (1976)",
+    4.5,
+    1.0
+   ],
+   [
+    "Trinity and Sartana Are Coming (1972)",
+    5.0,
+    1.0
+   ],
+   [
+    "'Salem's Lot (2004)",
+    5.0,
+    1.0
+   ],
+   [
+    "Whole Wide World, The (1996)",
+    4.25,
+    2.0
+   ],
+   [
+    "Man from Earth, The (2007)",
+    4.1875,
+    8.0
+   ],
+   [
+    "Karlson Returns (1970)",
+    5.0,
+    1.0
+   ],
+   [
+    "Jiro Dreams of Sushi (2011)",
+    4.1,
+    5.0
+   ],
+   [
+    "Let It Snow (1999)",
+    4.5,
+    1.0
+   ],
+   [
+    "Spring (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "Balance (1989)",
+    4.5,
+    1.0
+   ],
+   [
+    "The Editor (2015)",
+    5.0,
+    1.0
+   ],
+   [
+    "Flashback (1990)",
+    4.5,
+    1.0
+   ],
+   [
+    "Jim Jefferies: BARE (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "George Carlin: Jammin' in New York (1992)",
+    5.0,
+    1.0
+   ],
+   [
+    "Best of Youth, The (La meglio giovent\u00f9) (2003)",
+    4.75,
+    2.0
+   ],
+   [
+    "Perfect Plan, A (Plan parfait, Un) (2012)",
+    4.25,
+    2.0
+   ],
+   [
+    "Wonder Woman (2009)",
+    5.0,
+    1.0
+   ],
+   [
+    "Asterix and the Vikings (Ast\u00e9rix et les Vikings) (2006)",
+    5.0,
+    1.0
+   ],
+   [
+    "Applesauce (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "In the Company of Men (1997)",
+    4.083333333333333,
+    6.0
+   ],
+   [
+    "Experimenter (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "Party Girl (1995)",
+    4.125,
+    4.0
+   ],
+   [
+    "Mickey's Once Upon a Christmas (1999)",
+    5.0,
+    1.0
+   ],
+   [
+    "George Carlin: It's Bad for Ya! (2008)",
+    5.0,
+    1.0
+   ],
+   [
+    "Sun Alley (Sonnenallee) (1999)",
+    5.0,
+    1.0
+   ],
+   [
+    "The Magician (1958)",
+    4.5,
+    1.0
+   ],
+   [
+    "I Am a Sex Addict (2005)",
+    4.5,
+    1.0
+   ],
+   [
+    "Atalante, L' (1934)",
+    4.5,
+    1.0
+   ],
+   [
+    "Nights of Cabiria (Notti di Cabiria, Le) (1957)",
+    4.285714285714286,
+    7.0
+   ],
+   [
+    "Lion (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "Louis Theroux: Law & Disorder (2008)",
+    5.0,
+    1.0
+   ],
+   [
+    "Tokyo Tribe (2014)",
+    5.0,
+    1.0
+   ],
+   [
+    "Alphaville (Alphaville, une \u00e9trange aventure de Lemmy Caution) (1965)",
+    4.125,
+    4.0
+   ],
+   [
+    "Hour of the Wolf (Vargtimmen) (1968)",
+    4.5,
+    2.0
+   ],
+   [
+    "Day of the Jackal, The (1973)",
+    4.083333333333333,
+    6.0
+   ],
+   [
+    "Cosmos",
+    4.5,
+    2.0
+   ],
+   [
+    "Sisters (Syostry) (2001)",
+    5.0,
+    1.0
+   ],
+   [
+    "High School (2010)",
+    4.5,
+    1.0
+   ],
+   [
+    "The Magic Ring (1982)",
+    4.5,
+    1.0
+   ],
+   [
+    "Love Me If You Dare (Jeux d'enfants) (2003)",
+    4.1,
+    5.0
+   ],
+   [
+    "Band of Brothers (2001)",
+    4.285714285714286,
+    7.0
+   ],
+   [
+    "Tom and Jerry: A Nutcracker Tale (2007)",
+    5.0,
+    1.0
+   ],
+   [
+    "The Brain (1969)",
+    4.5,
+    1.0
+   ],
+   [
+    "PK (2014)",
+    5.0,
+    1.0
+   ],
+   [
+    "Kagemusha (1980)",
+    4.125,
+    4.0
+   ],
+   [
+    "The Road Within (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Sleuth (1972)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Too Big to Fail (2011)",
+    4.5,
+    1.0
+   ],
+   [
+    "To Sir with Love (1967)",
+    4.071428571428571,
+    7.0
+   ],
+   [
+    "Man Bites Dog (C'est arriv\u00e9 pr\u00e8s de chez vous) (1992)",
+    4.5,
+    6.0
+   ],
+   [
+    "Doctor Who: A Christmas Carol (2010)",
+    4.75,
+    2.0
+   ],
+   [
+    "I Am Trying to Break Your Heart (2002)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "The Bremen Town Musicians (1969)",
+    5.0,
+    1.0
+   ],
+   [
+    "Paterson",
+    4.5,
+    1.0
+   ],
+   [
+    "Promises (2001)",
+    4.25,
+    2.0
+   ],
+   [
+    "Live Nude Girls (1995)",
+    5.0,
+    1.0
+   ],
+   [
+    "Into the Abyss (2011)",
+    5.0,
+    1.0
+   ],
+   [
+    "Immigrant, The (1917)",
+    4.5,
+    1.0
+   ],
+   [
+    "Seeking a Friend for the End of the World (2012)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Louis C.K.: Live at The Comedy Store (2015)",
+    4.375,
+    4.0
+   ],
+   [
+    "Blow-Out (La grande bouffe) (1973)",
+    4.25,
+    2.0
+   ],
+   [
+    "Magdalene Sisters, The (2002)",
+    4.333333333333333,
+    6.0
+   ],
+   [
+    "Rise of the Footsoldier (2007)",
+    4.5,
+    1.0
+   ],
+   [
+    "Ninja: Shadow of a Tear (2013)",
+    4.5,
+    1.0
+   ],
+   [
+    "Ponette (1996)",
+    4.5,
+    2.0
+   ],
+   [
+    "3-Iron (Bin-jip) (2004)",
+    4.5,
+    3.0
+   ],
+   [
+    "Priklyucheniya Kapitana Vrungelya (1979)",
+    5.0,
+    1.0
+   ],
+   [
+    "Kid, The (1921)",
+    4.1,
+    5.0
+   ],
+   [
+    "Adventures Of Sherlock Holmes And Dr. Watson: The Twentieth Century Approaches (1986)",
+    5.0,
+    1.0
+   ],
+   [
+    "Girl Who Kicked the Hornet's Nest, The (Luftslottet som spr\u00e4ngdes) (2009)",
+    4.2,
+    5.0
+   ],
+   [
+    "Open Hearts (Elsker dig for evigt) (2002)",
+    5.0,
+    1.0
+   ],
+   [
+    "Funny Games U.S. (2007)",
+    4.375,
+    4.0
+   ],
+   [
+    "The Red Turtle (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "World of Glory (1991)",
+    5.0,
+    1.0
+   ],
+   [
+    "Doctor Who: The Doctor, the Widow and the Wardrobe (2011)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Comedy of the Strict Regime (1993)",
+    4.5,
+    1.0
+   ],
+   [
+    "84 Charing Cross Road (1987)",
+    4.5,
+    3.0
+   ],
+   [
+    "Spiral (2007)",
+    4.5,
+    1.0
+   ],
+   [
+    "Radio Day (2008)",
+    5.0,
+    1.0
+   ],
+   [
+    "Benji the Hunted (1987)",
+    4.5,
+    2.0
+   ],
+   [
+    "Nirvana (1997)",
+    4.5,
+    1.0
+   ],
+   [
+    "Jason's Lyric (1994)",
+    4.5,
+    1.0
+   ],
+   [
+    "Scooby-Doo! and the Samurai Sword (2009)",
+    5.0,
+    1.0
+   ],
+   [
+    "Ernest & C\u00e9lestine (Ernest et C\u00e9lestine) (2012)",
+    4.5,
+    1.0
+   ],
+   [
+    "Journey to the West: Conquering the Demons (Daai wa sai you chi Chui mo chun kei) (2013)",
+    4.75,
+    2.0
+   ],
+   [
+    "Memories of Murder (Salinui chueok) (2003)",
+    4.7,
+    5.0
+   ],
+   [
+    "Eichmann (2007)",
+    5.0,
+    1.0
+   ],
+   [
+    "Harder They Come, The (1973)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Love and Death (1975)",
+    4.222222222222222,
+    9.0
+   ],
+   [
+    "Watermark (2014)",
+    5.0,
+    1.0
+   ],
+   [
+    "Girl on the Bridge, The (Fille sur le pont, La) (1999)",
+    4.125,
+    4.0
+   ],
+   [
+    "Flowers of War, The (Jin l\u00edng sh\u00ed san chai) (2011)",
+    4.5,
+    1.0
+   ],
+   [
+    "Perfect Sense (2011)",
+    4.25,
+    2.0
+   ],
+   [
+    "Mirror, The (Zerkalo) (1975)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "On the Beach (1959)",
+    4.5,
+    1.0
+   ],
+   [
+    "The Fox and the Hound 2 (2006)",
+    5.0,
+    1.0
+   ],
+   [
+    "Monster Squad, The (1987)",
+    5.0,
+    1.0
+   ],
+   [
+    "Lady Jane (1986)",
+    5.0,
+    1.0
+   ],
+   [
+    "Inherit the Wind (1960)",
+    4.083333333333333,
+    6.0
+   ],
+   [
+    "Sacrifice, The (Offret - Sacraficatio) (1986)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "3 Idiots (2009)",
+    4.75,
+    2.0
+   ],
+   [
+    "Believer, The (2001)",
+    4.25,
+    6.0
+   ],
+   [
+    "Unfaithfully Yours (1948)",
+    5.0,
+    1.0
+   ],
+   [
+    "Moonlight",
+    5.0,
+    1.0
+   ],
+   [
+    "Man and a Woman, A (Un homme et une femme) (1966)",
+    5.0,
+    1.0
+   ],
+   [
+    "Boss of It All, The (Direkt\u00f8ren for det hele) (2006)",
+    4.5,
+    2.0
+   ],
+   [
+    "Love (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "Victory (a.k.a. Escape to Victory) (1981)",
+    4.75,
+    2.0
+   ],
+   [
+    "Battle For Sevastopol (2015)",
+    5.0,
+    1.0
+   ],
+   [
+    "Afterglow (1997)",
+    4.5,
+    4.0
+   ],
+   [
+    "Brothers (Br\u00f8dre) (2004)",
+    4.25,
+    2.0
+   ],
+   [
+    "Facing Windows (Finestra di fronte, La) (2003)",
+    4.5,
+    1.0
+   ],
+   [
+    "Strada, La (1954)",
+    4.25,
+    6.0
+   ],
+   [
+    "All Watched Over by Machines of Loving Grace (2011)",
+    4.25,
+    2.0
+   ],
+   [
+    "Cold Fish (Tsumetai nettaigyo) (2010)",
+    4.5,
+    2.0
+   ],
+   [
+    "Oculus (2013)",
+    4.5,
+    1.0
+   ],
+   [
+    "Asphyx, The (1973)",
+    4.5,
+    1.0
+   ],
+   [
+    "La C\u00e9r\u00e9monie (1995)",
+    4.5,
+    2.0
+   ],
+   [
+    "Sorry to Bother You (2018)",
+    4.5,
+    1.0
+   ],
+   [
+    "Last Picture Show, The (1971)",
+    4.5,
+    8.0
+   ],
+   [
+    "Tales of Manhattan (1942)",
+    5.0,
+    1.0
+   ],
+   [
+    "Hidden Fortress, The (Kakushi-toride no san-akunin) (1958)",
+    4.25,
+    2.0
+   ],
+   [
+    "Beyond Silence (Jenseits der Stille) (1996)",
+    4.5,
+    1.0
+   ],
+   [
+    "Runaway Brain (1995) ",
+    5.0,
+    1.0
+   ],
+   [
+    "Red Sorghum (Hong gao liang) (1987)",
+    5.0,
+    1.0
+   ],
+   [
+    "Late Night Shopping (2001)",
+    4.5,
+    1.0
+   ],
+   [
+    "All Yours (2016)",
+    5.0,
+    1.0
+   ],
+   [
+    "Secrets of a Soul (Geheimnisse einer Seele) (1926)",
+    4.5,
+    1.0
+   ],
+   [
+    "Shall We Dance (1937)",
+    4.5,
+    4.0
+   ],
+   [
+    "Alpha and Omega 3: The Great Wolf Games (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Elections Day (2007)",
+    4.5,
+    1.0
+   ],
+   [
+    "Silkwood (1983)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Patton Oswalt: My Weakness Is Strong (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "Night and Fog (Nuit et brouillard) (1955)",
+    4.5,
+    1.0
+   ],
+   [
+    "Devil and Daniel Johnston, The (2005)",
+    4.5,
+    1.0
+   ],
+   [
+    "Dead or Alive 2: T\u00f4b\u00f4sha (2000)",
+    4.5,
+    1.0
+   ],
+   [
+    "Dangerous Beauty (1998)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Boy Eats Girl (2005)",
+    5.0,
+    1.0
+   ],
+   [
+    "It Happened on Fifth Avenue (1947)",
+    4.5,
+    1.0
+   ],
+   [
+    "It Can't Be! (1975)",
+    4.5,
+    1.0
+   ],
+   [
+    "Ocho apellidos vascos (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Cement Garden, The (1993)",
+    4.25,
+    2.0
+   ],
+   [
+    "Golmaal (2006)",
+    4.5,
+    1.0
+   ],
+   [
+    "It Follows (2014)",
+    4.125,
+    4.0
+   ],
+   [
+    "George Carlin: Life Is Worth Losing (2005)",
+    5.0,
+    1.0
+   ],
+   [
+    "L.I.E. (2001)",
+    4.333333333333333,
+    3.0
+   ],
+   [
+    "Three from Prostokvashino (1978)",
+    5.0,
+    1.0
+   ],
+   [
+    "Adam's Rib (1949)",
+    4.75,
+    4.0
+   ],
+   [
+    "On Any Sunday (1971)",
+    4.5,
+    1.0
+   ],
+   [
+    "Human Condition II, The (Ningen no joken II) (1959)",
+    4.5,
+    1.0
+   ],
+   [
+    "Ordinary Miracle (1978)",
+    4.5,
+    1.0
+   ],
+   [
+    "Orlando (1992)",
+    4.5,
+    2.0
+   ],
+   [
+    "Story of Women (Affaire de femmes, Une) (1988)",
+    5.0,
+    1.0
+   ],
+   [
+    "How to Marry a Millionaire (1953)",
+    4.5,
+    1.0
+   ],
+   [
+    "13th (2016)",
+    4.5,
+    2.0
+   ],
+   [
+    "Red Beard (Akahige) (1965)",
+    4.5,
+    1.0
+   ],
+   [
+    "FLCL (2000)",
+    4.277777777777778,
+    9.0
+   ],
+   [
+    "Luck by Chance (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "Dogfight (1991)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Obsession (1965)",
+    5.0,
+    1.0
+   ],
+   [
+    "Hatchet II (2010)",
+    4.5,
+    1.0
+   ],
+   [
+    "Rudderless (2014)",
+    4.5,
+    1.0
+   ],
+   [
+    "Pel\u00e9: Birth of a Legend (2016)",
+    4.5,
+    1.0
+   ],
+   [
+    "Baraka (1992)",
+    4.125,
+    4.0
+   ],
+   [
+    "4 Little Girls (1997)",
+    4.25,
+    2.0
+   ],
+   [
+    "Another Earth (2011)",
+    4.5,
+    1.0
+   ],
+   [
+    "Corbeau, Le (Raven, The) (1943)",
+    4.25,
+    2.0
+   ],
+   [
+    "Goal! The Dream Begins (Goal!) (2005)",
+    4.25,
+    2.0
+   ],
+   [
+    "Out of the Past (1947)",
+    4.125,
+    4.0
+   ],
+   [
+    "Neon Genesis Evangelion: The End of Evangelion (Shin seiki Evangelion Gekij\u00f4-ban: Air/Magokoro wo, kimi ni) (1997)",
+    4.3,
+    5.0
+   ],
+   [
+    "Hands on a Hard Body (1996)",
+    4.5,
+    2.0
+   ],
+   [
+    "Face in the Crowd, A (1957)",
+    4.2,
+    5.0
+   ],
+   [
+    "Casper Meets Wendy (1998)",
+    4.5,
+    1.0
+   ],
+   [
+    "New York Cop (Ny\u00fb Y\u00f4ku no koppu) (1993)",
+    4.5,
+    1.0
+   ],
+   [
+    "Ugly Duckling and Me!, The (2006)",
+    5.0,
+    1.0
+   ],
+   [
+    "Satin Rouge (2002)",
+    5.0,
+    1.0
+   ],
+   [
+    "Red Lights (Feux rouges) (2004)",
+    4.5,
+    1.0
+   ],
+   [
+    "Watching the Detectives (2007)",
+    5.0,
+    1.0
+   ],
+   [
+    "Hedgehog in the Fog (1975)",
+    4.5,
+    1.0
+   ],
+   [
+    "Hunting Elephants (2013)",
+    5.0,
+    1.0
+   ],
+   [
+    "Ninja Assassin (2009)",
+    4.166666666666667,
+    3.0
+   ],
+   [
+    "Chorus Line, A (1985)",
+    4.666666666666667,
+    3.0
+   ],
+   [
+    "Three Men and a Cradle (3 hommes et un couffin) (1985)",
+    4.5,
+    1.0
+   ],
+   [
+    "The Natural Love (1996)",
+    4.5,
+    1.0
+   ],
+   [
+    "Slumber Party Massacre II (1987)",
+    5.0,
+    1.0
+   ],
+   [
+    "Cell 211 (Celda 211) (2009)",
+    4.5,
+    1.0
+   ],
+   [
+    "Two Family House (2000)",
+    5.0,
+    1.0
+   ],
+   [
+    "Dolls (2002)",
+    4.25,
+    2.0
+   ],
+   [
+    "High Heels (Tacones lejanos) (1991)",
+    4.5,
+    1.0
+   ],
+   [
+    "Year of the Horse (1997)",
+    4.5,
+    1.0
+   ],
+   [
+    "Cup, The (Ph\u00f6rpa) (1999)",
+    4.5,
+    2.0
+   ],
+   [
+    "The Blue Planet (2001)",
+    4.75,
+    2.0
+   ],
+   [
+    "Bootleggers (1961)",
+    4.5,
+    1.0
+   ],
+   [
+    "Bossa Nova (2000)",
+    5.0,
+    1.0
+   ],
+   [
+    "Stoning of Soraya M., The (2008)",
+    4.5,
+    1.0
+   ],
+   [
+    "Bitter Lake (2015)",
+    5.0,
+    1.0
+   ],
+   [
+    "Reform School Girls (1986)",
+    5.0,
+    1.0
+   ],
+   [
+    "Vovka in the Kingdom of Far Far Away (1965)",
+    5.0,
+    1.0
+   ],
+   [
+    "Four Seasons, The (1981)",
+    5.0,
+    1.0
+   ],
+   [
+    "Dragonheart 2: A New Beginning (2000)",
+    4.5,
+    1.0
+   ],
+   [
+    "Danny Collins (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "I'm the One That I Want (2000)",
+    5.0,
+    1.0
+   ],
+   [
+    "Lovers of the Arctic Circle, The (Los Amantes del C\u00edrculo Polar) (1998)",
+    4.25,
+    2.0
+   ],
+   [
+    "How To Change The World (2015)",
+    4.5,
+    1.0
+   ],
+   [
+    "My Left Eye Sees Ghosts (Ngo joh aan gin diy gwai) (2002)",
+    5.0,
+    1.0
+   ],
+   [
+    "Holy Motors (2012)",
+    5.0,
+    1.0
+   ],
+   [
+    "Anne of Green Gables: The Sequel (a.k.a. Anne of Avonlea) (1987)",
+    4.75,
+    2.0
+   ],
+   [
+    "Empire of Dreams: The Story of the 'Star Wars' Trilogy (2004)",
+    4.5,
+    1.0
+   ],
+   [
+    "Some Guy Who Kills People (2011)",
+    4.5,
+    1.0
+   ],
+   [
+    "Best Years of Our Lives, The (1946)",
+    4.0625,
+    8.0
+   ],
+   [
+    "Legend No. 17 (2013)",
+    4.5,
+    1.0
+   ],
+   [
+    "Flirting (1991)",
+    4.5,
+    2.0
+   ],
+   [
+    "Son of Rambow (2007)",
+    4.666666666666667,
+    3.0
+   ],
+   [
+    "Brothers Bloom, The (2008)",
+    4.333333333333333,
+    3.0
+   ]
+  ],
+  "n_rows": 1007
+ },
+ {
+  "id": "ml#12",
+  "db": "movielens",
+  "difficulty": "H",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "For each genre, which movie has the highest average rating (counting only movies with at least 20 ratings)?",
+  "sql": "WITH g AS (SELECT unnest(string_to_array(m.genres, '|')) AS genre, m.movieid, m.title FROM movies m), s AS (SELECT g.genre, g.movieid, g.title, AVG(r.rating) AS avg_rating FROM g JOIN ratings r ON r.movieid = g.movieid GROUP BY g.genre, g.movieid, g.title HAVING COUNT(*) >= 20) SELECT genre, title, avg_rating FROM (SELECT s.*, ROW_NUMBER() OVER (PARTITION BY genre ORDER BY avg_rating DESC, title) AS rn FROM s) x WHERE rn = 1",
+  "gold_cols": [
+   "genre",
+   "title",
+   "avg_rating"
+  ],
+  "gold_rows": [
+   [
+    "Action",
+    "Logan (2017)",
+    4.28
+   ],
+   [
+    "Adventure",
+    "Lawrence of Arabia (1962)",
+    4.3
+   ],
+   [
+    "Animation",
+    "Spirited Away (Sen to Chihiro no kamikakushi) (2001)",
+    4.155172413793103
+   ],
+   [
+    "Children",
+    "Toy Story 3 (2010)",
+    4.109090909090909
+   ],
+   [
+    "Comedy",
+    "Philadelphia Story, The (1940)",
+    4.310344827586207
+   ],
+   [
+    "Crime",
+    "Shawshank Redemption, The (1994)",
+    4.429022082018927
+   ],
+   [
+    "Documentary",
+    "Hoop Dreams (1994)",
+    4.293103448275862
+   ],
+   [
+    "Drama",
+    "Streetcar Named Desire, A (1951)",
+    4.475
+   ],
+   [
+    "Fantasy",
+    "Princess Bride, The (1987)",
+    4.232394366197183
+   ],
+   [
+    "Film-Noir",
+    "Sunset Blvd. (a.k.a. Sunset Boulevard) (1950)",
+    4.333333333333333
+   ],
+   [
+    "Horror",
+    "Rosemary's Baby (1968)",
+    4.171875
+   ],
+   [
+    "IMAX",
+    "Dark Knight, The (2008)",
+    4.238255033557047
+   ],
+   [
+    "Musical",
+    "Singin' in the Rain (1952)",
+    4.074468085106383
+   ],
+   [
+    "Mystery",
+    "Rear Window (1954)",
+    4.261904761904762
+   ],
+   [
+    "Romance",
+    "Sunset Blvd. (a.k.a. Sunset Boulevard) (1950)",
+    4.333333333333333
+   ],
+   [
+    "Sci-Fi",
+    "Logan (2017)",
+    4.28
+   ],
+   [
+    "Thriller",
+    "Fight Club (1999)",
+    4.272935779816514
+   ],
+   [
+    "War",
+    "Lawrence of Arabia (1962)",
+    4.3
+   ],
+   [
+    "Western",
+    "For a Few Dollars More (Per qualche dollaro in pi\u00f9) (1965)",
+    4.151515151515151
+   ]
+  ],
+  "n_rows": 19
+ },
+ {
+  "id": "ml#13",
+  "db": "movielens",
+  "difficulty": "M",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "What is the distribution of rating values?",
+  "sql": "SELECT rating, COUNT(*) AS n FROM ratings GROUP BY rating",
+  "gold_cols": [
+   "rating",
+   "n"
+  ],
+  "gold_rows": [
+   [
+    3.5,
+    13136.0
+   ],
+   [
+    3.0,
+    20047.0
+   ],
+   [
+    4.0,
+    26818.0
+   ],
+   [
+    4.5,
+    8551.0
+   ],
+   [
+    1.0,
+    2811.0
+   ],
+   [
+    0.5,
+    1370.0
+   ],
+   [
+    1.5,
+    1791.0
+   ],
+   [
+    2.5,
+    5550.0
+   ],
+   [
+    2.0,
+    7551.0
+   ],
+   [
+    5.0,
+    13211.0
+   ]
+  ],
+  "n_rows": 10
+ },
+ {
+  "id": "ml#14",
+  "db": "movielens",
+  "difficulty": "H",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "Which movies have been tagged but have no rating?",
+  "sql": "SELECT DISTINCT m.movieid, m.title FROM tags t JOIN movies m ON m.movieid = t.movieid WHERE NOT EXISTS (SELECT 1 FROM ratings r WHERE r.movieid = m.movieid)",
+  "gold_cols": [
+   "movieid",
+   "title"
+  ],
+  "gold_rows": [
+   [
+    25855.0,
+    "Roaring Twenties, The (1939)"
+   ],
+   [
+    4194.0,
+    "I Know Where I'm Going! (1945)"
+   ],
+   [
+    30892.0,
+    "In the Realms of the Unreal (2004)"
+   ],
+   [
+    34482.0,
+    "Browning Version, The (1951)"
+   ],
+   [
+    32160.0,
+    "Twentieth Century (1934)"
+   ],
+   [
+    3338.0,
+    "For All Mankind (1989)"
+   ],
+   [
+    7020.0,
+    "Proof (1991)"
+   ],
+   [
+    5721.0,
+    "Chosen, The (1981)"
+   ],
+   [
+    32371.0,
+    "Call Northside 777 (1948)"
+   ],
+   [
+    3456.0,
+    "Color of Paradise, The (Rang-e khoda) (1999)"
+   ],
+   [
+    26085.0,
+    "Mutiny on the Bounty (1962)"
+   ],
+   [
+    85565.0,
+    "Chalet Girl (2011)"
+   ],
+   [
+    8765.0,
+    "This Gun for Hire (1942)"
+   ],
+   [
+    6668.0,
+    "Road Home, The (Wo de fu qin mu qin) (1999)"
+   ],
+   [
+    2939.0,
+    "Niagara (1953)"
+   ],
+   [
+    1076.0,
+    "Innocents, The (1961)"
+   ],
+   [
+    6849.0,
+    "Scrooge (1970)"
+   ],
+   [
+    7792.0,
+    "Parallax View, The (1974)"
+   ]
+  ],
+  "n_rows": 18
+ },
+ {
+  "id": "ml#15",
+  "db": "movielens",
+  "difficulty": "H",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "How many ratings were made in each year?",
+  "sql": "SELECT EXTRACT(YEAR FROM to_timestamp(timestamp)) AS year, COUNT(*) AS n_ratings FROM ratings GROUP BY year ORDER BY year",
+  "gold_cols": [
+   "year",
+   "n_ratings"
+  ],
+  "gold_rows": [
+   [
+    "1996",
+    6040.0
+   ],
+   [
+    "1997",
+    1916.0
+   ],
+   [
+    "1998",
+    507.0
+   ],
+   [
+    "1999",
+    2439.0
+   ],
+   [
+    "2000",
+    10061.0
+   ],
+   [
+    "2001",
+    3922.0
+   ],
+   [
+    "2002",
+    3478.0
+   ],
+   [
+    "2003",
+    4014.0
+   ],
+   [
+    "2004",
+    3279.0
+   ],
+   [
+    "2005",
+    5813.0
+   ],
+   [
+    "2006",
+    4059.0
+   ],
+   [
+    "2007",
+    7114.0
+   ],
+   [
+    "2008",
+    4351.0
+   ],
+   [
+    "2009",
+    4158.0
+   ],
+   [
+    "2010",
+    2301.0
+   ],
+   [
+    "2011",
+    1690.0
+   ],
+   [
+    "2012",
+    4656.0
+   ],
+   [
+    "2013",
+    1664.0
+   ],
+   [
+    "2014",
+    1439.0
+   ],
+   [
+    "2015",
+    6616.0
+   ],
+   [
+    "2016",
+    6703.0
+   ],
+   [
+    "2017",
+    8198.0
+   ],
+   [
+    "2018",
+    6418.0
+   ]
+  ],
+  "n_rows": 23
+ },
+ {
+  "id": "ol#1",
+  "db": "olist",
+  "difficulty": "E",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "How many orders are in the database?",
+  "sql": "SELECT COUNT(*) AS n_orders FROM orders",
+  "gold_cols": [
+   "n_orders"
+  ],
+  "gold_rows": [
+   [
+    99441.0
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "ol#2",
+  "db": "olist",
+  "difficulty": "E",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "What is the total revenue?",
+  "sql": "SELECT SUM(price) AS total_revenue FROM order_items",
+  "gold_cols": [
+   "total_revenue"
+  ],
+  "gold_rows": [
+   [
+    13591643.70001419
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "ol#3",
+  "db": "olist",
+  "difficulty": "M",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "What are the top 10 product categories by revenue, using the English category names?",
+  "sql": "SELECT t.product_category_name_english AS category, SUM(oi.price) AS revenue FROM order_items oi JOIN products p ON p.product_id = oi.product_id JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name GROUP BY category ORDER BY revenue DESC LIMIT 10",
+  "gold_cols": [
+   "category",
+   "revenue"
+  ],
+  "gold_rows": [
+   [
+    "health_beauty",
+    1258681.3399999682
+   ],
+   [
+    "watches_gifts",
+    1205005.6799999995
+   ],
+   [
+    "bed_bath_table",
+    1036988.6800000712
+   ],
+   [
+    "sports_leisure",
+    988048.9700000401
+   ],
+   [
+    "computers_accessories",
+    911954.3200000388
+   ],
+   [
+    "furniture_decor",
+    729762.4900000411
+   ],
+   [
+    "cool_stuff",
+    635290.8500000009
+   ],
+   [
+    "housewares",
+    632248.6600000213
+   ],
+   [
+    "auto",
+    592720.1100000107
+   ],
+   [
+    "garden_tools",
+    485256.46000001475
+   ]
+  ],
+  "n_rows": 10
+ },
+ {
+  "id": "ol#4",
+  "db": "olist",
+  "difficulty": "M",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "How many orders are there per order status?",
+  "sql": "SELECT order_status, COUNT(*) AS n FROM orders GROUP BY order_status",
+  "gold_cols": [
+   "order_status",
+   "n"
+  ],
+  "gold_rows": [
+   [
+    "shipped",
+    1107.0
+   ],
+   [
+    "unavailable",
+    609.0
+   ],
+   [
+    "invoiced",
+    314.0
+   ],
+   [
+    "created",
+    5.0
+   ],
+   [
+    "approved",
+    2.0
+   ],
+   [
+    "processing",
+    301.0
+   ],
+   [
+    "delivered",
+    96478.0
+   ],
+   [
+    "canceled",
+    625.0
+   ]
+  ],
+  "n_rows": 8
+ },
+ {
+  "id": "ol#5",
+  "db": "olist",
+  "difficulty": "M",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "What is the average review score per product category, using the English category names?",
+  "note": "gold_questions.md asks for overall AND per-category in one question; graded on per-category only. Reviews are counted once per order item, the conventional Olist join.",
+  "sql": "SELECT t.product_category_name_english AS category, AVG(rv.review_score) AS avg_score FROM order_reviews rv JOIN orders o ON o.order_id = rv.order_id JOIN order_items oi ON oi.order_id = o.order_id JOIN products p ON p.product_id = oi.product_id JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name GROUP BY category",
+  "gold_cols": [
+   "category",
+   "avg_score"
+  ],
+  "gold_rows": [
+   [
+    "agro_industry_and_commerce",
+    "4.0000000000000000"
+   ],
+   [
+    "air_conditioning",
+    "3.9691780821917808"
+   ],
+   [
+    "art",
+    "3.9371980676328502"
+   ],
+   [
+    "arts_and_craftmanship",
+    "4.1250000000000000"
+   ],
+   [
+    "audio",
+    "3.8254847645429363"
+   ],
+   [
+    "auto",
+    "4.0655115119867078"
+   ],
+   [
+    "baby",
+    "4.0118110236220472"
+   ],
+   [
+    "bed_bath_table",
+    "3.8956631049654305"
+   ],
+   [
+    "books_general_interest",
+    "4.4462659380692168"
+   ],
+   [
+    "books_imported",
+    "4.4000000000000000"
+   ],
+   [
+    "books_technical",
+    "4.3684210526315789"
+   ],
+   [
+    "cds_dvds_musicals",
+    "4.6428571428571429"
+   ],
+   [
+    "christmas_supplies",
+    "4.0205479452054795"
+   ],
+   [
+    "cine_photo",
+    "4.2054794520547945"
+   ],
+   [
+    "computers",
+    "4.1750000000000000"
+   ],
+   [
+    "computers_accessories",
+    "3.9308192126385527"
+   ],
+   [
+    "consoles_games",
+    "4.0230700976042591"
+   ],
+   [
+    "construction_tools_construction",
+    "4.0529157667386609"
+   ],
+   [
+    "construction_tools_lights",
+    "4.0540540540540541"
+   ],
+   [
+    "construction_tools_safety",
+    "3.8445595854922280"
+   ],
+   [
+    "cool_stuff",
+    "4.1463414634146341"
+   ],
+   [
+    "costruction_tools_garden",
+    "4.0541666666666667"
+   ],
+   [
+    "costruction_tools_tools",
+    "4.4444444444444444"
+   ],
+   [
+    "diapers_and_hygiene",
+    "3.2564102564102564"
+   ],
+   [
+    "drinks",
+    "4.0477453580901857"
+   ],
+   [
+    "dvds_blu_ray",
+    "4.0793650793650794"
+   ],
+   [
+    "electronics",
+    "4.0374681702437250"
+   ],
+   [
+    "fashio_female_clothing",
+    "3.7800000000000000"
+   ],
+   [
+    "fashion_bags_accessories",
+    "4.1446787641000490"
+   ],
+   [
+    "fashion_childrens_clothes",
+    "4.5000000000000000"
+   ],
+   [
+    "fashion_male_clothing",
+    "3.6412213740458015"
+   ],
+   [
+    "fashion_shoes",
+    "4.2337164750957854"
+   ],
+   [
+    "fashion_sport",
+    "4.2580645161290323"
+   ],
+   [
+    "fashion_underwear_beach",
+    "3.9769230769230769"
+   ],
+   [
+    "fixed_telephony",
+    "3.6832061068702290"
+   ],
+   [
+    "flowers",
+    "4.4193548387096774"
+   ],
+   [
+    "food",
+    "4.2181818181818182"
+   ],
+   [
+    "food_drink",
+    "4.3154121863799283"
+   ],
+   [
+    "furniture_bedroom",
+    "4.1181818181818182"
+   ],
+   [
+    "furniture_decor",
+    "3.9034929780338495"
+   ],
+   [
+    "furniture_living_room",
+    "3.9043824701195219"
+   ],
+   [
+    "furniture_mattress_and_upholstery",
+    "3.8157894736842105"
+   ],
+   [
+    "garden_tools",
+    "4.0427350427350427"
+   ],
+   [
+    "health_beauty",
+    "4.1427682737169518"
+   ],
+   [
+    "home_appliances",
+    "4.1724565756823821"
+   ],
+   [
+    "home_appliances_2",
+    "4.1428571428571429"
+   ],
+   [
+    "home_comfort_2",
+    "3.6296296296296296"
+   ],
+   [
+    "home_confort",
+    "3.8298850574712644"
+   ],
+   [
+    "home_construction",
+    "3.9400000000000000"
+   ],
+   [
+    "housewares",
+    "4.0550194440443612"
+   ],
+   [
+    "industry_commerce_and_business",
+    "4.1015037593984962"
+   ],
+   [
+    "kitchen_dining_laundry_garden_furniture",
+    "3.9642857142857143"
+   ],
+   [
+    "la_cuisine",
+    "4.0000000000000000"
+   ],
+   [
+    "luggage_accessories",
+    "4.3152573529411765"
+   ],
+   [
+    "market_place",
+    "4.0194174757281553"
+   ],
+   [
+    "music",
+    "4.2105263157894737"
+   ],
+   [
+    "musical_instruments",
+    "4.1525925925925926"
+   ],
+   [
+    "office_furniture",
+    "3.4931831653823355"
+   ],
+   [
+    "party_supplies",
+    "3.7674418604651163"
+   ],
+   [
+    "pc_gamer",
+    "3.3333333333333333"
+   ],
+   [
+    "perfumery",
+    "4.1619409529377375"
+   ],
+   [
+    "pet_shop",
+    "4.1851469829809180"
+   ],
+   [
+    "portable_kitchen_food_processors",
+    "3.2666666666666667"
+   ],
+   [
+    "security_and_services",
+    "2.5000000000000000"
+   ],
+   [
+    "signaling_and_security",
+    "4.0862944162436548"
+   ],
+   [
+    "small_appliances",
+    "4.1491875923190547"
+   ],
+   [
+    "small_appliances_home_oven_and_coffee",
+    "4.3026315789473684"
+   ],
+   [
+    "sports_leisure",
+    "4.1079861111111111"
+   ],
+   [
+    "stationery",
+    "4.1938571998404467"
+   ],
+   [
+    "tablets_printing_image",
+    "4.1234567901234568"
+   ],
+   [
+    "telephony",
+    "3.9468673898605269"
+   ],
+   [
+    "toys",
+    "4.1586409190906869"
+   ],
+   [
+    "watches_gifts",
+    "4.0191596638655462"
+   ]
+  ],
+  "n_rows": 73
+ },
+ {
+  "id": "ol#6",
+  "db": "olist",
+  "difficulty": "H",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "What is the average delivery time in days (delivered date minus purchase date) for delivered orders?",
+  "sql": "SELECT AVG(EXTRACT(EPOCH FROM (order_delivered_customer_date - order_purchase_timestamp)) / 86400.0) AS avg_days FROM orders WHERE order_status = 'delivered' AND order_delivered_customer_date IS NOT NULL",
+  "gold_cols": [
+   "avg_days"
+  ],
+  "gold_rows": [
+   [
+    "12.55821709805197547514"
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "ol#7",
+  "db": "olist",
+  "difficulty": "H",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "What percentage of orders were delivered after the estimated delivery date?",
+  "sql": "SELECT 100.0 * SUM(CASE WHEN order_delivered_customer_date > order_estimated_delivery_date THEN 1 ELSE 0 END) / COUNT(*) AS pct_late FROM orders WHERE order_delivered_customer_date IS NOT NULL",
+  "gold_cols": [
+   "pct_late"
+  ],
+  "gold_rows": [
+   [
+    "8.1128985447157842"
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "ol#8",
+  "db": "olist",
+  "difficulty": "M",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "What is the distribution of payment types?",
+  "sql": "SELECT payment_type, COUNT(*) AS n FROM order_payments GROUP BY payment_type",
+  "gold_cols": [
+   "payment_type",
+   "n"
+  ],
+  "gold_rows": [
+   [
+    "not_defined",
+    3.0
+   ],
+   [
+    "boleto",
+    19784.0
+   ],
+   [
+    "debit_card",
+    1529.0
+   ],
+   [
+    "voucher",
+    5775.0
+   ],
+   [
+    "credit_card",
+    76795.0
+   ]
+  ],
+  "n_rows": 5
+ },
+ {
+  "id": "ol#9",
+  "db": "olist",
+  "difficulty": "M",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "Who are the top 10 sellers by total revenue?",
+  "sql": "SELECT seller_id, SUM(price) AS revenue FROM order_items GROUP BY seller_id ORDER BY revenue DESC LIMIT 10",
+  "gold_cols": [
+   "seller_id",
+   "revenue"
+  ],
+  "gold_rows": [
+   [
+    "4869f7a5dfa277a7dca6462dcf3b52b2",
+    229472.6299999981
+   ],
+   [
+    "53243585a1d6dc2643021fd1853d8905",
+    222776.04999999952
+   ],
+   [
+    "4a3ca9315b744ce9f8e9374361493884",
+    200472.9199999949
+   ],
+   [
+    "fa1c13f2614d7b5c4749cbc52fecda94",
+    194042.02999999846
+   ],
+   [
+    "7c67e1448b00f6e969d365cea6b010ab",
+    187923.8899999995
+   ],
+   [
+    "7e93a43ef30c4f03f38b393420bc753a",
+    176431.86999999982
+   ],
+   [
+    "da8622b14eb17ae2831f4ac5b9dab84a",
+    160236.56999999538
+   ],
+   [
+    "7a67c85e85bb2ce8582c35f2203ad736",
+    141745.53000000177
+   ],
+   [
+    "1025f0e2d44d7041d6cf58b6550e0bfa",
+    138968.5499999995
+   ],
+   [
+    "955fee9216a65b617aa5c0531780ce60",
+    135171.69999999914
+   ]
+  ],
+  "n_rows": 10
+ },
+ {
+  "id": "ol#10",
+  "db": "olist",
+  "difficulty": "M",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "How many orders are there per customer state?",
+  "sql": "SELECT c.customer_state, COUNT(*) AS n_orders FROM orders o JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.customer_state",
+  "gold_cols": [
+   "customer_state",
+   "n_orders"
+  ],
+  "gold_rows": [
+   [
+    "AC",
+    81.0
+   ],
+   [
+    "AL",
+    413.0
+   ],
+   [
+    "AM",
+    148.0
+   ],
+   [
+    "AP",
+    68.0
+   ],
+   [
+    "BA",
+    3380.0
+   ],
+   [
+    "CE",
+    1336.0
+   ],
+   [
+    "DF",
+    2140.0
+   ],
+   [
+    "ES",
+    2033.0
+   ],
+   [
+    "GO",
+    2020.0
+   ],
+   [
+    "MA",
+    747.0
+   ],
+   [
+    "MG",
+    11635.0
+   ],
+   [
+    "MS",
+    715.0
+   ],
+   [
+    "MT",
+    907.0
+   ],
+   [
+    "PA",
+    975.0
+   ],
+   [
+    "PB",
+    536.0
+   ],
+   [
+    "PE",
+    1652.0
+   ],
+   [
+    "PI",
+    495.0
+   ],
+   [
+    "PR",
+    5045.0
+   ],
+   [
+    "RJ",
+    12852.0
+   ],
+   [
+    "RN",
+    485.0
+   ],
+   [
+    "RO",
+    253.0
+   ],
+   [
+    "RR",
+    46.0
+   ],
+   [
+    "RS",
+    5466.0
+   ],
+   [
+    "SC",
+    3637.0
+   ],
+   [
+    "SE",
+    350.0
+   ],
+   [
+    "SP",
+    41746.0
+   ],
+   [
+    "TO",
+    280.0
+   ]
+  ],
+  "n_rows": 27
+ },
+ {
+  "id": "ol#11",
+  "db": "olist",
+  "difficulty": "H",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "How many orders were placed each month over time?",
+  "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS month, COUNT(*) AS n_orders FROM orders GROUP BY month ORDER BY month",
+  "gold_cols": [
+   "month",
+   "n_orders"
+  ],
+  "gold_rows": [
+   [
+    "2016-09-01 00:00:00",
+    4.0
+   ],
+   [
+    "2016-10-01 00:00:00",
+    324.0
+   ],
+   [
+    "2016-12-01 00:00:00",
+    1.0
+   ],
+   [
+    "2017-01-01 00:00:00",
+    800.0
+   ],
+   [
+    "2017-02-01 00:00:00",
+    1780.0
+   ],
+   [
+    "2017-03-01 00:00:00",
+    2682.0
+   ],
+   [
+    "2017-04-01 00:00:00",
+    2404.0
+   ],
+   [
+    "2017-05-01 00:00:00",
+    3700.0
+   ],
+   [
+    "2017-06-01 00:00:00",
+    3245.0
+   ],
+   [
+    "2017-07-01 00:00:00",
+    4026.0
+   ],
+   [
+    "2017-08-01 00:00:00",
+    4331.0
+   ],
+   [
+    "2017-09-01 00:00:00",
+    4285.0
+   ],
+   [
+    "2017-10-01 00:00:00",
+    4631.0
+   ],
+   [
+    "2017-11-01 00:00:00",
+    7544.0
+   ],
+   [
+    "2017-12-01 00:00:00",
+    5673.0
+   ],
+   [
+    "2018-01-01 00:00:00",
+    7269.0
+   ],
+   [
+    "2018-02-01 00:00:00",
+    6728.0
+   ],
+   [
+    "2018-03-01 00:00:00",
+    7211.0
+   ],
+   [
+    "2018-04-01 00:00:00",
+    6939.0
+   ],
+   [
+    "2018-05-01 00:00:00",
+    6873.0
+   ],
+   [
+    "2018-06-01 00:00:00",
+    6167.0
+   ],
+   [
+    "2018-07-01 00:00:00",
+    6292.0
+   ],
+   [
+    "2018-08-01 00:00:00",
+    6512.0
+   ],
+   [
+    "2018-09-01 00:00:00",
+    16.0
+   ],
+   [
+    "2018-10-01 00:00:00",
+    4.0
+   ]
+  ],
+  "n_rows": 25
+ },
+ {
+  "id": "ol#12",
+  "db": "olist",
+  "difficulty": "H",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "Which product category has the worst average review score, counting only categories with at least 100 orders? Use the English category names.",
+  "sql": "SELECT t.product_category_name_english AS category, AVG(rv.review_score) AS avg_score FROM order_reviews rv JOIN orders o ON o.order_id = rv.order_id JOIN order_items oi ON oi.order_id = o.order_id JOIN products p ON p.product_id = oi.product_id JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name GROUP BY category HAVING COUNT(DISTINCT o.order_id) >= 100 ORDER BY avg_score ASC, category LIMIT 1",
+  "gold_cols": [
+   "category",
+   "avg_score"
+  ],
+  "gold_rows": [
+   [
+    "office_furniture",
+    "3.4931831653823355"
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "ol#13",
+  "db": "olist",
+  "difficulty": "H",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "What is the average freight value by customer state?",
+  "sql": "SELECT c.customer_state, AVG(oi.freight_value) AS avg_freight FROM order_items oi JOIN orders o ON o.order_id = oi.order_id JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.customer_state",
+  "gold_cols": [
+   "customer_state",
+   "avg_freight"
+  ],
+  "gold_rows": [
+   [
+    "AC",
+    40.0733695652174
+   ],
+   [
+    "AL",
+    35.84367117117117
+   ],
+   [
+    "AM",
+    33.205393939393936
+   ],
+   [
+    "AP",
+    34.00609756097561
+   ],
+   [
+    "BA",
+    26.363958936562266
+   ],
+   [
+    "CE",
+    32.71420162381602
+   ],
+   [
+    "DF",
+    21.041354945968347
+   ],
+   [
+    "ES",
+    22.058776595744646
+   ],
+   [
+    "GO",
+    22.766815259322716
+   ],
+   [
+    "MA",
+    38.25700242718443
+   ],
+   [
+    "MG",
+    20.63016680630687
+   ],
+   [
+    "MS",
+    23.374884004883995
+   ],
+   [
+    "MT",
+    28.16628436018959
+   ],
+   [
+    "PA",
+    35.83268518518521
+   ],
+   [
+    "PB",
+    42.72380398671095
+   ],
+   [
+    "PE",
+    32.91786267995574
+   ],
+   [
+    "PI",
+    39.14797047970478
+   ],
+   [
+    "PR",
+    20.53165156794417
+   ],
+   [
+    "RJ",
+    20.960923931682732
+   ],
+   [
+    "RN",
+    35.6523629489603
+   ],
+   [
+    "RO",
+    41.06971223021582
+   ],
+   [
+    "RR",
+    42.984423076923086
+   ],
+   [
+    "RS",
+    21.735804330392895
+   ],
+   [
+    "SC",
+    21.470368773946273
+   ],
+   [
+    "SE",
+    36.65316883116883
+   ],
+   [
+    "SP",
+    15.147275390419454
+   ],
+   [
+    "TO",
+    37.24660317460318
+   ]
+  ],
+  "n_rows": 27
+ },
+ {
+  "id": "ol#14",
+  "db": "olist",
+  "difficulty": "M",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "What is the average number of items per order?",
+  "sql": "SELECT AVG(item_count) AS avg_items FROM (SELECT order_id, COUNT(*) AS item_count FROM order_items GROUP BY order_id) x",
+  "gold_cols": [
+   "avg_items"
+  ],
+  "gold_rows": [
+   [
+    "1.1417306873695093"
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "ol#15",
+  "db": "olist",
+  "difficulty": "H",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "How many unique customers placed more than one order?",
+  "sql": "SELECT COUNT(*) AS n_repeat_customers FROM (SELECT c.customer_unique_id FROM orders o JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.customer_unique_id HAVING COUNT(DISTINCT o.order_id) > 1) x",
+  "gold_cols": [
+   "n_repeat_customers"
+  ],
+  "gold_rows": [
+   [
+    2997.0
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "sc#1",
+  "db": "soccer",
+  "difficulty": "E",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "How many matches are in the database?",
+  "sql": "SELECT COUNT(*) AS n_matches FROM \"Match\"",
+  "gold_cols": [
+   "n_matches"
+  ],
+  "gold_rows": [
+   [
+    25979.0
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "sc#2",
+  "db": "soccer",
+  "difficulty": "E",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "How many players are there?",
+  "sql": "SELECT COUNT(*) AS n_players FROM \"Player\"",
+  "gold_cols": [
+   "n_players"
+  ],
+  "gold_rows": [
+   [
+    11060.0
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "sc#3",
+  "db": "soccer",
+  "difficulty": "M",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "How many matches were played per league?",
+  "sql": "SELECT l.name AS league, COUNT(*) AS n_matches FROM \"Match\" m JOIN \"League\" l ON l.id = m.league_id GROUP BY l.name",
+  "gold_cols": [
+   "league",
+   "n_matches"
+  ],
+  "gold_rows": [
+   [
+    "Belgium Jupiler League",
+    1728.0
+   ],
+   [
+    "England Premier League",
+    3040.0
+   ],
+   [
+    "France Ligue 1",
+    3040.0
+   ],
+   [
+    "Germany 1. Bundesliga",
+    2448.0
+   ],
+   [
+    "Italy Serie A",
+    3017.0
+   ],
+   [
+    "Netherlands Eredivisie",
+    2448.0
+   ],
+   [
+    "Poland Ekstraklasa",
+    1920.0
+   ],
+   [
+    "Portugal Liga ZON Sagres",
+    2052.0
+   ],
+   [
+    "Scotland Premier League",
+    1824.0
+   ],
+   [
+    "Spain LIGA BBVA",
+    3040.0
+   ],
+   [
+    "Switzerland Super League",
+    1422.0
+   ]
+  ],
+  "n_rows": 11
+ },
+ {
+  "id": "sc#4",
+  "db": "soccer",
+  "difficulty": "M",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "What is the average number of goals per match by league?",
+  "sql": "SELECT l.name AS league, AVG(m.home_team_goal + m.away_team_goal) AS avg_goals FROM \"Match\" m JOIN \"League\" l ON l.id = m.league_id GROUP BY l.name",
+  "gold_cols": [
+   "league",
+   "avg_goals"
+  ],
+  "gold_rows": [
+   [
+    "Belgium Jupiler League",
+    2.8015046296296298
+   ],
+   [
+    "England Premier League",
+    2.710526315789474
+   ],
+   [
+    "France Ligue 1",
+    2.443092105263158
+   ],
+   [
+    "Germany 1. Bundesliga",
+    2.9015522875816995
+   ],
+   [
+    "Italy Serie A",
+    2.6168379184620485
+   ],
+   [
+    "Netherlands Eredivisie",
+    3.0808823529411766
+   ],
+   [
+    "Poland Ekstraklasa",
+    2.425
+   ],
+   [
+    "Portugal Liga ZON Sagres",
+    2.534600389863548
+   ],
+   [
+    "Scotland Premier League",
+    2.633771929824561
+   ],
+   [
+    "Spain LIGA BBVA",
+    2.767105263157895
+   ],
+   [
+    "Switzerland Super League",
+    2.929676511954993
+   ]
+  ],
+  "n_rows": 11
+ },
+ {
+  "id": "sc#5",
+  "db": "soccer",
+  "difficulty": "M",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "Which season has the most matches?",
+  "sql": "SELECT season, COUNT(*) AS n_matches FROM \"Match\" GROUP BY season ORDER BY n_matches DESC, season LIMIT 1",
+  "gold_cols": [
+   "season",
+   "n_matches"
+  ],
+  "gold_rows": [
+   [
+    "2008/2009",
+    3326.0
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "sc#6",
+  "db": "soccer",
+  "difficulty": "H",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "Which are the top 10 teams by total goals scored (home and away combined)?",
+  "sql": "SELECT t.team_long_name, SUM(CASE WHEN t.team_api_id = m.home_team_api_id THEN m.home_team_goal ELSE m.away_team_goal END) AS goals_scored FROM \"Team\" t JOIN \"Match\" m ON t.team_api_id = m.home_team_api_id OR t.team_api_id = m.away_team_api_id GROUP BY t.team_long_name ORDER BY goals_scored DESC, t.team_long_name LIMIT 10",
+  "gold_cols": [
+   "team_long_name",
+   "goals_scored"
+  ],
+  "gold_rows": [
+   [
+    "FC Barcelona",
+    849.0
+   ],
+   [
+    "Real Madrid CF",
+    843.0
+   ],
+   [
+    "Celtic",
+    695.0
+   ],
+   [
+    "FC Bayern Munich",
+    653.0
+   ],
+   [
+    "PSV",
+    652.0
+   ],
+   [
+    "Ajax",
+    647.0
+   ],
+   [
+    "FC Basel",
+    619.0
+   ],
+   [
+    "Manchester City",
+    606.0
+   ],
+   [
+    "Chelsea",
+    583.0
+   ],
+   [
+    "Manchester United",
+    582.0
+   ]
+  ],
+  "n_rows": 10
+ },
+ {
+  "id": "sc#7",
+  "db": "soccer",
+  "difficulty": "H",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "How many matches ended in a home win, an away win, and a draw overall?",
+  "sql": "SELECT SUM(CASE WHEN home_team_goal > away_team_goal THEN 1 ELSE 0 END) AS home_wins, SUM(CASE WHEN away_team_goal > home_team_goal THEN 1 ELSE 0 END) AS away_wins, SUM(CASE WHEN home_team_goal = away_team_goal THEN 1 ELSE 0 END) AS draws FROM \"Match\"",
+  "gold_cols": [
+   "home_wins",
+   "away_wins",
+   "draws"
+  ],
+  "gold_rows": [
+   [
+    11917.0,
+    7466.0,
+    6596.0
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "sc#8",
+  "db": "soccer",
+  "difficulty": "M",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "Which player has the highest overall rating?",
+  "sql": "SELECT p.player_name, MAX(pa.overall_rating) AS best_rating FROM \"Player_Attributes\" pa JOIN \"Player\" p ON p.player_api_id = pa.player_api_id GROUP BY p.player_name ORDER BY best_rating DESC, p.player_name LIMIT 1",
+  "gold_cols": [
+   "player_name",
+   "best_rating"
+  ],
+  "gold_rows": [
+   [
+    "Lionel Messi",
+    94.0
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "sc#9",
+  "db": "soccer",
+  "difficulty": "H",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "Who are the top 10 players by average overall rating across their attribute records?",
+  "sql": "SELECT p.player_name, AVG(pa.overall_rating) AS avg_rating FROM \"Player_Attributes\" pa JOIN \"Player\" p ON p.player_api_id = pa.player_api_id GROUP BY p.player_name ORDER BY avg_rating DESC, p.player_name LIMIT 10",
+  "gold_cols": [
+   "player_name",
+   "avg_rating"
+  ],
+  "gold_rows": [
+   [
+    "Lionel Messi",
+    92.1923076923077
+   ],
+   [
+    "Cristiano Ronaldo",
+    91.28
+   ],
+   [
+    "Franck Ribery",
+    88.45833333333333
+   ],
+   [
+    "Andres Iniesta",
+    88.32
+   ],
+   [
+    "Zlatan Ibrahimovic",
+    88.28571428571429
+   ],
+   [
+    "Arjen Robben",
+    87.84
+   ],
+   [
+    "Xavi Hernandez",
+    87.63636363636364
+   ],
+   [
+    "Wayne Rooney",
+    87.22222222222223
+   ],
+   [
+    "Iker Casillas",
+    86.95454545454545
+   ],
+   [
+    "Philipp Lahm",
+    86.73333333333333
+   ]
+  ],
+  "n_rows": 10
+ },
+ {
+  "id": "sc#10",
+  "db": "soccer",
+  "difficulty": "M",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "Which league has the highest average goals per match?",
+  "sql": "SELECT l.name AS league, AVG(m.home_team_goal + m.away_team_goal) AS avg_goals FROM \"Match\" m JOIN \"League\" l ON l.id = m.league_id GROUP BY l.name ORDER BY avg_goals DESC, l.name LIMIT 1",
+  "gold_cols": [
+   "league",
+   "avg_goals"
+  ],
+  "gold_rows": [
+   [
+    "Netherlands Eredivisie",
+    3.0808823529411766
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "sc#11",
+  "db": "soccer",
+  "difficulty": "H",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "How many wins, losses and draws did Arsenal have in the 2015/2016 season?",
+  "note": "gold_questions.md says 'for a given team, in a chosen season'; concretised to Arsenal / 2015-2016 so the question is answerable.",
+  "sql": "SELECT SUM(CASE WHEN (m.home_team_api_id = t.team_api_id AND m.home_team_goal > m.away_team_goal)        OR (m.away_team_api_id = t.team_api_id AND m.away_team_goal > m.home_team_goal)       THEN 1 ELSE 0 END) AS wins, SUM(CASE WHEN (m.home_team_api_id = t.team_api_id AND m.home_team_goal < m.away_team_goal)        OR (m.away_team_api_id = t.team_api_id AND m.away_team_goal < m.home_team_goal)       THEN 1 ELSE 0 END) AS losses, SUM(CASE WHEN m.home_team_goal = m.away_team_goal THEN 1 ELSE 0 END) AS draws FROM \"Match\" m JOIN \"Team\" t ON t.team_api_id IN (m.home_team_api_id, m.away_team_api_id) WHERE t.team_long_name = 'Arsenal' AND m.season = '2015/2016'",
+  "gold_cols": [
+   "wins",
+   "losses",
+   "draws"
+  ],
+  "gold_rows": [
+   [
+    20.0,
+    7.0,
+    11.0
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "sc#12",
+  "db": "soccer",
+  "difficulty": "H",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "What is the total number of goals scored per season across all leagues?",
+  "sql": "SELECT season, SUM(home_team_goal + away_team_goal) AS total_goals FROM \"Match\" GROUP BY season",
+  "gold_cols": [
+   "season",
+   "total_goals"
+  ],
+  "gold_rows": [
+   [
+    "2008/2009",
+    8672.0
+   ],
+   [
+    "2009/2010",
+    8632.0
+   ],
+   [
+    "2010/2011",
+    8749.0
+   ],
+   [
+    "2011/2012",
+    8747.0
+   ],
+   [
+    "2012/2013",
+    9039.0
+   ],
+   [
+    "2013/2014",
+    8389.0
+   ],
+   [
+    "2014/2015",
+    8897.0
+   ],
+   [
+    "2015/2016",
+    9162.0
+   ]
+  ],
+  "n_rows": 8
+ },
+ {
+  "id": "sc#13",
+  "db": "soccer",
+  "difficulty": "M",
+  "shape": "list",
+  "order_sensitive": true,
+  "question": "Who are the 10 tallest players?",
+  "note": "gold_questions.md says 'tallest / heaviest'; graded on tallest only.",
+  "sql": "SELECT player_name, height FROM \"Player\" ORDER BY height DESC, player_name LIMIT 10",
+  "gold_cols": [
+   "player_name",
+   "height"
+  ],
+  "gold_rows": [
+   [
+    "Kristof van Hout",
+    208.28
+   ],
+   [
+    "Bogdan Milic",
+    203.2
+   ],
+   [
+    "Costel Pantilimon",
+    203.2
+   ],
+   [
+    "Fejsal Mulic",
+    203.2
+   ],
+   [
+    "Jurgen Wevers",
+    203.2
+   ],
+   [
+    "Kevin Vink",
+    203.2
+   ],
+   [
+    "Lacina Traore",
+    203.2
+   ],
+   [
+    "Nikola Zigic",
+    203.2
+   ],
+   [
+    "Paolo Acerbis",
+    203.2
+   ],
+   [
+    "Pietro Marino",
+    203.2
+   ]
+  ],
+  "n_rows": 10
+ },
+ {
+  "id": "sc#14",
+  "db": "soccer",
+  "difficulty": "H",
+  "shape": "scalar",
+  "order_sensitive": false,
+  "question": "What is the average number of home-team goals compared with the average number of away-team goals?",
+  "sql": "SELECT AVG(home_team_goal) AS avg_home_goals, AVG(away_team_goal) AS avg_away_goals FROM \"Match\"",
+  "gold_cols": [
+   "avg_home_goals",
+   "avg_away_goals"
+  ],
+  "gold_rows": [
+   [
+    1.5445937103044767,
+    1.1609376804341969
+   ]
+  ],
+  "n_rows": 1
+ },
+ {
+  "id": "sc#15",
+  "db": "soccer",
+  "difficulty": "H",
+  "shape": "set",
+  "order_sensitive": false,
+  "question": "Which teams never lost a home match in the 2015/2016 season?",
+  "note": "gold_questions.md says 'in a given season'; concretised to 2015/2016.",
+  "sql": "SELECT t.team_long_name FROM \"Team\" t WHERE EXISTS (SELECT 1 FROM \"Match\" m WHERE m.home_team_api_id = t.team_api_id AND m.season = '2015/2016') AND NOT EXISTS (SELECT 1 FROM \"Match\" m WHERE m.home_team_api_id = t.team_api_id AND m.season = '2015/2016' AND m.home_team_goal < m.away_team_goal)",
+  "gold_cols": [
+   "team_long_name"
+  ],
+  "gold_rows": [
+   [
+    "RSC Anderlecht"
+   ],
+   [
+    "Borussia Dortmund"
+   ],
+   [
+    "Napoli"
+   ]
+  ],
+  "n_rows": 3
+ }
+]

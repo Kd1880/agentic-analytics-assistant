@@ -1,0 +1,140 @@
+[
+  {
+    "id": "ml#1",
+    "db": "movielens",
+    "question": "How many movies are in the database?",
+    "sql": "SELECT COUNT(*) FROM movies"
+  },
+  {
+    "id": "ml#2",
+    "db": "movielens",
+    "question": "How many ratings are there in total?",
+    "sql": "SELECT COUNT(*) FROM ratings"
+  },
+  {
+    "id": "ml#3",
+    "db": "movielens",
+    "question": "What is the overall average rating?",
+    "sql": "SELECT AVG(rating) AS avg_rating FROM ratings"
+  },
+  {
+    "id": "ml#4",
+    "db": "movielens",
+    "question": "Which 10 movies have the most ratings?",
+    "sql": "SELECT m.title, COUNT(*) AS n_ratings FROM ratings r JOIN movies m ON m.movieid = r.movieid GROUP BY m.movieid, m.title ORDER BY n_ratings DESC LIMIT 10"
+  },
+  {
+    "id": "ml#5",
+    "db": "movielens",
+    "question": "Top 10 highest-average-rated movies with at least 50 ratings.",
+    "sql": "SELECT m.title, AVG(r.rating) AS avg_rating, COUNT(*) AS n_ratings FROM ratings r JOIN movies m ON m.movieid = r.movieid GROUP BY m.movieid, m.title HAVING COUNT(*) >= 50 ORDER BY avg_rating DESC LIMIT 10"
+  },
+  {
+    "id": "ml#6",
+    "db": "movielens",
+    "question": "How many movies are there per genre?",
+    "sql": "SELECT g AS genre, COUNT(*) AS n_movies FROM movies, unnest(string_to_array(genres, '|')) AS g GROUP BY g ORDER BY n_movies DESC"
+  },
+  {
+    "id": "ml#7",
+    "db": "movielens",
+    "question": "Which user has rated the most movies?",
+    "sql": "SELECT userid, COUNT(*) AS n_ratings FROM ratings GROUP BY userid ORDER BY n_ratings DESC LIMIT 1"
+  },
+  {
+    "id": "ml#9",
+    "db": "movielens",
+    "question": "What is the average rating per release year?",
+    "sql": "WITH y AS (SELECT movieid, substring(title FROM '\\((\\d{4})\\)\\s*$')::int AS release_year FROM movies) SELECT y.release_year, AVG(r.rating) AS avg_rating FROM ratings r JOIN y ON y.movieid = r.movieid WHERE y.release_year IS NOT NULL GROUP BY y.release_year ORDER BY y.release_year"
+  },
+  {
+    "id": "ml#10",
+    "db": "movielens",
+    "question": "What are the 10 most frequently used tags?",
+    "sql": "SELECT tag, COUNT(*) AS n FROM tags GROUP BY tag ORDER BY n DESC LIMIT 10"
+  },
+  {
+    "id": "ml#13",
+    "db": "movielens",
+    "question": "Distribution of rating values (how many 0.5, 1.0, ... 5.0).",
+    "sql": "SELECT rating, COUNT(*) AS n FROM ratings GROUP BY rating ORDER BY rating"
+  },
+  {
+    "id": "ol#1",
+    "db": "olist",
+    "question": "How many orders are in the database?",
+    "sql": "SELECT COUNT(*) FROM orders"
+  },
+  {
+    "id": "ol#2",
+    "db": "olist",
+    "question": "What is the total revenue?",
+    "sql": "SELECT SUM(price) AS total_revenue FROM order_items"
+  },
+  {
+    "id": "ol#3",
+    "db": "olist",
+    "question": "Top 10 product categories by revenue (English names).",
+    "sql": "SELECT t.product_category_name_english AS category, SUM(oi.price) AS revenue FROM order_items oi JOIN products p ON p.product_id = oi.product_id JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name GROUP BY category ORDER BY revenue DESC LIMIT 10"
+  },
+  {
+    "id": "ol#4",
+    "db": "olist",
+    "question": "How many orders per order_status?",
+    "sql": "SELECT order_status, COUNT(*) AS n FROM orders GROUP BY order_status ORDER BY n DESC"
+  },
+  {
+    "id": "ol#8",
+    "db": "olist",
+    "question": "Distribution of payment types.",
+    "sql": "SELECT payment_type, COUNT(*) AS n FROM order_payments GROUP BY payment_type ORDER BY n DESC"
+  },
+  {
+    "id": "ol#9",
+    "db": "olist",
+    "question": "Top 10 sellers by total revenue.",
+    "sql": "SELECT oi.seller_id, SUM(oi.price) AS revenue FROM order_items oi GROUP BY oi.seller_id ORDER BY revenue DESC LIMIT 10"
+  },
+  {
+    "id": "ol#10",
+    "db": "olist",
+    "question": "Number of orders per customer state.",
+    "sql": "SELECT c.customer_state, COUNT(DISTINCT o.order_id) AS n_orders FROM orders o JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.customer_state ORDER BY n_orders DESC"
+  },
+  {
+    "id": "ol#14",
+    "db": "olist",
+    "question": "Average number of items per order.",
+    "sql": "SELECT AVG(item_count) AS avg_items_per_order FROM (SELECT order_id, COUNT(*) AS item_count FROM order_items GROUP BY order_id) x"
+  },
+  {
+    "id": "sc#1",
+    "db": "soccer",
+    "question": "How many matches are in the database?",
+    "sql": "SELECT COUNT(*) FROM \"Match\""
+  },
+  {
+    "id": "sc#2",
+    "db": "soccer",
+    "question": "How many players are there?",
+    "sql": "SELECT COUNT(*) FROM \"Player\""
+  },
+  {
+    "id": "sc#3",
+    "db": "soccer",
+    "question": "How many matches per league?",
+    "sql": "SELECT l.name AS league, COUNT(*) AS n_matches FROM \"Match\" m JOIN \"League\" l ON l.id = m.league_id GROUP BY l.name ORDER BY n_matches DESC"
+  },
+  {
+    "id": "sc#4",
+    "db": "soccer",
+    "question": "Average goals per match by league.",
+    "sql": "SELECT l.name AS league, AVG(m.home_team_goal + m.away_team_goal) AS avg_goals FROM \"Match\" m JOIN \"League\" l ON l.id = m.league_id GROUP BY l.name ORDER BY avg_goals DESC"
+  },
+  {
+    "id": "sc#7",
+    "db": "soccer",
+    "question": "Home-win vs away-win vs draw counts overall.",
+    "sql": "SELECT SUM(CASE WHEN home_team_goal > away_team_goal THEN 1 ELSE 0 END) AS home_wins, SUM(CASE WHEN away_team_goal > home_team_goal THEN 1 ELSE 0 END) AS away_wins, SUM(CASE WHEN home_team_goal = away_team_goal THEN 1 ELSE 0 END) AS draws FROM \"Match\""
+  }
+]
