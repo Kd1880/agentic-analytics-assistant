@@ -66,6 +66,12 @@ if not _origins_raw:
 
 ALLOWED_ORIGINS = [o.strip() for o in _origins_raw.split(",") if o.strip()]
 
+# Always allow the deployed production frontend (Railway env var unreliable)
+_ALWAYS_ALLOW = ["https://agentic-analytics-assistant.vercel.app"]
+for _o in _ALWAYS_ALLOW:
+    if "*" not in ALLOWED_ORIGINS and _o not in ALLOWED_ORIGINS:
+        ALLOWED_ORIGINS.append(_o)
+
 app = FastAPI(title="Agentic Analytics Assistant", version="1.0")
 app.add_middleware(CORSMiddleware, allow_origins=ALLOWED_ORIGINS,
                    allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
