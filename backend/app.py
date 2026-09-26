@@ -47,7 +47,24 @@ TIMEOUT_S = float(os.getenv("SQL_TIMEOUT_S", "30"))
 USE_SAMPLES = os.getenv("USE_SAMPLES", "true").lower() == "true"
 USE_MEMORY = os.getenv("USE_MEMORY", "true").lower() == "true"
 K_EXAMPLES = int(os.getenv("K_EXAMPLES", "3"))
-ALLOWED_ORIGINS = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "*").split(",")]
+# --- CORS ------------------------------------------------------------------
+# "*" is convenient locally and too permissive in production, so a production
+# deployment must name its frontend origin explicitly. Failing loudly at start
+# beats silently shipping a wide-open API.
+APP_ENV = os.getenv("APP_ENV", "development").strip().lower()
+IS_PRODUCTION = APP_ENV == "production" or bool(os.getenv("RENDER"))
+_origins_raw = os.getenv("ALLOWED_ORIGINS", "").strip()
+
+if IS_PRODUCTION and (not _origins_raw or "*" in _origins_raw):
+    raise RuntimeError(
+        f"ALLOWED_ORIGINS is {_origins_raw or 'unset'!r}. A production deployment must name "
+        "its frontend origin explicitly -- the wildcard is refused here. Set e.g. "
+        "ALLOWED_ORIGINS=https://your-frontend.vercel.app (comma-separated for several)."
+    )
+if not _origins_raw:
+    _origins_raw = "*"
+
+ALLOWED_ORIGINS = [o.strip() for o in _origins_raw.split(",") if o.strip()]
 
 app = FastAPI(title="Agentic Analytics Assistant", version="1.0")
 app.add_middleware(CORSMiddleware, allow_origins=ALLOWED_ORIGINS,
@@ -112,13 +129,15 @@ def _insight(cols: list[str], rows: list, truncated: bool) -> str:
 @app.get("/health")
 def health():
     return {"status": "ok", "provider": default_provider(),
-            "databases": list(DATABASES), "memory": bool(_memory)}
+            "databases": list(DATABASES), "memory": bool(_memory),
+            "env": APP_ENV, "allowedOrigins": ALLOWED_ORIGINS}
 
 
 @app.get("/config")
 def config():
     """Safe-to-expose configuration. Contains no secret values."""
-    return {"providers": provider_status(),
+    return {"providers": provider_status(), "env": APP_ENV,
+            "allowed_origins": ALLOWED_ORIGINS,
             "use_samples": USE_SAMPLES, "use_memory": USE_MEMORY,
             "k_examples": K_EXAMPLES, "max_retries": MAX_RETRIES,
             "max_rows": MAX_ROWS, "sql_timeout_s": TIMEOUT_S}

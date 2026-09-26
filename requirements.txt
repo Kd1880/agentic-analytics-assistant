@@ -1,0 +1,25 @@
+# Runtime dependencies for the deployed backend (backend/app.py).
+# Pinned to the versions the study was developed and evaluated against.
+
+# --- API ---
+fastapi==0.115.5
+uvicorn[standard]==0.32.0
+pydantic==2.9.2
+
+# --- database access (db.py, guardrails.py) ---
+SQLAlchemy==2.0.54
+psycopg2-binary==2.9.13
+# SQLite needs no driver: Python ships the sqlite3 module.
+
+# --- LLM providers (agent.py, llm_provider.py) ---
+# Both Ollama and Gemini expose OpenAI-compatible endpoints, so one client covers both.
+openai==2.7.1
+
+# --- retrieval memory (memory.py): TF-IDF cosine similarity ---
+scikit-learn==1.7.2
+
+# --- config from .env / environment ---
+python-dotenv==1.0.1
+
+# --- data loading + the cloud migration script (not imported by the API itself) ---
+pandas==2.3.2
