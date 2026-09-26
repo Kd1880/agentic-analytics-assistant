@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+/*
+ * Base shell only. The real design system is per-database and is injected as
+ * inline CSS custom properties by themeStyle() in src/lib/databases.ts:
+ *   --bg --surface --surface-strong --primary --primary-fg --accent
+ *   --text --muted --line --glow --display
+ * Every askdb component reads those variables, so switching database re-skins
+ * the entire app without a re-render of the styles.
+ */
+
+:root {
+  --radius: 0.625rem;
+  color-scheme: light dark;
+}
+
+* { border-color: var(--line, rgba(255, 255, 255, 0.1)); }
+
+html, body, #root { min-height: 100%; }
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--primary); color: var(--primary-fg); }
+
+/* thin scrollbars that follow the active theme */
+* { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { background: var(--line); border-radius: 99px; }

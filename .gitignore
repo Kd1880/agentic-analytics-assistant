@@ -34,3 +34,8 @@ notes/
 .vscode/
 .idea/
 env/
+
+# --- frontend (belt-and-braces; frontend/.gitignore also covers these) ---
+node_modules/
+dist/
+*.tsbuildinfo
